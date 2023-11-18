@@ -176,6 +176,7 @@ function main() {
       // TODO: Multiply.
     },
     Mat4: {
+      // TODO: All the transforms.
       multiply() {
         checkSimilarMat4s(
           new Mat4().setComponents(
