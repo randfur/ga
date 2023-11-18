@@ -1,6 +1,7 @@
-vec3
-rotor3
-mat4
+import {Vec3} from './vec3.js';
+import {Rotor3} from './rotor3.js';
+import {Mat4} from './mat4.js';
+
 export class Temp {
   static vec3Buffer = [];
   static rotor3Buffer = [];

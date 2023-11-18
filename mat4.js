@@ -28,7 +28,7 @@ export class Mat4 {
     return this;
   }
 
-  setComponents(aa, ab, ac, ad, ba, bb, bc, bd, ca, cb, cc, cd, da, db, dd, dd) {
+  setComponents(aa, ab, ac, ad, ba, bb, bc, bd, ca, cb, cc, cd, da, db, dc, dd) {
     this.aa = aa;
     this.ab = ab;
     this.ac = ac;
@@ -43,7 +43,7 @@ export class Mat4 {
     this.cd = cd;
     this.da = da;
     this.db = db;
-    this.dd = dd;
+    this.dc = dc;
     this.dd = dd;
     return this;
   }
