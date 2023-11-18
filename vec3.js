@@ -12,11 +12,11 @@ export class Vec3 {
   }
 
   squareLength() {
-    return this.x ** 2 + this.y ** 2 + this.z ** 2;
+    return this.x * this.x + this.y * this.y + this.z * this.z;
   }
 
   length() {
-    return this.squareLength() ** 0.5;
+    return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
   }
 
   dot(v) {
@@ -87,7 +87,7 @@ export class Vec3 {
   setRotateRotor(v, r) {
     const qunged =
       Temp.rotor3().setComponents(r.rr, -r.yz, -r.zx, -r.xy)
-        .inplaceMultiply(Temp.rotor3.setComponents(0, v.x, v.y, v.z))
+        .inplaceMultiply(Temp.rotor3().setComponents(0, v.x, v.y, v.z))
         .inplaceMultiply(r);
     this.x = qunged.yz;
     this.y = qunged.zx;
@@ -96,7 +96,7 @@ export class Vec3 {
   }
 
   setMultiplyMat4Vec3(m, v) {
-    this.setXyz(
+    return this.setXyz(
       m.aa * v.x + m.ab * v.y + m.ac * v.z + m.ad,
       m.ba * v.x + m.bb * v.y + m.bc * v.z + m.bd,
       m.ca * v.x + m.cb * v.y + m.cc * v.z + m.cd,

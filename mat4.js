@@ -9,67 +9,51 @@ export class Mat4 {
   }
 
   setIdentity() {
-    this.aa = 1;
-    this.ab = 0;
-    this.ac = 0;
-    this.ad = 0;
-    this.ba = 0;
-    this.bb = 1;
-    this.bc = 0;
-    this.bd = 0;
-    this.ca = 0;
-    this.cb = 0;
-    this.cc = 1;
-    this.cd = 0;
-    this.da = 0;
-    this.db = 0;
-    this.dc = 0;
-    this.dd = 1;
+    this.aa = 1; this.ab = 0; this.ac = 0; this.ad = 0;
+    this.ba = 0; this.bb = 1; this.bc = 0; this.bd = 0;
+    this.ca = 0; this.cb = 0; this.cc = 1; this.cd = 0;
+    this.da = 0; this.db = 0; this.dc = 0; this.dd = 1;
     return this;
   }
 
   setComponents(aa, ab, ac, ad, ba, bb, bc, bd, ca, cb, cc, cd, da, db, dc, dd) {
-    this.aa = aa;
-    this.ab = ab;
-    this.ac = ac;
-    this.ad = ad;
-    this.ba = ba;
-    this.bb = bb;
-    this.bc = bc;
-    this.bd = bd;
-    this.ca = ca;
-    this.cb = cb;
-    this.cc = cc;
-    this.cd = cd;
-    this.da = da;
-    this.db = db;
-    this.dc = dc;
-    this.dd = dd;
+    this.aa = aa; this.ab = ab; this.ac = ac; this.ad = ad;
+    this.ba = ba; this.bb = bb; this.bc = bc; this.bd = bd;
+    this.ca = ca; this.cb = cb; this.cc = cc; this.cd = cd;
+    this.da = da; this.db = db; this.dc = dc; this.dd = dd;
     return this;
   }
 
   set(m) {
-    this.aa = m.aa;
-    this.ab = m.ab;
-    this.ac = m.ac;
-    this.ad = m.ad;
-    this.ba = m.ba;
-    this.bb = m.bb;
-    this.bc = m.bc;
-    this.bd = m.bd;
-    this.ca = m.ca;
-    this.cb = m.cb;
-    this.cc = m.cc;
-    this.cd = m.cd;
-    this.da = m.da;
-    this.db = m.db;
-    this.dd = m.dd;
-    this.dd = m.dd;
+    this.aa = m.aa; this.ab = m.ab; this.ac = m.ac; this.ad = m.ad;
+    this.ba = m.ba; this.bb = m.bb; this.bc = m.bc; this.bd = m.bd;
+    this.ca = m.ca; this.cb = m.cb; this.cc = m.cc; this.cd = m.cd;
+    this.da = m.da; this.db = m.db; this.dd = m.dd; this.dd = m.dd;
     return this;
   }
 
-  setTranslateVec3(v) {
-    return this.setTranslateXyz(v.x, v.y, v.z);
+  setMultiply(ma, mb) {
+    return this.setComponents(
+      /*aa*/ ma.aa * mb.aa + ma.ab * mb.ba + ma.ac * mb.ca + ma.ad * mb.da,
+      /*ab*/ ma.aa * mb.ab + ma.ab * mb.bb + ma.ac * mb.cb + ma.ad * mb.db,
+      /*ac*/ ma.aa * mb.ac + ma.ab * mb.bc + ma.ac * mb.cc + ma.ad * mb.dc,
+      /*ad*/ ma.aa * mb.ad + ma.ab * mb.bd + ma.ac * mb.cd + ma.ad * mb.dd,
+
+      /*ba*/ ma.ba * mb.aa + ma.bb * mb.ba + ma.bc * mb.ca + ma.bd * mb.da,
+      /*bb*/ ma.ba * mb.ab + ma.bb * mb.bb + ma.bc * mb.cb + ma.bd * mb.db,
+      /*bc*/ ma.ba * mb.ac + ma.bb * mb.bc + ma.bc * mb.cc + ma.bd * mb.dc,
+      /*bd*/ ma.ba * mb.ad + ma.bb * mb.bd + ma.bc * mb.cd + ma.bd * mb.dd,
+
+      /*ca*/ ma.ca * mb.aa + ma.cb * mb.ba + ma.cc * mb.ca + ma.cd * mb.da,
+      /*cb*/ ma.ca * mb.ab + ma.cb * mb.bb + ma.cc * mb.cb + ma.cd * mb.db,
+      /*cc*/ ma.ca * mb.ac + ma.cb * mb.bc + ma.cc * mb.cc + ma.cd * mb.dc,
+      /*cd*/ ma.ca * mb.ad + ma.cb * mb.bd + ma.cc * mb.cd + ma.cd * mb.dd,
+
+      /*da*/ ma.da * mb.aa + ma.db * mb.ba + ma.dc * mb.ca + ma.dd * mb.da,
+      /*db*/ ma.da * mb.ab + ma.db * mb.bb + ma.dc * mb.cb + ma.dd * mb.db,
+      /*dc*/ ma.da * mb.ac + ma.db * mb.bc + ma.dc * mb.cc + ma.dd * mb.dc,
+      /*dd*/ ma.da * mb.ad + ma.db * mb.bd + ma.dc * mb.cd + ma.dd * mb.dd,
+    );
   }
 
   setTranslateXyz(x, y, z) {
@@ -79,6 +63,10 @@ export class Mat4 {
       0, 0, 1, z,
       0, 0, 0, 1,
     );
+  }
+
+  setTranslateVec3(v) {
+    return this.setTranslateXyz(v.x, v.y, v.z);
   }
 
   setRotateRotor(r) {
@@ -220,27 +208,9 @@ export class Mat4 {
     );
   }
 
-  setMultiply(ma, mb) {
-    this.setComponents(
-      ma.aa * mb.aa + ma.ab * mb.ba + ma.ac * mb.ca + ma.ad * mb.da,
-      ma.aa * mb.ab + ma.ab * mb.bb + ma.ac * mb.cb + ma.ad * mb.db,
-      ma.aa * mb.ac + ma.ab * mb.bc + ma.ac * mb.cc + ma.ad * mb.dc,
-      ma.aa * mb.ad + ma.ab * mb.bd + ma.ac * mb.cd + ma.ad * mb.dd,
-      ma.ba * mb.aa + ma.bb * mb.ba + ma.bc * mb.ca + ma.bd * mb.da,
-      ma.ba * mb.ab + ma.bb * mb.bb + ma.bc * mb.cb + ma.bd * mb.db,
-      ma.ba * mb.ac + ma.bb * mb.bc + ma.bc * mb.cc + ma.bd * mb.dc,
-      ma.ba * mb.ad + ma.bb * mb.bd + ma.bc * mb.cd + ma.bd * mb.dd,
-      ma.ca * mb.aa + ma.cb * mb.ba + ma.cc * mb.ca + ma.cd * mb.da,
-      ma.ca * mb.ab + ma.cb * mb.bb + ma.cc * mb.cb + ma.cd * mb.db,
-      ma.ca * mb.ac + ma.cb * mb.bc + ma.cc * mb.cc + ma.cd * mb.dc,
-      ma.ca * mb.ad + ma.cb * mb.bd + ma.cc * mb.cd + ma.cd * mb.dd,
-      ma.da * mb.aa + ma.db * mb.ba + ma.dc * mb.ca + ma.dd * mb.da,
-      ma.da * mb.ab + ma.db * mb.bb + ma.dc * mb.cb + ma.dd * mb.db,
-      ma.da * mb.ad + ma.db * mb.bd + ma.dc * mb.cd + ma.dd * mb.dd,
-      ma.da * mb.ad + ma.db * mb.bd + ma.dc * mb.cd + ma.dd * mb.dd,
-    );
-  }
-
   inplaceMultiplyLeft(m) { return this.setMultiply(m, this); }
   inplaceMultiplyRight(m) { return this.setMultiply(this, m); }
+  inplaceTranslateXyz(x, y, z) { return this.setTranslateXyz(x, y, z); }
+  inplaceTranslateVec3(v) { return this.setTranslateVec3(v); }
+  inplaceRotateRotor(r) { return this.setRotateRotor(this, r); }
 }

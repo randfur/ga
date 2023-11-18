@@ -8,3 +8,7 @@
   - Using aa, ab, ac, etc. format for components.
   - Works very well with multicursor manipulation.
   - Can copy the letters a, b, c, d into four cursors and paste them in batches where they're needed.
+- Added Vec3 and Rotor3.
+- Added testing framework, added some tests.
+  - Most bugs in forgetting to return this.
+  - One bug in multiply, not sure how abdd was used at some point.
