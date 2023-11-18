@@ -17,12 +17,14 @@ export class Temp {
     }
     return this.vec3Buffer[this.nextVec3Index++].setXyz(x, y, z);
   }
+
   static rotor3(rr=1, yz=0, zx=0, xy=0) {
     if (this.nextRotor3Index === this.rotor3Buffer.length) {
       this.rotor3Buffer.push(new Rotor3());
     }
     return this.rotor3Buffer[this.nextRotor3Index++].setComponents(rr, yz, zx, xy);
   }
+
   static mat4() {
     if (this.nextMat4Index === this.mat4Buffer.length) {
       this.mat4Buffer.push(new Mat4());
