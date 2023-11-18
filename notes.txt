@@ -1,0 +1,10 @@
+# 2023-11-18
+- Geometric algebra library for 3D stuff.
+- Vec3, Rotor3, Mat4 classes.
+- Vec3 and Rotor3 mostly written already in the ember experiment, will pull in.
+- Writing up Mat4 implementation.
+  - First thing to add is Rotor3 -> Mat4 conversion.
+  - Multicursor algebraic expansion.
+  - Using aa, ab, ac, etc. format for components.
+  - Works very well with multicursor manipulation.
+  - Can copy the letters a, b, c, d into four cursors and paste them in batches where they're needed.
