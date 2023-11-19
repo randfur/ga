@@ -6,6 +6,10 @@
   - Need to find documentation for this.
   - Supposedly this is how WebGL accepts matrices.
   - Having thoroughly tested the theory.
+- Added x, y, z convenience helpers to Temp.
+  - Not too sure if it's that useful but should be eventually.
+- Fixed Rotor3 not specifying which side inplace multiplication happens on.
+- Fixed Vec3 not having default values.
 
 # 2023-11-18
 - Geometric algebra library for 3D stuff.

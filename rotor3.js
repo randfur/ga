@@ -156,7 +156,8 @@ export class Rotor3 {
 
   inplaceConjugate() { return this.setConjugate(this); }
   inplaceNormalise() { return this.setNormalise(this); }
-  inplaceMultiply(r) { return this.setMultiply(this, r); }
+  inplaceMultiplyLeft(r) { return this.setMultiply(r, this); }
+  inplaceMultiplyRight(r) { return this.setMultiply(this, r); }
   inplaceReduce(ratio) { return this.setReduce(this, ratio); }
   inplaceTurnTo(vPosition, vBaseForward, vTarget, reduceRatio) { return this.setTurnTo(vPosition, vBaseForward, this, vTarget, reduceRatio); }
 }

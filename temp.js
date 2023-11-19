@@ -17,6 +17,9 @@ export class Temp {
     }
     return this.vec3Buffer[this.nextVec3Index++].setXyz(x, y, z);
   }
+  static x() { return this.vec3(1, 0, 0); }
+  static y() { return this.vec3(0, 1, 0); }
+  static z() { return this.vec3(0, 0, 1); }
 
   static rotor3(rr=1, yz=0, zx=0, xy=0) {
     if (this.nextRotor3Index === this.rotor3Buffer.length) {

@@ -1,7 +1,7 @@
 import {Temp} from './temp.js';
 
 export class Vec3 {
-  constructor(x, y, z) {
+  constructor(x=0, y=0, z=0) {
     this.x = x;
     this.y = y;
     this.z = z;
@@ -87,8 +87,8 @@ export class Vec3 {
   setRotateRotor(v, r) {
     const qunged =
       Temp.rotor3().setComponents(r.rr, -r.yz, -r.zx, -r.xy)
-        .inplaceMultiply(Temp.rotor3().setComponents(0, v.x, v.y, v.z))
-        .inplaceMultiply(r);
+        .inplaceMultiplyRight(Temp.rotor3().setComponents(0, v.x, v.y, v.z))
+        .inplaceMultiplyRight(r);
     this.x = qunged.yz;
     this.y = qunged.zx;
     this.z = qunged.xy;
