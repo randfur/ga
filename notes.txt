@@ -1,3 +1,12 @@
+# 2023-11-19
+- Added more matrix tests.
+  - Combining translations and rotations appears to work as expected using left multiplication.
+- Added exporting to array buffers for Mat4.
+  - Exporting as column major.
+  - Need to find documentation for this.
+  - Supposedly this is how WebGL accepts matrices.
+  - Having thoroughly tested the theory.
+
 # 2023-11-18
 - Geometric algebra library for 3D stuff.
 - Vec3, Rotor3, Mat4 classes.

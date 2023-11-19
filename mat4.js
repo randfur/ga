@@ -72,22 +72,26 @@ export class Mat4 {
   setRotateRotor(r) {
     const {rr: a, yz: b, zx: c, xy: d} = r;
     // (arr - byz - czx - dxy) * (ex + fy + gz) * (arr + byz + czx + dxy)
+    //
     // = (arr - byz - czx - dxy) * (
     //     eaxrr + ebxyz + ecxzx + edxxy +
     //     fayrr + fbyyz + fcyzx + fdyxy +
     //     gazrr + gbzyz + gczzx + gdzxy +
     //   )
+    //
     // = (arr - byz - czx - dxy) * (
     //     eax + ebxyz + -ecz + edy +
     //     fay + fbz + fcxyz + -fdx +
     //     gaz + -gby + gcx + gdxyz +
     //   )
+    //
     // = (arr - byz - czx - dxy) * (
     //     (ea + -fd + gc)x +
     //     (ed + fa + -gb)y +
     //     (-ec + fb + ga)z +
     //     (eb + fc + gd)xyz +
     //   )
+    //
     // = a(ea + -fd + gc)x +
     //   a(ed + fa + -gb)y +
     //   a(-ec + fb + ga)z +
@@ -104,6 +108,7 @@ export class Mat4 {
     //   -d(ed + fa + -gb)xyy +
     //   -d(-ec + fb + ga)xyz +
     //   -d(eb + fc + gd)xyxyz +
+    //
     // = a(ea + -fd + gc)x +
     //   a(ed + fa + -gb)y +
     //   a(-ec + fb + ga)z +
@@ -120,6 +125,7 @@ export class Mat4 {
     //   -d(ed + fa + -gb)x +
     //   -d(-ec + fb + ga)xyz +
     //   d(eb + fc + gd)z +
+    //
     // = (
     //     a(ea + -fd + gc) +
     //     b(eb + fc + gd) +
@@ -144,6 +150,7 @@ export class Mat4 {
     //     -c(ed + fa + -gb) +
     //     -d(-ec + fb + ga) +
     //   )xyz +
+    //
     // = (
     //     aea + -afd + agc +
     //     beb + bfc + bgd +
@@ -168,6 +175,7 @@ export class Mat4 {
     //     -ced + -cfa + cgb +
     //     dec + -dfb + -dga +
     //   )xyz +
+    //
     // = (
     //     (-cc + -dd + aa + bb)e +
     //     (-ad + -da + bc + cb)f +
@@ -210,7 +218,26 @@ export class Mat4 {
 
   inplaceMultiplyLeft(m) { return this.setMultiply(m, this); }
   inplaceMultiplyRight(m) { return this.setMultiply(this, m); }
-  inplaceTranslateXyz(x, y, z) { return this.setTranslateXyz(x, y, z); }
-  inplaceTranslateVec3(v) { return this.setTranslateVec3(v); }
-  inplaceRotateRotor(r) { return this.setRotateRotor(this, r); }
+
+  exportToArrayBuffer(float32ArrayBuffer) {
+    float32ArrayBuffer[0] = this.aa;
+    float32ArrayBuffer[1] = this.ba;
+    float32ArrayBuffer[2] = this.ca;
+    float32ArrayBuffer[3] = this.da;
+
+    float32ArrayBuffer[4] = this.ab;
+    float32ArrayBuffer[5] = this.bb;
+    float32ArrayBuffer[6] = this.cb;
+    float32ArrayBuffer[7] = this.db;
+
+    float32ArrayBuffer[8] = this.ac;
+    float32ArrayBuffer[9] = this.bc;
+    float32ArrayBuffer[10] = this.cc;
+    float32ArrayBuffer[11] = this.dc;
+
+    float32ArrayBuffer[12] = this.ad;
+    float32ArrayBuffer[13] = this.bd;
+    float32ArrayBuffer[14] = this.cd;
+    float32ArrayBuffer[15] = this.dd;
+  }
 }

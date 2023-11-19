@@ -53,7 +53,7 @@ export class Rotor3 {
     return this;
   }
 
-  setVecToVec(va, vb, reduceRatio=1) {
+  setVec3ToVec3(va, vb, reduceRatio=1) {
     if (reduceRatio <= 0) {
       this.setIdentity();
       return this;
@@ -67,12 +67,15 @@ export class Rotor3 {
     const {x: a, y: b, z: c} = directionA;
     const {x: d, y: e, z: f} = directionB;
     // (ax + by + cz) * (dx + ey + fz)
+    //
     // = adxx + aexy + afxz +
     //   bdyx + beyy + bfyz +
     //   cdzx + cezy + cfzz
+    //
     // = ad + aexy + -afzx +
     //   -bdxy + be + bfyz +
     //   cdzx + -ceyz + cf
+    //
     // = (ad + be + cf) +
     //   (bf - ce)yz +
     //   (-af + cd)zx +
@@ -109,14 +112,17 @@ export class Rotor3 {
     const {rr: a, yz: b, zx: c, xy: d} = ra;
     const {rr: e, yz: f, zx: g, xy: h} = rb;
     // (arr + byz + czx + dxy) * (err + fyz + gzx + hxy)
+    //
     // = aerrrr + beyzrr + cezxrr + dexyrr +
     //   afrryz + bfyzyz + cfzxyz + dfxyyz +
     //   agrrzx + bgyzzx + cgzxzx + dgxyzx +
     //   ahrrxy + bhyzxy + chzxxy + dhxyxy
+    //
     // = aerr + beyz + cezx + dexy +
     //   afyz + -bfrr + cfxy + -dfzx +
     //   agzx + -bgxy + -cgrr + dgyz +
     //   ahxy + bhzx + -chyz + -dhrr
+    //
     // = (ae + -bf + -cg + -dh)rr
     //   (be + af + dg + -ch)yz +
     //   (ce + -df + ag + bh)zx +
@@ -144,7 +150,7 @@ export class Rotor3 {
   setTurnTo(vPosition, vBaseForward, rOrientation, vTarget, reduceRatio) {
     const delta = Temp.vec3().setDelta(vPosition, vTarget);
     const forward = Temp.vec3().set(vBaseForward).inplaceRotateRotor(rOrientation);
-    const turn = Temp.rotor3().setVecToVec(forward, delta, reduceRatio);
+    const turn = Temp.rotor3().setVec3ToVec3(forward, delta, reduceRatio);
     return this.setMultiply(rOrientation, turn);
   }
 

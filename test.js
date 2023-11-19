@@ -136,24 +136,21 @@ function main() {
       },
       rotateRotor() {
         checkSimilarVec3s(
-          new Vec3(1, 2, 3)
-            .inplaceRotateRotor(
-              new Rotor3().setAxisAngle(new Vec3(1, 0, 0), TAU / 4)
-            ),
+          new Vec3(1, 2, 3).inplaceRotateRotor(
+            new Rotor3().setAxisAngle(new Vec3(1, 0, 0), TAU / 4)
+          ),
           new Vec3(1, -3, 2),
         );
         checkSimilarVec3s(
-          new Vec3(1, 2, 3)
-            .inplaceRotateRotor(
-              new Rotor3().setAxisAngle(new Vec3(0, 1, 0), TAU / 4)
-            ),
+          new Vec3(1, 2, 3).inplaceRotateRotor(
+            new Rotor3().setAxisAngle(new Vec3(0, 1, 0), TAU / 4)
+          ),
           new Vec3(3, 2, -1),
         );
         checkSimilarVec3s(
-          new Vec3(1, 2, 3)
-            .inplaceRotateRotor(
-              new Rotor3().setAxisAngle(new Vec3(0, 0, 1), TAU / 4)
-            ),
+          new Vec3(1, 2, 3).inplaceRotateRotor(
+            new Rotor3().setAxisAngle(new Vec3(0, 0, 1), TAU / 4)
+          ),
           new Vec3(-2, 1, 3),
         );
       },
@@ -166,7 +163,7 @@ function main() {
                 2, 2, 2, 2,
                 3, 3, 3, 3,
                 4, 4, 4, 4,
-              )
+              ),
             ),
           new Vec3(7, 16, 21),
         );
@@ -176,7 +173,6 @@ function main() {
       // TODO: Multiply.
     },
     Mat4: {
-      // TODO: All the transforms.
       multiply() {
         checkSimilarMat4s(
           new Mat4().setComponents(
@@ -190,7 +186,7 @@ function main() {
               21, 22, 23, 24,
               25, 26, 27, 28,
               29, 30, 31, 32,
-            )
+            ),
           ),
           new Mat4().setComponents(
             250, 260, 270, 280,
@@ -211,7 +207,7 @@ function main() {
               5, 6, 7, 8,
               9, 10, 11, 12,
               13, 14, 15, 16,
-            )
+            ),
           ),
           new Mat4().setComponents(
             250, 260, 270, 280,
@@ -220,7 +216,67 @@ function main() {
             1354, 1412, 1470, 1528,
           ),
         );
-      }
+      },
+      rotateRotor() {
+        checkSimilarVec3s(
+          new Vec3(1, 2, 3).inplaceMultiplyMat4Left(
+            new Mat4().setRotateRotor(
+              new Rotor3().setVec3ToVec3(
+                new Vec3(1, 0, 0),
+                new Vec3(0, 1, 0),
+              ),
+            ),
+          ),
+          new Vec3(-2, 1, 3),
+        );
+        checkSimilarVec3s(
+          new Vec3(1, 2, 3).inplaceMultiplyMat4Left(
+            new Mat4().setRotateRotor(
+              new Rotor3().setVec3ToVec3(
+                new Vec3(0, 1, 0),
+                new Vec3(0, 0, 1),
+              ),
+            ),
+          ),
+          new Vec3(1, -3, 2),
+        );
+        checkSimilarVec3s(
+          new Vec3(1, 2, 3).inplaceMultiplyMat4Left(
+            new Mat4().setRotateRotor(
+              new Rotor3().setVec3ToVec3(
+                new Vec3(0, 0, 1),
+                new Vec3(1, 0, 0),
+              ),
+            ),
+          ),
+          new Vec3(3, 2, -1),
+        );
+      },
+      translate() {
+        checkSimilarVec3s(
+          new Vec3(1, 2, 3).inplaceMultiplyMat4Left(
+            new Mat4().setTranslateXyz(10, 20, 30),
+          ),
+          new Vec3(11, 22, 33),
+        );
+      },
+      translateRotate() {
+        checkSimilarVec3s(
+          new Vec3(1, 2, 3).inplaceMultiplyMat4Left(
+            new Mat4()
+              .setTranslateXyz(2, -1, -5)
+              .inplaceMultiplyLeft(
+                new Mat4().setRotateRotor(
+                  new Rotor3().setVec3ToVec3(
+                    new Vec3(0, 1, 0),
+                    new Vec3(0, 0, 1),
+                  ),
+                ),
+              ),
+          ),
+          new Vec3(3, 2, 1),
+        );
+      },
     },
   });
 }
