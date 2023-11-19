@@ -70,21 +70,27 @@ export class Rotor3 {
     //
     // = adxx + aexy + afxz +
     //   bdyx + beyy + bfyz +
-    //   cdzx + cezy + cfzz
+    //   cdzx + cezy + cfzz +
     //
     // = ad + aexy + -afzx +
     //   -bdxy + be + bfyz +
-    //   cdzx + -ceyz + cf
+    //   cdzx + -ceyz + cf +
     //
     // = (ad + be + cf) +
     //   (bf - ce)yz +
     //   (-af + cd)zx +
-    //   (ae - bd)xy
+    //   (ae - bd)xy +
     this.rr = a * d + b * e + c * f;
     this.yz = b * f - c * e;
     this.zx = -a * f + c * d;
     this.xy = a * e - b * d;
     return this;
+  }
+
+  // va and vb must be orthogonal, they define which plane to turn around in.
+  setTurnAround(va, vb) {
+    const rightAngleTurn = Temp.rotor3().setVec3ToVec3(va, vb)
+    return this.setMultiply(rightAngleTurn, rightAngleTurn);
   }
 
   setConjugate(r) {

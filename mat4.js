@@ -69,6 +69,15 @@ export class Mat4 {
     return this.setTranslateXyz(v.x, v.y, v.z);
   }
 
+  setScale(k) {
+    return this.setComponents(
+      k, 0, 0, 0,
+      0, k, 0, 0,
+      0, 0, k, 0,
+      0, 0, 0, 1,
+    );
+  }
+
   setRotateRotor(r) {
     const {rr: a, yz: b, zx: c, xy: d} = r;
     // (arr - byz - czx - dxy) * (ex + fy + gz) * (arr + byz + czx + dxy)

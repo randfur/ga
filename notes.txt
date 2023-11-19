@@ -1,3 +1,9 @@
+# 2023-11-20
+- Added scale to Mat4.
+- Added turn around to Rotor3.
+  - Needs to take two right angle vectors to know the plane to turn around in.
+  - Just does a double right angle turn.
+
 # 2023-11-19
 - Added more matrix tests.
   - Combining translations and rotations appears to work as expected using left multiplication.
