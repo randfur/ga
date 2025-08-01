@@ -6,6 +6,9 @@
     - Nah, more vague than Temp in communicating intention.
 - Implemented and updated all three primitives.
   - Updated tests to include Temp.
+- Had resetValue() as registered function to reset temp values.
+  - Removed, each client's temp getter can do the resetting as they wish and optionally take parameters to decide what to reset to.
+  - Much simpler client code.
 
 # 2023-11-20
 - Added scale to Mat4.

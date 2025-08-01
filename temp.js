@@ -1,8 +1,8 @@
 export class Temp {
   static storageList = []
 
-  static registerStorage({createNew, resetValue}) {
-    const storage = new TempStorage({createNew, resetValue});
+  static registerStorage(createNew) {
+    const storage = new TempStorage(createNew);
     this.storageList.push(storage);
     return storage;
   }
@@ -15,9 +15,8 @@ export class Temp {
 }
 
 class TempStorage {
-  constructor({createNew, resetValue}) {
+  constructor(createNew) {
     this.createNew = createNew;
-    this.resetValue = resetValue;
     this.buffer = [];
     this.index = 0;
   }
@@ -26,8 +25,6 @@ class TempStorage {
     if (this.buffer.length === this.index) {
       this.buffer.push(this.createNew())
     }
-    const item = this.buffer[this.index++];
-    this.resetValue(item);
-    return item;
+    return this.buffer[this.index++];
   }
 }

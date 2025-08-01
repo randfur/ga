@@ -1,13 +1,6 @@
 import {Temp} from './temp.js';
 
-const tempStorage = Temp.registerStorage({
-  createNew() {
-    return new Mat4();
-  },
-  resetValue(mat4) {
-    mat4.setIdentity();
-  },
-});
+const tempStorage = Temp.registerStorage(() => new Mat4());
 
 // Matrix shape:
 // aa ab ac ad
@@ -16,7 +9,7 @@ const tempStorage = Temp.registerStorage({
 // da db dc dd
 export class Mat4 {
   static temp() {
-    return tempStorage.acquire();
+    return tempStorage.acquire().setIdentity();
   }
 
   constructor() {

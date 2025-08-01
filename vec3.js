@@ -1,18 +1,11 @@
 import {Temp} from './temp.js';
 import {Rotor3} from './rotor3.js';
 
-const tempStorage = Temp.registerStorage({
-  createNew() {
-    return new Vec3();
-  },
-  resetValue(vec3) {
-    vec3.setXyz(0, 0, 0);
-  },
-});
+const tempStorage = Temp.registerStorage(() => new Vec3());
 
 export class Vec3 {
-  static temp() {
-    return tempStorage.acquire();
+  static temp(x=0, y=0, z=0) {
+    return tempStorage.acquire().setXyz(x, y, z);
   }
 
   constructor(x=0, y=0, z=0) {
