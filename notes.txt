@@ -1,3 +1,12 @@
+# 2025-08-01
+- Idea for making Temp more extensible.
+  - Have classes register themselves with it for their own storage.
+  - Keep reclaimAll() method to reset all registered storage.
+  - Rename from Temp to MemoryArena to match memory model concept?
+    - Nah, more vague than Temp in communicating intention.
+- Implemented and updated all three primitives.
+  - Updated tests to include Temp.
+
 # 2023-11-20
 - Added scale to Mat4.
 - Added turn around to Rotor3.

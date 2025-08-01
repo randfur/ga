@@ -1,6 +1,20 @@
 import {Temp} from './temp.js';
+import {Rotor3} from './rotor3.js';
+
+const tempStorage = Temp.registerStorage({
+  createNew() {
+    return new Vec3();
+  },
+  resetValue(vec3) {
+    vec3.setXyz(0, 0, 0);
+  },
+});
 
 export class Vec3 {
+  static temp() {
+    return tempStorage.acquire();
+  }
+
   constructor(x=0, y=0, z=0) {
     this.x = x;
     this.y = y;
@@ -86,8 +100,8 @@ export class Vec3 {
 
   setRotateRotor(v, r) {
     const qunged =
-      Temp.rotor3().setComponents(r.rr, -r.yz, -r.zx, -r.xy)
-        .inplaceMultiplyRight(Temp.rotor3().setComponents(0, v.x, v.y, v.z))
+      Rotor3.temp().setComponents(r.rr, -r.yz, -r.zx, -r.xy)
+        .inplaceMultiplyRight(Rotor3.temp().setComponents(0, v.x, v.y, v.z))
         .inplaceMultiplyRight(r);
     this.x = qunged.yz;
     this.y = qunged.zx;

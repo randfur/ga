@@ -5,6 +5,13 @@ import {Temp} from './temp.js';
 
 const TAU = Math.PI * 2;
 
+function checkExact(a, b) {
+  if (a !== b) {
+    debugger;
+    throw `${a} !== ${b}`;
+  }
+}
+
 function checkSimilar(a, b) {
   if (Math.abs(a - b) >= 0.001) {
     debugger;
@@ -276,6 +283,21 @@ function main() {
           ),
           new Vec3(3, 2, 1),
         );
+      },
+    },
+    Temp: {
+      reclaimAll() {
+        Temp.reclaimAll();
+        const a = Vec3.temp();
+        const b = Vec3.temp();
+        const c = Vec3.temp();
+        Temp.reclaimAll();
+        const d = Vec3.temp();
+        const e = Vec3.temp();
+        const f = Vec3.temp();
+        checkExact(a, d);
+        checkExact(b, e);
+        checkExact(c, f);
       },
     },
   });

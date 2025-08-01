@@ -1,6 +1,20 @@
 import {Temp} from './temp.js';
+import {Vec3} from './vec3.js';
+
+const tempStorage = Temp.registerStorage({
+  createNew() {
+    return new Rotor3();
+  },
+  resetValue(rotor3) {
+    rotor3.setIdentity();
+  },
+});
 
 export class Rotor3 {
+  static temp() {
+    return tempStorage.acquire();
+  }
+
   constructor(rr=1, yz=0, zx=0, xy=0) {
     this.rr = rr;
     this.yz = yz;
@@ -59,8 +73,8 @@ export class Rotor3 {
       return this;
     }
 
-    const directionA = Temp.vec3().setNormalise(va);
-    const directionB = Temp.vec3()
+    const directionA = Vec3.temp().setNormalise(va);
+    const directionB = Vec3.temp()
       .setNormalise(vb)
       .inplaceScaleAdd(1 / reduceRatio, directionA)
       .inplaceNormalise();
@@ -89,7 +103,7 @@ export class Rotor3 {
 
   // va and vb must be orthogonal, they define which plane to turn around in.
   setTurnAround(va, vb) {
-    const rightAngleTurn = Temp.rotor3().setVec3ToVec3(va, vb)
+    const rightAngleTurn = Rotor3.temp().setVec3ToVec3(va, vb)
     return this.setMultiply(rightAngleTurn, rightAngleTurn);
   }
 
@@ -154,9 +168,9 @@ export class Rotor3 {
   }
 
   setTurnTo(vPosition, vBaseForward, rOrientation, vTarget, reduceRatio) {
-    const delta = Temp.vec3().setDelta(vPosition, vTarget);
-    const forward = Temp.vec3().set(vBaseForward).inplaceRotateRotor(rOrientation);
-    const turn = Temp.rotor3().setVec3ToVec3(forward, delta, reduceRatio);
+    const delta = Vec3.temp().setDelta(vPosition, vTarget);
+    const forward = Vec3.temp().set(vBaseForward).inplaceRotateRotor(rOrientation);
+    const turn = Rotor3.temp().setVec3ToVec3(forward, delta, reduceRatio);
     return this.setMultiply(rOrientation, turn);
   }
 
