@@ -1,3 +1,8 @@
+# 2025-08-04
+- Added some plane projection methods to Vec3.
+  - Need to add tests.
+- Thinking about creating a Vec2 with some plane basis vector helpers.
+
 # 2025-08-01
 - Idea for making Temp more extensible.
   - Have classes register themselves with it for their own storage.

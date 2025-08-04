@@ -110,6 +110,20 @@ export class Vec3 {
     );
   }
 
+  // planeNormal must be a unit vector.
+  setRelativePlaneProjection(planePosition, planeNormal, position) {
+    return this
+      .setDelta(planePosition, position)
+      .inplaceScaleAdd(-this.dot(planeNormal), planeNormal);
+  }
+
+  // planeNormal must be a unit vector.
+  setPlaneProjection(planePosition, planeNormal, position) {
+    return this
+      .setRelativePlaneProjection(planePosition, planeNormal, position)
+      .inplaceAdd(planePosition);
+  }
+
   inplaceScale(k) { return this.setScale(k, this); }
   inplaceAdd(v) { return this.setAdd(this, v); }
   inplaceScaleAdd(k, v) { return this.setScaleAdd(this, k, v); }
@@ -118,4 +132,6 @@ export class Vec3 {
   inplaceNormalise() { return this.setNormalise(this); }
   inplaceRotateRotor(r) { return this.setRotateRotor(this, r); }
   inplaceMultiplyMat4Left(m) { return this.setMultiplyMat4Vec3(m, this); }
+  inplaceRelativePlaneProjection(planePosition, planeNormal) { return this.setRelativePlaneProjection(planePosition, planeNormal, this); }
+  inplacePlaneProjection(planePosition, planeNormal) { return this.setPlaneProjection(planePosition, planeNormal, this); }
 }
