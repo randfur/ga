@@ -110,11 +110,16 @@ export class Vec3 {
     );
   }
 
+  // normal must be a unit vector.
+  setNormalProjection(normal, position) {
+    return this.setScaleAdd(position, -position.dot(normal), normal);
+  }
+
   // planeNormal must be a unit vector.
   setRelativePlaneProjection(planePosition, planeNormal, position) {
     return this
       .setDelta(planePosition, position)
-      .inplaceScaleAdd(-this.dot(planeNormal), planeNormal);
+      .inplaceNormalProjection(planeNormal)
   }
 
   // planeNormal must be a unit vector.
@@ -122,6 +127,35 @@ export class Vec3 {
     return this
       .setRelativePlaneProjection(planePosition, planeNormal, position)
       .inplaceAdd(planePosition);
+  }
+
+  setNonParallel(v) {
+    [this.x, this.y, this.z] = [v.y, v.z, -v.x];
+    return this;
+  }
+
+  static #orthogonalTemp = new Vec3();
+  // normal must be a unit vector.
+  setOrthogonal(normal) {
+    Vec3.#orthogonalTemp.set(normal);
+    return this
+      .setNonParallel(Vec3.#orthogonalTemp)
+      .inplaceNormalProjection(Vec3.#orthogonalTemp)
+      .implaceNormalise();
+  }
+
+  setCross(va, vb) {
+    //     [x y z]
+    // det([a b c])
+    //     [d e f]
+    //
+    // = x(bf - ce) - y(af - cd) + z(ae - bd)
+    const {x: a, y: b, z: c} = va;
+    const {x: d, y: e, z: f} = vb;
+    this.x = b * f - c * e;
+    this.y = c * d - a * f;
+    this.z = a * e - b * d;
+    return this;
   }
 
   inplaceScale(k) { return this.setScale(k, this); }
@@ -132,6 +166,10 @@ export class Vec3 {
   inplaceNormalise() { return this.setNormalise(this); }
   inplaceRotateRotor(r) { return this.setRotateRotor(this, r); }
   inplaceMultiplyMat4Left(m) { return this.setMultiplyMat4Vec3(m, this); }
+  inplaceNormalProjection(normal) { return this.setNormalProjection(normal, this); }
   inplaceRelativePlaneProjection(planePosition, planeNormal) { return this.setRelativePlaneProjection(planePosition, planeNormal, this); }
   inplacePlaneProjection(planePosition, planeNormal) { return this.setPlaneProjection(planePosition, planeNormal, this); }
+  inplaceNonParallel() { return this.setNonParallel(this); }
+  inplaceOrthogonal() { return this.setOrthogonal(this); }
+  inplaceCross(v) { return this.setCross(this, v); }
 }
