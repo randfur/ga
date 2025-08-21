@@ -1,6 +1,7 @@
 # 2025-08-21
 - Added setPolarXy().
 - Removed use of Rotor3.temp() in Vec3.setRotateRotor().
+  - Oops, can't do this because circular class static dependencies.
 - Added PlaneBasis class.
 - Added TODOs for testing.
 

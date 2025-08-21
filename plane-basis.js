@@ -8,12 +8,11 @@ export class PlaneBasis {
     return tempStorage.acquire().set(position, normal);
   }
 
-  constructor(position, normal) {
+  constructor() {
     this.position = new Vec3();
     this.normal = new Vec3();
     this.xDirection = new Vec3();
     this.yDirection = new Vec3();
-    this.set(position, normal);
   }
 
   // TODO: Test.

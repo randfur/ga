@@ -51,6 +51,7 @@ export class Vec3 {
     this.x = Math.cos(angle) * length;
     this.y = Math.sin(angle) * length;
     this.z = 0;
+    return this;
   }
 
   setScale(k, v) {
@@ -100,14 +101,12 @@ export class Vec3 {
     return this;
   }
 
-  static #rotateRotorTempA = new Rotor3();
-  static #rotateRotorTempB = new Rotor3();
   setRotateRotor(v, r) {
     const qunged =
-      Vec3.#rotateRotorTempA
+      Rotor3.temp()
         .setComponents(r.rr, -r.yz, -r.zx, -r.xy)
         .inplaceMultiplyRight(
-          Vec3.#rotateRotorTempB.setComponents(0, v.x, v.y, v.z)
+          Rotor3.temp().setComponents(0, v.x, v.y, v.z)
         )
         .inplaceMultiplyRight(r);
     this.x = qunged.yz;
