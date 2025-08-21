@@ -14,10 +14,12 @@ export class Vec3 {
     this.z = z;
   }
 
+  // TODO: Test.
   clone() {
     return new Vec3(this.x, this.y, this.z);
   }
 
+  // TODO: Test.
   squareLength() {
     return this.x * this.x + this.y * this.y + this.z * this.z;
   }
@@ -42,6 +44,13 @@ export class Vec3 {
     this.y = y;
     this.z = z;
     return this;
+  }
+
+  // TODO: Test.
+  setPolarXy(angle, length=1) {
+    this.x = Math.cos(angle) * length;
+    this.y = Math.sin(angle) * length;
+    this.z = 0;
   }
 
   setScale(k, v) {
@@ -91,10 +100,15 @@ export class Vec3 {
     return this;
   }
 
+  static #rotateRotorTempA = new Rotor3();
+  static #rotateRotorTempB = new Rotor3();
   setRotateRotor(v, r) {
     const qunged =
-      Rotor3.temp().setComponents(r.rr, -r.yz, -r.zx, -r.xy)
-        .inplaceMultiplyRight(Rotor3.temp().setComponents(0, v.x, v.y, v.z))
+      Vec3.#rotateRotorTempA
+        .setComponents(r.rr, -r.yz, -r.zx, -r.xy)
+        .inplaceMultiplyRight(
+          Vec3.#rotateRotorTempB.setComponents(0, v.x, v.y, v.z)
+        )
         .inplaceMultiplyRight(r);
     this.x = qunged.yz;
     this.y = qunged.zx;
@@ -110,11 +124,13 @@ export class Vec3 {
     );
   }
 
+  // TODO: Test.
   // normal must be a unit vector.
   setNormalProjection(normal, position) {
     return this.setScaleAdd(position, -position.dot(normal), normal);
   }
 
+  // TODO: Test.
   // planeNormal must be a unit vector.
   setRelativePlaneProjection(planePosition, planeNormal, position) {
     return this
@@ -122,6 +138,7 @@ export class Vec3 {
       .inplaceNormalProjection(planeNormal)
   }
 
+  // TODO: Test.
   // planeNormal must be a unit vector.
   setPlaneProjection(planePosition, planeNormal, position) {
     return this
@@ -129,12 +146,14 @@ export class Vec3 {
       .inplaceAdd(planePosition);
   }
 
+  // TODO: Test.
   setNonParallel(v) {
     [this.x, this.y, this.z] = [v.y, v.z, -v.x];
     return this;
   }
 
   static #orthogonalTemp = new Vec3();
+  // TODO: Test.
   // normal must be a unit vector.
   setOrthogonal(normal) {
     Vec3.#orthogonalTemp.set(normal);
@@ -144,6 +163,7 @@ export class Vec3 {
       .implaceNormalise();
   }
 
+  // TODO: Test.
   setCross(va, vb) {
     // Matrix determinant method:
     //     [x y z]
@@ -167,6 +187,11 @@ export class Vec3 {
     return this;
   }
 
+  // TODO: Test.
+  set2dPlaneProjection(planeBasis, v) {
+    return this.setXyz(planeBasis.xDirection.dot(v), planeBasis.yDirection.dot(v));
+  }
+
   inplaceScale(k) { return this.setScale(k, this); }
   inplaceAdd(v) { return this.setAdd(this, v); }
   inplaceScaleAdd(k, v) { return this.setScaleAdd(this, k, v); }
@@ -181,4 +206,5 @@ export class Vec3 {
   inplaceNonParallel() { return this.setNonParallel(this); }
   inplaceOrthogonal() { return this.setOrthogonal(this); }
   inplaceCross(v) { return this.setCross(this, v); }
+  inplace2dPlaneProjection(planeBasis) { return this.set2dPlaneProjection(planeBasis, this); }
 }

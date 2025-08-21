@@ -1,3 +1,9 @@
+# 2025-08-21
+- Added setPolarXy().
+- Removed use of Rotor3.temp() in Vec3.setRotateRotor().
+- Added PlaneBasis class.
+- Added TODOs for testing.
+
 # 2025-08-10
 - Added projection and getting orthogonal vectors and cross product.
   - All needs testing.
