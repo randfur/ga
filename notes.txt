@@ -1,5 +1,8 @@
 # 2025-08-23
 - Added set3dPlanePosition() as an inverse to set2dPlaneProjection().
+- Updated setNonParallel() to give a nicer answer for PlaneBasis.set() such that a list of points in the XY plane going counter clockwise like a unit circle would produce a plane basis in the same handed-ness and with X->Y going counter clockwise as well.
+- Updated set2dPlaneProjection() to take into account the plane position and added setRelative2dPlaneProjection() and setRelative3dPlanePosition().
+- Renamed PlaneBasis.position to PlaneBasis.origin as it represents the origin point within the plane's local 2D co-ordinate space.
 
 # 2025-08-21
 - Added setPolarXy().

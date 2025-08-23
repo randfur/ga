@@ -147,7 +147,7 @@ export class Vec3 {
 
   // TODO: Test.
   setNonParallel(v) {
-    [this.x, this.y, this.z] = [v.y, v.z, -v.x];
+    [this.x, this.y, this.z] = [v.y, -v.z, v.x];
     return this;
   }
 
@@ -187,13 +187,32 @@ export class Vec3 {
   }
 
   // TODO: Test.
+  // Takes a 3D point, projects it onto the plane and converts it to a "2D"
+  // vector with only X and Y set to the local co-ordinates within the 2D plane
+  // basis vectors.
   set2dPlaneProjection(planeBasis, v) {
+    return this.setRelative2dPlaneProjection(planeBasis, this.setDelta(planeBasis.origin, v));
+  }
+
+  // TODO: Test.
+  // Same as set2dPlaneProjection() but considers v as already relative to the
+  // plane's origin.
+  setRelative2dPlaneProjection(planeBasis, v) {
     return this.setXyz(planeBasis.xDirection.dot(v), planeBasis.yDirection.dot(v), 0);
   }
 
   // TODO: Test.
+  // Takes a "2D" vector's X and Y values as being within the 2D plane's local
+  // co-ordinates and converts it to a 3D vector on the plane's surface.
   set3dPlanePosition(planeBasis, v) {
-    return this.setSum(v.x, planeBasis.xDirection, v.y, planeBasis.yDirection).inplaceAdd(planeBasis.position);
+    return this.setRelative3dPlanePosition(planeBasis, v).inplaceAdd(planeBasis.origin);
+  }
+
+  // TODO: Test.
+  // Same as set3dPlanePosition() but keeps the resulting vector relative to the
+  // plane's origin.
+  setRelative3dPlanePosition(planeBasis, v) {
+    return this.setSum(v.x, planeBasis.xDirection, v.y, planeBasis.yDirection);
   }
 
   inplaceScale(k) { return this.setScale(k, this); }
@@ -211,5 +230,7 @@ export class Vec3 {
   inplaceOrthogonal() { return this.setOrthogonal(this); }
   inplaceCross(v) { return this.setCross(this, v); }
   inplace2dPlaneProjection(planeBasis) { return this.set2dPlaneProjection(planeBasis, this); }
+  inplaceRelative2dPlaneProjection(planeBasis) { return this.setRelative2dPlaneProjection(planeBasis, this); }
   inplace3dPlanePosition(planeBasis) { return this.set3dPlanePosition(planeBasis, this); }
+  inplaceRelative3dPlanePosition(planeBasis) { return this.setRelative3dPlanePosition(planeBasis, this); }
 }
