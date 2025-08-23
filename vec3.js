@@ -188,7 +188,12 @@ export class Vec3 {
 
   // TODO: Test.
   set2dPlaneProjection(planeBasis, v) {
-    return this.setXyz(planeBasis.xDirection.dot(v), planeBasis.yDirection.dot(v));
+    return this.setXyz(planeBasis.xDirection.dot(v), planeBasis.yDirection.dot(v), 0);
+  }
+
+  // TODO: Test.
+  set3dPlanePosition(planeBasis, v) {
+    return this.setSum(v.x, planeBasis.xDirection, v.y, planeBasis.yDirection).inplaceAdd(planeBasis.position);
   }
 
   inplaceScale(k) { return this.setScale(k, this); }
@@ -206,4 +211,5 @@ export class Vec3 {
   inplaceOrthogonal() { return this.setOrthogonal(this); }
   inplaceCross(v) { return this.setCross(this, v); }
   inplace2dPlaneProjection(planeBasis) { return this.set2dPlaneProjection(planeBasis, this); }
+  inplace3dPlanePosition(planeBasis) { return this.set3dPlanePosition(planeBasis, this); }
 }

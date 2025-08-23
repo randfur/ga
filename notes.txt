@@ -1,3 +1,6 @@
+# 2025-08-23
+- Added set3dPlanePosition() as an inverse to set2dPlaneProjection().
+
 # 2025-08-21
 - Added setPolarXy().
 - Removed use of Rotor3.temp() in Vec3.setRotateRotor().
