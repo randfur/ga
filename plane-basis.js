@@ -16,14 +16,10 @@ export class PlaneBasis {
   }
 
   // TODO: Test.
-  static #origin = new Vec3();
   set(origin, normal) {
     this.origin.set(origin);
     this.normal.setNormalise(normal);
-    this.xDirection
-      .setNonParallel(this.normal)
-      .inplaceRelativePlaneProjection(PlaneBasis.#origin, this.normal)
-      .inplaceNormalise();
+    this.xDirection.setOrthogonal(this.normal);
     this.yDirection.setCross(this.normal, this.xDirection);
     return this;
   }

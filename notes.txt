@@ -1,8 +1,29 @@
 # 2025-08-23
+- Added setRotateXy(), setRotateYz(), setRotateZx() to Mat4.
+  - Should maybe add inplace transform methods.
+  - Give option to multiply on left or right?
+  - Probably only on right, not sure of adequate naming though.
+  - inplaceMultiplyRightRotateXy()? So verbose.
+  - imrRotateXy()? Hmm...
 - Added set3dPlanePosition() as an inverse to set2dPlaneProjection().
 - Updated setNonParallel() to give a nicer answer for PlaneBasis.set() such that a list of points in the XY plane going counter clockwise like a unit circle would produce a plane basis in the same handed-ness and with X->Y going counter clockwise as well.
 - Updated set2dPlaneProjection() to take into account the plane position and added setRelative2dPlaneProjection() and setRelative3dPlanePosition().
 - Renamed PlaneBasis.position to PlaneBasis.origin as it represents the origin point within the plane's local 2D co-ordinate space.
+- Grouped and reordered the set*Plane*() methods around.
+- Renamed "position" parameters to "v" for general consistency with earlier methods.
+- Killed setNormalProjection(), nothing's using it.
+  - Oops, actually the inplaceNormalProjection is used; restored.
+- Updated PlaneBasis.xDirection calculation:
+  - It was originally:
+    this.xDirection
+      .setNonParallel(this.normal)
+      .inplaceRelativePlaneProjection(PlaneBasis.#origin, this.normal)
+      .inplaceNormalise();
+  - Where PlaneBasis.#origin was (0, 0, 0).
+  - This could have used inplaceNormalProjection().
+  - Actually Vec3.setOrthogonal() already does all this.
+    - Fixed typo in this function.
+
 
 # 2025-08-21
 - Added setPolarXy().

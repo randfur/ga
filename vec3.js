@@ -124,28 +124,6 @@ export class Vec3 {
   }
 
   // TODO: Test.
-  // normal must be a unit vector.
-  setNormalProjection(normal, position) {
-    return this.setScaleAdd(position, -position.dot(normal), normal);
-  }
-
-  // TODO: Test.
-  // planeNormal must be a unit vector.
-  setRelativePlaneProjection(planePosition, planeNormal, position) {
-    return this
-      .setDelta(planePosition, position)
-      .inplaceNormalProjection(planeNormal)
-  }
-
-  // TODO: Test.
-  // planeNormal must be a unit vector.
-  setPlaneProjection(planePosition, planeNormal, position) {
-    return this
-      .setRelativePlaneProjection(planePosition, planeNormal, position)
-      .inplaceAdd(planePosition);
-  }
-
-  // TODO: Test.
   setNonParallel(v) {
     [this.x, this.y, this.z] = [v.y, -v.z, v.x];
     return this;
@@ -159,7 +137,7 @@ export class Vec3 {
     return this
       .setNonParallel(Vec3.#orthogonalTemp)
       .inplaceNormalProjection(Vec3.#orthogonalTemp)
-      .implaceNormalise();
+      .inplaceNormalise();
   }
 
   // TODO: Test.
@@ -186,6 +164,35 @@ export class Vec3 {
     return this;
   }
 
+  setTurnXy(v) {
+    return this.setXyz(-v.y, v.x, v.z);
+  }
+
+  // TODO: Test.
+  // Projects v onto a plane.
+  // planeNormal must be a unit vector.
+  setPlaneProjection(planeOrigin, planeNormal, v) {
+    return this
+      .setRelativePlaneProjection(planeOrigin, planeNormal, v)
+      .inplaceAdd(planeOrigin);
+  }
+
+  // TODO: Test.
+  // Projects v onto a plane and returns the delta from the plane origin.
+  // planeNormal must be a unit vector.
+  setRelativePlaneProjection(planeOrigin, planeNormal, position) {
+    return this
+      .setDelta(planeOrigin, position)
+      .inplaceNormalProjection(planeNormal)
+  }
+
+  // TODO: Test.
+  // normal must be a unit vector.
+  // Same as setPlaneProjection() but uses a planeOrigin of (0,0,0).
+  setNormalProjection(normal, v) {
+    return this.setScaleAdd(v, -v.dot(normal), normal);
+  }
+
   // TODO: Test.
   // Takes a 3D point, projects it onto the plane and converts it to a "2D"
   // vector with only X and Y set to the local co-ordinates within the 2D plane
@@ -202,6 +209,7 @@ export class Vec3 {
   }
 
   // TODO: Test.
+  // The reverse of set2dPlanePosition().
   // Takes a "2D" vector's X and Y values as being within the 2D plane's local
   // co-ordinates and converts it to a 3D vector on the plane's surface.
   set3dPlanePosition(planeBasis, v) {
@@ -209,6 +217,7 @@ export class Vec3 {
   }
 
   // TODO: Test.
+  // The reverse of setRelative2dPlanePosition().
   // Same as set3dPlanePosition() but keeps the resulting vector relative to the
   // plane's origin.
   setRelative3dPlanePosition(planeBasis, v) {
@@ -223,12 +232,13 @@ export class Vec3 {
   inplaceNormalise() { return this.setNormalise(this); }
   inplaceRotateRotor(r) { return this.setRotateRotor(this, r); }
   inplaceMultiplyMat4Left(m) { return this.setMultiplyMat4Vec3(m, this); }
-  inplaceNormalProjection(normal) { return this.setNormalProjection(normal, this); }
-  inplaceRelativePlaneProjection(planePosition, planeNormal) { return this.setRelativePlaneProjection(planePosition, planeNormal, this); }
-  inplacePlaneProjection(planePosition, planeNormal) { return this.setPlaneProjection(planePosition, planeNormal, this); }
   inplaceNonParallel() { return this.setNonParallel(this); }
   inplaceOrthogonal() { return this.setOrthogonal(this); }
   inplaceCross(v) { return this.setCross(this, v); }
+  inplaceTurnXy() { return this.setTurnXy(this); }
+  inplacePlaneProjection(planeOrigin, planeNormal) { return this.setPlaneProjection(planeOrigin, planeNormal, this); }
+  inplaceRelativePlaneProjection(planeOrigin, planeNormal) { return this.setRelativePlaneProjection(planeOrigin, planeNormal, this); }
+  inplaceNormalProjection(normal) { return this.setNormalProjection(normal, this); }
   inplace2dPlaneProjection(planeBasis) { return this.set2dPlaneProjection(planeBasis, this); }
   inplaceRelative2dPlaneProjection(planeBasis) { return this.setRelative2dPlaneProjection(planeBasis, this); }
   inplace3dPlanePosition(planeBasis) { return this.set3dPlanePosition(planeBasis, this); }
