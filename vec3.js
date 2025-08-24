@@ -169,6 +169,13 @@ export class Vec3 {
   }
 
   // TODO: Test.
+  // normal must be a unit vector.
+  // Same as setPlaneProjection() but uses a planeOrigin of (0,0,0).
+  setNormalProjection(normal, v) {
+    return this.setScaleAdd(v, -v.dot(normal), normal);
+  }
+
+  // TODO: Test.
   // Projects v onto a plane.
   // planeNormal must be a unit vector.
   setPlaneProjection(planeOrigin, planeNormal, v) {
@@ -184,13 +191,6 @@ export class Vec3 {
     return this
       .setDelta(planeOrigin, position)
       .inplaceNormalProjection(planeNormal)
-  }
-
-  // TODO: Test.
-  // normal must be a unit vector.
-  // Same as setPlaneProjection() but uses a planeOrigin of (0,0,0).
-  setNormalProjection(normal, v) {
-    return this.setScaleAdd(v, -v.dot(normal), normal);
   }
 
   // TODO: Test.
@@ -236,9 +236,9 @@ export class Vec3 {
   inplaceOrthogonal() { return this.setOrthogonal(this); }
   inplaceCross(v) { return this.setCross(this, v); }
   inplaceTurnXy() { return this.setTurnXy(this); }
+  inplaceNormalProjection(normal) { return this.setNormalProjection(normal, this); }
   inplacePlaneProjection(planeOrigin, planeNormal) { return this.setPlaneProjection(planeOrigin, planeNormal, this); }
   inplaceRelativePlaneProjection(planeOrigin, planeNormal) { return this.setRelativePlaneProjection(planeOrigin, planeNormal, this); }
-  inplaceNormalProjection(normal) { return this.setNormalProjection(normal, this); }
   inplace2dPlaneProjection(planeBasis) { return this.set2dPlaneProjection(planeBasis, this); }
   inplaceRelative2dPlaneProjection(planeBasis) { return this.setRelative2dPlaneProjection(planeBasis, this); }
   inplace3dPlanePosition(planeBasis) { return this.set3dPlanePosition(planeBasis, this); }
