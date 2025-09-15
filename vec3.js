@@ -68,6 +68,13 @@ export class Vec3 {
     return this;
   }
 
+  setAddXyz(v, x, y, z) {
+    this.x = v.x + x;
+    this.y = v.y + y;
+    this.z = v.z + z;
+    return this;
+  }
+
   setScaleAdd(va, kb, vb) {
     this.x = va.x + kb * vb.x;
     this.y = va.y + kb * vb.y;
@@ -226,6 +233,7 @@ export class Vec3 {
 
   inplaceScale(k) { return this.setScale(k, this); }
   inplaceAdd(v) { return this.setAdd(this, v); }
+  inplaceAddXyz(v, x, y, z) { return this.setAdd(this, x, y, z); }
   inplaceScaleAdd(k, v) { return this.setScaleAdd(this, k, v); }
   inplaceSum(ka, kb, vb) { return this.setSum(ka, this, kb, vb); }
   inplaceDelta(v) { return this.setDelta(this, v); }

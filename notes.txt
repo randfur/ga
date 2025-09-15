@@ -1,3 +1,6 @@
+# 2025-09-15
+- Added Vec3.setAddXyz() and inplaceAddXyz().
+
 # 2025-08-23
 - Added setRotateXy(), setRotateYz(), setRotateZx() to Mat4.
   - Should maybe add inplace transform methods.
