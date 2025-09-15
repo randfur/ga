@@ -1,5 +1,6 @@
 # 2025-09-15
 - Added Vec3.setAddXyz() and inplaceAddXyz().
+- Added Vec3.setLerp() and inplaceLerp().
 
 # 2025-08-23
 - Added setRotateXy(), setRotateYz(), setRotateZx() to Mat4.

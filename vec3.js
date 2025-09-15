@@ -68,6 +68,7 @@ export class Vec3 {
     return this;
   }
 
+  // TODO: Test.
   setAddXyz(v, x, y, z) {
     this.x = v.x + x;
     this.y = v.y + y;
@@ -93,6 +94,14 @@ export class Vec3 {
     this.x = vb.x - va.x;
     this.y = vb.y - va.y;
     this.z = vb.z - va.z;
+    return this;
+  }
+
+  // TODO: Test.
+  setLerp(va, vb, t) {
+    this.x = va.x + t * (vb.x - va.x);
+    this.y = va.y + t * (vb.y - va.y);
+    this.z = va.z + t * (vb.z - va.z);
     return this;
   }
 
@@ -171,6 +180,7 @@ export class Vec3 {
     return this;
   }
 
+  // TODO: Test.
   setTurnXy(v) {
     return this.setXyz(-v.y, v.x, v.z);
   }
@@ -237,6 +247,7 @@ export class Vec3 {
   inplaceScaleAdd(k, v) { return this.setScaleAdd(this, k, v); }
   inplaceSum(ka, kb, vb) { return this.setSum(ka, this, kb, vb); }
   inplaceDelta(v) { return this.setDelta(this, v); }
+  inplaceLerp(v, t) { return this.setLerp(this, v, t); }
   inplaceNormalise() { return this.setNormalise(this); }
   inplaceRotateRotor(r) { return this.setRotateRotor(this, r); }
   inplaceMultiplyMat4Left(m) { return this.setMultiplyMat4Vec3(m, this); }
