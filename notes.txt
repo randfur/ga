@@ -1,6 +1,9 @@
 # 2025-09-15
-- Added Vec3.setAddXyz() and inplaceAddXyz().
-- Added Vec3.setLerp() and inplaceLerp().
+- Added Vec3.setMin(), Vec3.setMax(), Vec3.setZero() and Vec3.setSubtract().
+
+# 2025-09-15
+- Added Vec3.setAddXyz().
+- Added Vec3.setLerp().
 
 # 2025-08-23
 - Added setRotateXy(), setRotateYz(), setRotateZx() to Mat4.

@@ -39,6 +39,13 @@ export class Vec3 {
     return this;
   }
 
+  setZero() {
+    this.x = 0;
+    this.y = 0;
+    this.z = 0;
+    return this;
+  }
+
   setXyz(x, y, z) {
     this.x = x;
     this.y = y;
@@ -98,6 +105,14 @@ export class Vec3 {
   }
 
   // TODO: Test.
+  setSubtract(va, vb) {
+    this.x = va.x - vb.x;
+    this.y = va.y - vb.y;
+    this.z = va.z - vb.z;
+    return this;
+  }
+
+  // TODO: Test.
   setLerp(va, vb, t) {
     this.x = va.x + t * (vb.x - va.x);
     this.y = va.y + t * (vb.y - va.y);
@@ -114,6 +129,22 @@ export class Vec3 {
     this.x = v.x / length;
     this.y = v.y / length;
     this.z = v.z / length;
+    return this;
+  }
+
+  // TODO: Test.
+  setMin(va, vb) {
+    this.x = Math.min(va.x, vb.x);
+    this.y = Math.min(va.y, vb.y);
+    this.z = Math.min(va.z, vb.z);
+    return this;
+  }
+
+  // TODO: Test.
+  setMax(va, vb) {
+    this.x = Math.max(va.x, vb.x);
+    this.y = Math.max(va.y, vb.y);
+    this.z = Math.max(va.z, vb.z);
     return this;
   }
 
@@ -247,8 +278,11 @@ export class Vec3 {
   inplaceScaleAdd(k, v) { return this.setScaleAdd(this, k, v); }
   inplaceSum(ka, kb, vb) { return this.setSum(ka, this, kb, vb); }
   inplaceDelta(v) { return this.setDelta(this, v); }
+  inplaceSubtract(v) { return this.setSubtract(this, v); }
   inplaceLerp(v, t) { return this.setLerp(this, v, t); }
   inplaceNormalise() { return this.setNormalise(this); }
+  inplaceMin(v) { return this.setMin(this, v); }
+  inplaceMax(v) { return this.setMax(this, v); }
   inplaceRotateRotor(r) { return this.setRotateRotor(this, r); }
   inplaceMultiplyMat4Left(m) { return this.setMultiplyMat4Vec3(m, this); }
   inplaceNonParallel() { return this.setNonParallel(this); }
