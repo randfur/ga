@@ -23,4 +23,6 @@ export class PlaneBasis {
     this.yDirection.setCross(this.normal, this.xDirection);
     return this;
   }
+
+  // See "plane" methods on Vec3 for related operations involving PlaneBasis.
 }

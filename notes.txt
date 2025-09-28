@@ -1,3 +1,6 @@
+# 2025-09-29
+- Small comment for PlaneBasis pointing to Vec3 for related functionality.
+
 # 2025-09-15
 - Added Vec3.setMin(), Vec3.setMax(), Vec3.setZero() and Vec3.setSubtract().
 
