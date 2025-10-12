@@ -217,6 +217,11 @@ export class Vec3 {
   }
 
   // TODO: Test.
+  setUnturnXy(v) {
+    return this.setXyz(v.y, -v.x, v.z);
+  }
+
+  // TODO: Test.
   // normal must be a unit vector.
   // Same as setPlaneProjection() but uses a planeOrigin of (0,0,0).
   setNormalProjection(normal, v) {
@@ -289,6 +294,7 @@ export class Vec3 {
   inplaceOrthogonal() { return this.setOrthogonal(this); }
   inplaceCross(v) { return this.setCross(this, v); }
   inplaceTurnXy() { return this.setTurnXy(this); }
+  inplaceUnturnXy() { return this.setUnturnXy(this); }
   inplaceNormalProjection(normal) { return this.setNormalProjection(normal, this); }
   inplacePlaneProjection(planeOrigin, planeNormal) { return this.setPlaneProjection(planeOrigin, planeNormal, this); }
   inplaceRelativePlaneProjection(planeOrigin, planeNormal) { return this.setRelativePlaneProjection(planeOrigin, planeNormal, this); }
