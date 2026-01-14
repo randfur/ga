@@ -22,7 +22,7 @@ export class PlaneBasis {
     if (guideXDirection === null) {
       this.xDirection.setOrthogonal(this.normal);
     } else {
-      this.xDirection.setNormalProjection(this.normal, guideXDirection);
+      this.xDirection.setNormalProjection(this.normal, guideXDirection).inplaceNormalise();
     }
     this.yDirection.setCross(this.normal, this.xDirection);
     return this;

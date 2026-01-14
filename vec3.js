@@ -54,10 +54,18 @@ export class Vec3 {
   }
 
   // TODO: Test.
-  setPolarXy(angle, length=1) {
-    this.x = Math.cos(angle) * length;
-    this.y = Math.sin(angle) * length;
+  setPolar(angle, radius=1) {
+    this.x = Math.cos(angle) * radius;
+    this.y = Math.sin(angle) * radius;
     this.z = 0;
+    return this;
+  }
+
+  // TODO: Test.
+  setSpherical(angleXy, angleZ, radius=1) {
+    this.x = Math.cos(angleXy) * Math.sin(angleZ) * radius;
+    this.y = Math.sin(angleXy) * Math.sin(angleZ) * radius;
+    this.z = Math.cos(angleZ) * radius;
     return this;
   }
 
