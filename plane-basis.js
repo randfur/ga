@@ -4,8 +4,8 @@ import {Vec3} from './vec3.js';
 const tempStorage = Temp.registerStorage(() => new PlaneBasis());
 
 export class PlaneBasis {
-  static temp(origin, normal) {
-    return tempStorage.acquire().set(origin, normal);
+  static temp(origin, normal, guideXDirection=null) {
+    return tempStorage.acquire().set(origin, normal, guideXDirection);
   }
 
   constructor() {
@@ -16,10 +16,14 @@ export class PlaneBasis {
   }
 
   // TODO: Test.
-  set(origin, normal) {
+  set(origin, normal, guideXDirection=null) {
     this.origin.set(origin);
     this.normal.setNormalise(normal);
-    this.xDirection.setOrthogonal(this.normal);
+    if (guideXDirection === null) {
+      this.xDirection.setOrthogonal(this.normal);
+    } else {
+      this.xDirection.setNormalProjection(this.normal, guideXDirection);
+    }
     this.yDirection.setCross(this.normal, this.xDirection);
     return this;
   }

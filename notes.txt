@@ -1,3 +1,6 @@
+# 2026-01-15
+- Added guideXDirection to PlaneBasis contruction to influence which direction the 2D x axis points relative to the given normal.
+
 # 2025-10-13
 - Added Vec3.setUnturnXy() for the opposite direction of setTurnXy().
 
