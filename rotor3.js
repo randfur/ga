@@ -8,6 +8,8 @@ export class Rotor3 {
     return tempStorage.acquire().setIdentity();
   }
 
+  static singleton = new Rotor3();
+
   constructor(rr=1, yz=0, zx=0, xy=0) {
     this.rr = rr;
     this.yz = yz;
@@ -34,6 +36,9 @@ export class Rotor3 {
     this.xy = 0;
     return this;
   }
+  static identity() {
+    return this.singleton.setIdentity();
+  }
 
   setComponents(rr, yz, zx, xy) {
     this.rr = rr;
@@ -41,6 +46,9 @@ export class Rotor3 {
     this.zx = zx;
     this.xy = xy;
     return this;
+  }
+  static components(rr, yz, zx, xy) {
+    return this.singleton.setComponents(rr, yz, zx, xy);
   }
 
   set(r) {
@@ -58,6 +66,9 @@ export class Rotor3 {
     this.zx = axis.y * sin;
     this.xy = axis.z * sin;
     return this;
+  }
+  static axisAngle(axis, angle) {
+    return this.singleton.setAxisAngle(axis, angle);
   }
 
   setVec3ToVec3(va, vb, reduceRatio=1) {
@@ -93,11 +104,17 @@ export class Rotor3 {
     this.xy = a * e - b * d;
     return this;
   }
+  static vec3ToVec3(va, vb, reduceRatio=1) {
+    return this.singleton.setVec3ToVec3(va, vb, reduceRatio);
+  }
 
   // va and vb must be orthogonal, they define which plane to turn around in.
   setTurnAround(va, vb) {
     const rightAngleTurn = Rotor3.temp().setVec3ToVec3(va, vb)
     return this.setMultiply(rightAngleTurn, rightAngleTurn);
+  }
+  static turnAround(va, vb) {
+    return this.singleton.setTurnAround(va, vb);
   }
 
   setConjugate(r) {
@@ -106,6 +123,9 @@ export class Rotor3 {
     this.zx = -r.zx;
     this.xy = -r.xy;
     return this;
+  }
+  static conjugate(r) {
+    return this.singleton.setConjugate(r);
   }
 
   setNormalise(r) {
@@ -119,6 +139,9 @@ export class Rotor3 {
     this.zx = r.zx / length;
     this.xy = r.xy / length;
     return this;
+  }
+  static normalise(r) {
+    return this.singleton.setNormalise(r);
   }
 
   setMultiply(ra, rb) {
@@ -146,6 +169,9 @@ export class Rotor3 {
     this.xy = d * e + c * f - b * g + a * h;
     return this;
   }
+  static multiply(ra, rb) {
+    return this.singleton.setMultiply(ra, rb);
+  }
 
   setReduce(r, ratio) {
     if (ratio <= 0) {
@@ -159,12 +185,18 @@ export class Rotor3 {
     }
     return this;
   }
+  static reduce(r, ratio) {
+    return this.singleton.setReduce(r, ratio);
+  }
 
   setTurnTo(vPosition, vBaseForward, rOrientation, vTarget, reduceRatio) {
     const delta = Vec3.temp().setDelta(vPosition, vTarget);
     const forward = Vec3.temp().set(vBaseForward).inplaceRotateRotor(rOrientation);
     const turn = Rotor3.temp().setVec3ToVec3(forward, delta, reduceRatio);
     return this.setMultiply(rOrientation, turn);
+  }
+  static turnTo(vPosition, vBaseForward, rOrientation, vTarget, reduceRatio) {
+    return this.singleton.setTurnTo(vPosition, vBaseForward, rOrientation, vTarget, reduceRatio);
   }
 
   inplaceConjugate() { return this.setConjugate(this); }

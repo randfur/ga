@@ -8,6 +8,8 @@ export class Vec3 {
     return tempStorage.acquire().setXyz(x, y, z);
   }
 
+  static singleton = new Vec3();
+
   constructor(x=0, y=0, z=0) {
     this.x = x;
     this.y = y;
@@ -45,12 +47,51 @@ export class Vec3 {
     this.z = 0;
     return this;
   }
+  static zero() {
+    return this.singleton.setZero();
+  }
 
   setXyz(x, y, z) {
     this.x = x;
     this.y = y;
     this.z = z;
     return this;
+  }
+  static xyz(x, y, z) {
+    return this.singleton.setXyz(x, y, z);
+  }
+
+  // TODO: Test.
+  setX(x=1) {
+    this.x = x;
+    this.y = 0;
+    this.z = 0;
+    return this;
+  }
+  static x(x=1) {
+    return this.singleton.setX(x);
+  }
+
+  // TODO: Test.
+  setY(x=1) {
+    this.x = 0;
+    this.y = y;
+    this.z = 0;
+    return this;
+  }
+  static y(y=1) {
+    return this.singleton.setY(y);
+  }
+
+  // TODO: Test.
+  setZ(x=1) {
+    this.x = 0;
+    this.y = 0;
+    this.z = z;
+    return this;
+  }
+  static z(z=1) {
+    return this.singleton.setZ(z);
   }
 
   // TODO: Test.
@@ -60,6 +101,9 @@ export class Vec3 {
     this.z = 0;
     return this;
   }
+  static polar(angle, radius=1) {
+    return this.singleton.setPolar(angle, radius);
+  }
 
   // TODO: Test.
   setSpherical(angleXy, angleZ, radius=1) {
@@ -68,6 +112,9 @@ export class Vec3 {
     this.z = Math.cos(angleZ) * radius;
     return this;
   }
+  static spherical(angleXy, angleZ, radius=1) {
+    return this.singleton.setSpherical(angleXy, angleZ, radius);
+  }
 
   setScale(k, v) {
     this.x = k * v.x;
@@ -75,12 +122,18 @@ export class Vec3 {
     this.z = k * v.z;
     return this;
   }
+  static scale(k, v) {
+    return this.singleton.setScale(k, v);
+  }
 
   setAdd(va, vb) {
     this.x = va.x + vb.x;
     this.y = va.y + vb.y;
     this.z = va.z + vb.z;
     return this;
+  }
+  static add(va, vb) {
+    return this.singleton.setAdd(va, vb);
   }
 
   // TODO: Test.
@@ -90,12 +143,18 @@ export class Vec3 {
     this.z = v.z + z;
     return this;
   }
+  static addXyz(v, x, y, z) {
+    return this.singleton.setAddXyz(v, x, y, z);
+  }
 
   setScaleAdd(va, kb, vb) {
     this.x = va.x + kb * vb.x;
     this.y = va.y + kb * vb.y;
     this.z = va.z + kb * vb.z;
     return this;
+  }
+  static scaleAdd(va, kb, vb) {
+    return this.singleton.setScaleAdd(va, kb, vb);
   }
 
   setSum(ka, va, kb, vb) {
@@ -104,12 +163,18 @@ export class Vec3 {
     this.z = ka * va.z + kb * vb.z;
     return this;
   }
+  static sum(ka, va, kb, vb) {
+    return this.singleton.setSum(ka, va, kb, vb);
+  }
 
   setDelta(va, vb) {
     this.x = vb.x - va.x;
     this.y = vb.y - va.y;
     this.z = vb.z - va.z;
     return this;
+  }
+  static delta(va, vb) {
+    return this.singleton.setDelta(va, vb);
   }
 
   // TODO: Test.
@@ -119,6 +184,9 @@ export class Vec3 {
     this.z = va.z - vb.z;
     return this;
   }
+  static subtract(va, vb) {
+    return this.singleton.setSubtract(va, vb);
+  }
 
   // TODO: Test.
   setLerp(va, vb, t) {
@@ -126,6 +194,9 @@ export class Vec3 {
     this.y = va.y + t * (vb.y - va.y);
     this.z = va.z + t * (vb.z - va.z);
     return this;
+  }
+  static lerp(va, vb, t) {
+    return this.singleton.setLerp(va, vb, t);
   }
 
   setNormalise(v) {
@@ -139,6 +210,9 @@ export class Vec3 {
     this.z = v.z / length;
     return this;
   }
+  static normalise(v) {
+    return this.singleton.setNormalise(v);
+  }
 
   // TODO: Test.
   setMin(va, vb) {
@@ -147,6 +221,9 @@ export class Vec3 {
     this.z = Math.min(va.z, vb.z);
     return this;
   }
+  static min(va, vb) {
+    return this.singleton.setMin(va, vb);
+  }
 
   // TODO: Test.
   setMax(va, vb) {
@@ -154,6 +231,9 @@ export class Vec3 {
     this.y = Math.max(va.y, vb.y);
     this.z = Math.max(va.z, vb.z);
     return this;
+  }
+  static max(va, vb) {
+    return this.singleton.setMax(va, vb);
   }
 
   setRotateRotor(v, r) {
@@ -169,6 +249,9 @@ export class Vec3 {
     this.z = qunged.xy;
     return this;
   }
+  static rotateRotor(v, r) {
+    return this.singleton.setRotateRotor(v, r);
+  }
 
   setMultiplyMat4Vec3(m, v) {
     return this.setXyz(
@@ -177,11 +260,17 @@ export class Vec3 {
       m.ca * v.x + m.cb * v.y + m.cc * v.z + m.cd,
     );
   }
+  static multiplyMat4Vec3(m, v) {
+    return this.singleton.setMultiplyMat4Vec3(m, v);
+  }
 
   // TODO: Test.
   setNonParallel(v) {
     [this.x, this.y, this.z] = [v.y, -v.z, v.x];
     return this;
+  }
+  static nonParallel(v) {
+    return this.singleton.setNonParallel(v);
   }
 
   static #orthogonalTemp = new Vec3();
@@ -193,6 +282,9 @@ export class Vec3 {
       .setNonParallel(Vec3.#orthogonalTemp)
       .inplaceNormalProjection(Vec3.#orthogonalTemp)
       .inplaceNormalise();
+  }
+  static orthogonal(normal) {
+    return this.singleton.setOrthogonal(normal);
   }
 
   // TODO: Test.
@@ -209,7 +301,7 @@ export class Vec3 {
     // = munge(aexy + afxz + bdyx + bfyz + cdzx + cezy)
     // = munge(aexy - afzx - bdxy + bfyz + cdzx - ceyz)
     // = aez - afy - bdz + bfx + cdy - cex
-    // = x(bf - ce) + y(cd - af) + z(ae - bd)
+    // = x(bf - ce) + y(cd - af) + z(ae - bd)i
 
     const {x: a, y: b, z: c} = va;
     const {x: d, y: e, z: f} = vb;
@@ -218,15 +310,24 @@ export class Vec3 {
     this.z = a * e - b * d;
     return this;
   }
+  static cross(va, vb) {
+    return this.singleton.setCross(va, vb);
+  }
 
   // TODO: Test.
   setTurnXy(v) {
     return this.setXyz(-v.y, v.x, v.z);
   }
+  static turnXy(v) {
+    return this.singleton.setTurnXy(v);
+  }
 
   // TODO: Test.
   setUnturnXy(v) {
     return this.setXyz(v.y, -v.x, v.z);
+  }
+  static unturnXy(v) {
+    return this.singleton.setUnturnXy(v);
   }
 
   // TODO: Test.
@@ -234,6 +335,9 @@ export class Vec3 {
   // Same as setPlaneProjection() but uses a planeOrigin of (0,0,0).
   setNormalProjection(normal, v) {
     return this.setScaleAdd(v, -v.dot(normal), normal);
+  }
+  static normalProjection(normal, v) {
+    return this.singleton.setNormalProjection(normal, v);
   }
 
   // TODO: Test.
@@ -244,6 +348,9 @@ export class Vec3 {
       .setRelativePlaneProjection(planeOrigin, planeNormal, v)
       .inplaceAdd(planeOrigin);
   }
+  static planeProjection(planeOrigin, planeNormal, v) {
+    return this.singleton.setPlaneProjection(planeOrigin, planeNormal, v);
+  }
 
   // TODO: Test.
   // Projects v onto a plane and returns the delta from the plane origin.
@@ -253,36 +360,51 @@ export class Vec3 {
       .setDelta(planeOrigin, position)
       .inplaceNormalProjection(planeNormal)
   }
+  static relativePlaneProjection(planeOrigin, planeNormal, position) {
+    return this.singleton.setRelativePlaneProjection(planeOrigin, planeNormal, position);
+  }
 
   // TODO: Test.
   // Takes a 3D point, projects it onto the plane and converts it to a "2D"
   // vector with only X and Y set to the local co-ordinates within the 2D plane
   // basis vectors.
-  set2dPlaneProjection(planeBasis, v) {
-    return this.setRelative2dPlaneProjection(planeBasis, this.setDelta(planeBasis.origin, v));
+  setPlaneProjection2d(planeBasis, v) {
+    return this.setRelativePlaneProjection2d(planeBasis, this.setDelta(planeBasis.origin, v));
+  }
+  static planeProjection2d(planeBasis, v) {
+    return this.singleton.setPlaneProjection2d(planeBasis, v);
   }
 
   // TODO: Test.
   // Same as set2dPlaneProjection() but considers v as already relative to the
   // plane's origin.
-  setRelative2dPlaneProjection(planeBasis, v) {
+  setRelativePlaneProjection2d(planeBasis, v) {
     return this.setXyz(planeBasis.xDirection.dot(v), planeBasis.yDirection.dot(v), 0);
+  }
+  static relativePlaneProjection2d(planeBasis, v) {
+    return this.singleton.setRelativePlaneProjection2d(planeBasis, v);
   }
 
   // TODO: Test.
   // The reverse of set2dPlanePosition().
   // Takes a "2D" vector's X and Y values as being within the 2D plane's local
   // co-ordinates and converts it to a 3D vector on the plane's surface.
-  set3dPlanePosition(planeBasis, v) {
-    return this.setRelative3dPlanePosition(planeBasis, v).inplaceAdd(planeBasis.origin);
+  setPlanePosition3d(planeBasis, v) {
+    return this.setRelativePlanePosition3d(planeBasis, v).inplaceAdd(planeBasis.origin);
+  }
+  static planePosition3d(planeBasis, v) {
+    return this.singleton.setPlanePosition3d(planeBasis, v);
   }
 
   // TODO: Test.
   // The reverse of setRelative2dPlanePosition().
   // Same as set3dPlanePosition() but keeps the resulting vector relative to the
   // plane's origin.
-  setRelative3dPlanePosition(planeBasis, v) {
+  setRelativePlanePosition3d(planeBasis, v) {
     return this.setSum(v.x, planeBasis.xDirection, v.y, planeBasis.yDirection);
+  }
+  static relativePlanePosition3d(planeBasis, v) {
+    return this.singleton.setRelativePlanePosition3d(planeBasis, v);
   }
 
   inplaceScale(k) { return this.setScale(k, this); }
@@ -306,8 +428,8 @@ export class Vec3 {
   inplaceNormalProjection(normal) { return this.setNormalProjection(normal, this); }
   inplacePlaneProjection(planeOrigin, planeNormal) { return this.setPlaneProjection(planeOrigin, planeNormal, this); }
   inplaceRelativePlaneProjection(planeOrigin, planeNormal) { return this.setRelativePlaneProjection(planeOrigin, planeNormal, this); }
-  inplace2dPlaneProjection(planeBasis) { return this.set2dPlaneProjection(planeBasis, this); }
-  inplaceRelative2dPlaneProjection(planeBasis) { return this.setRelative2dPlaneProjection(planeBasis, this); }
-  inplace3dPlanePosition(planeBasis) { return this.set3dPlanePosition(planeBasis, this); }
-  inplaceRelative3dPlanePosition(planeBasis) { return this.setRelative3dPlanePosition(planeBasis, this); }
+  inplacePlaneProjection2d(planeBasis) { return this.setPlaneProjection2d(planeBasis, this); }
+  inplaceRelativePlaneProjection2d(planeBasis) { return this.setRelativePlaneProjection2d(planeBasis, this); }
+  inplacePlanePosition3d(planeBasis) { return this.setPlanePosition3d(planeBasis, this); }
+  inplaceRelativePlanePosition3d(planeBasis) { return this.setRelativePlanePosition3d(planeBasis, this); }
 }

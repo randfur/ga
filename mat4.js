@@ -12,6 +12,8 @@ export class Mat4 {
     return tempStorage.acquire().setIdentity();
   }
 
+  static singleton = new Mat4();
+
   constructor() {
     this.setIdentity();
   }
@@ -23,6 +25,9 @@ export class Mat4 {
     this.da = 0; this.db = 0; this.dc = 0; this.dd = 1;
     return this;
   }
+  static identity() {
+    return this.singleton.setIdentity();
+  }
 
   setComponents(aa, ab, ac, ad, ba, bb, bc, bd, ca, cb, cc, cd, da, db, dc, dd) {
     this.aa = aa; this.ab = ab; this.ac = ac; this.ad = ad;
@@ -30,6 +35,9 @@ export class Mat4 {
     this.ca = ca; this.cb = cb; this.cc = cc; this.cd = cd;
     this.da = da; this.db = db; this.dc = dc; this.dd = dd;
     return this;
+  }
+  static components(aa, ab, ac, ad, ba, bb, bc, bd, ca, cb, cc, cd, da, db, dc, dd) {
+    return this.singleton.setComponents(aa, ab, ac, ad, ba, bb, bc, bd, ca, cb, cc, cd, da, db, dc, dd);
   }
 
   set(m) {
@@ -63,6 +71,9 @@ export class Mat4 {
       /*dd*/ ma.da * mb.ad + ma.db * mb.bd + ma.dc * mb.cd + ma.dd * mb.dd,
     );
   }
+  static multiply(ma, mb) {
+    return this.singleton.setMultiply(ma, mb);
+  }
 
   setTranslateXyz(x, y, z) {
     return this.setComponents(
@@ -72,9 +83,15 @@ export class Mat4 {
       0, 0, 0, 1,
     );
   }
+  static translateXyz(x, y, z) {
+    return this.singleton.setTranslateXyz(x, y, z);
+  }
 
   setTranslateVec3(v) {
     return this.setTranslateXyz(v.x, v.y, v.z);
+  }
+  static translateVec3(v) {
+    return this.singleton.setTranslateVec3(v);
   }
 
   setScale(k) {
@@ -84,6 +101,9 @@ export class Mat4 {
       0, 0, k, 0,
       0, 0, 0, 1,
     );
+  }
+  static scale(k) {
+    return this.singleton.setScale(k);
   }
 
   setRotateRotor(r) {
@@ -232,6 +252,9 @@ export class Mat4 {
       0, 0, 0, 1,
     );
   }
+  static rotateRotor(r) {
+    return this.singleton.setRotateRotor(r);
+  }
 
   setRotateXy(angle) {
     const c = Math.cos(angle);
@@ -242,6 +265,9 @@ export class Mat4 {
       0, 0, 1, 0,
       0, 0, 0, 1,
     );
+  }
+  static rotateXy(angle) {
+    return this.singleton.setRotateXy(angle);
   }
 
   setRotateYz(angle) {
@@ -254,6 +280,9 @@ export class Mat4 {
       0, 0, 0, 1,
     );
   }
+  static rotateYz(angle) {
+    return this.singleton.setRotateYz(angle);
+  }
 
   setRotateZx(angle) {
     const c = Math.cos(angle);
@@ -264,6 +293,9 @@ export class Mat4 {
       -s, 0, c, 0,
       0, 0, 0, 1,
     );
+  }
+  static rotateZx(angle) {
+    return this.singleton.setRotateZx(angle);
   }
 
   inplaceMultiplyLeft(m) { return this.setMultiply(m, this); }

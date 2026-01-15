@@ -1,3 +1,25 @@
+# 2026-01-16
+- Added singleton instance to Vec3, Mat4 and Rotor3.
+- Added static versions of all set*() methods that operate on the singleton.
+  - Used Gemini to do all the Vec3 ones as it was a lot of busy work.
+- Had to rename the Vec3 planeProjection methods as they started with 2d/3d.
+  - Renames:
+    - set2dPlaneProjection() -> setPlaneProjection2d()
+    - 2dplaneProjection() -> planeProjection2d()
+    - set2dRelativePlaneProjection() -> setRelativePlaneProjection2d()
+    - 2drelativePlaneProjection() -> relativePlaneProjection2d()
+    - set3dPlanePosition() -> setPlanePosition3d()
+    - 3dplanePosition() -> planePosition3d()
+    - set3dRelativePlanePosition() -> setRelativePlanePosition3d()
+    - 3drelativePlanePosition() -> relativePlanePosition3d()
+    - inplace2dPlaneProjection() -> inplacePlaneProjection2d()
+    - inplaceRelative2dPlaneProjection() -> inplaceRelativePlaneProjection2d()
+    - inplace3dPlanePosition() -> inplacePlanePosition3d()
+    - inplaceRelative3dPlanePosition() -> inplaceRelativePlanePosition3d()
+  - Doesn't read as well but is fine.
+  - Need to update all existing uses of these methods in the code.
+    - Done.
+
 # 2026-01-15
 - Added guideXDirection to PlaneBasis contruction to influence which direction the 2D x axis points relative to the given normal.
 - Added Vec3.setSphericalXyz().
