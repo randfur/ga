@@ -9,6 +9,10 @@ export class Rotor3 {
   }
 
   static singleton = new Rotor3();
+  static a = new Rotor3();
+  static b = new Rotor3();
+  static c = new Rotor3();
+  static d = new Rotor3();
 
   constructor(rr=1, yz=0, zx=0, xy=0) {
     this.rr = rr;

@@ -8,6 +8,8 @@ export class PlaneBasis {
     return tempStorage.acquire().set(origin, normal, guideXDirection);
   }
 
+  static singleton = new PlaneBasis();
+
   constructor() {
     this.origin = new Vec3();
     this.normal = new Vec3();

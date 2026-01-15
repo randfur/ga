@@ -13,6 +13,10 @@ export class Mat4 {
   }
 
   static singleton = new Mat4();
+  static a = new Mat4();
+  static b = new Mat4();
+  static c = new Mat4();
+  static d = new Mat4();
 
   constructor() {
     this.setIdentity();

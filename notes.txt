@@ -19,6 +19,8 @@
   - Doesn't read as well but is fine.
   - Need to update all existing uses of these methods in the code.
     - Done.
+- Added static a, b, c, d instances to Vec3, Mat4 and Rotor3 for when multiple singletons are wanted in the same function parameter passing e.g. Rotor3.turnAround(Vec3.a.setX(), Vec3.b.setY()).
+  - Rotor3.turnAround(Vec3.x(), Vec3.y()) would be an error because x() and y() mutate the same instance.
 
 # 2026-01-15
 - Added guideXDirection to PlaneBasis contruction to influence which direction the 2D x axis points relative to the given normal.

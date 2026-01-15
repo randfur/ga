@@ -9,6 +9,10 @@ export class Vec3 {
   }
 
   static singleton = new Vec3();
+  static a = new Vec3();
+  static b = new Vec3();
+  static c = new Vec3();
+  static d = new Vec3();
 
   constructor(x=0, y=0, z=0) {
     this.x = x;
@@ -73,7 +77,7 @@ export class Vec3 {
   }
 
   // TODO: Test.
-  setY(x=1) {
+  setY(y=1) {
     this.x = 0;
     this.y = y;
     this.z = 0;
@@ -84,7 +88,7 @@ export class Vec3 {
   }
 
   // TODO: Test.
-  setZ(x=1) {
+  setZ(z=1) {
     this.x = 0;
     this.y = 0;
     this.z = z;
