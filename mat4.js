@@ -51,6 +51,9 @@ export class Mat4 {
     this.da = m.da; this.db = m.db; this.dd = m.dd; this.dd = m.dd;
     return this;
   }
+  static set(m) {
+    return this.singleton.set(m);
+  }
 
   setMultiply(ma, mb) {
     return this.setComponents(

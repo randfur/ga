@@ -44,6 +44,9 @@ export class Vec3 {
     this.z = v.z;
     return this;
   }
+  static set(v) {
+    return this.singleton.set(v);
+  }
 
   setZero() {
     this.x = 0;
@@ -55,13 +58,13 @@ export class Vec3 {
     return this.singleton.setZero();
   }
 
-  setXyz(x, y, z) {
+  setXyz(x=0, y=0, z=0) {
     this.x = x;
     this.y = y;
     this.z = z;
     return this;
   }
-  static xyz(x, y, z) {
+  static xyz(x=0, y=0, z=0) {
     return this.singleton.setXyz(x, y, z);
   }
 

@@ -62,6 +62,9 @@ export class Rotor3 {
     this.xy = r.xy;
     return this;
   }
+  static set(r) {
+    return this.singleton.set(r);
+  }
 
   setAxisAngle(axis, angle) {
     const sin = Math.sin(angle / 2);

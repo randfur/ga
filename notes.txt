@@ -1,3 +1,7 @@
+# 2026-01-19
+- Added static set() to Vec3, Mat4 and Rotor3.
+- Added default 0 values to Vec3.setXyz().
+
 # 2026-01-16
 - Added singleton instance to Vec3, Mat4 and Rotor3.
 - Added static versions of all set*() methods that operate on the singleton.
