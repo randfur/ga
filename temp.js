@@ -7,6 +7,8 @@ export class Temp {
     return storage;
   }
 
+  // Reclaims all temp objects as available for reuse, typically called at the
+  // start or end of every frame.
   static reclaimAll() {
     for (const storage of this.storageList) {
       storage.index = 0;

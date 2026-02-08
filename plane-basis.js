@@ -2,6 +2,7 @@ import {Temp} from './temp.js';
 import {Vec3} from './vec3.js';
 
 export class PlaneBasis {
+  // Uses of this must include a call to Temp.reclaimAll().
   static temp(origin, normal, guideXDirection=null) {
     return tempStorage.acquire().set(origin, normal, guideXDirection);
   }

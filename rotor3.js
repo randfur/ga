@@ -2,6 +2,7 @@ import {Temp} from './temp.js';
 import {Vec3} from './vec3.js';
 
 export class Rotor3 {
+  // Uses of this must include a call to Temp.reclaimAll().
   static temp() {
     return tempStorage.acquire().setIdentity();
   }
@@ -116,7 +117,6 @@ export class Rotor3 {
 
   // va and vb must be orthogonal, they define which plane to turn around in.
   setTurnAround(va, vb) {
-    initStatics?.();
     staticRightAngleTurn.setVec3ToVec3(va, vb)
     return this.setMultiply(staticRightAngleTurn, staticRightAngleTurn);
   }
@@ -217,18 +217,17 @@ export class Rotor3 {
 
 const tempStorage = Temp.registerStorage(() => new Rotor3());
 
+const staticRightAngleTurn = new Rotor3();
+
 let staticDirectionA;
 let staticDirectionB;
-let staticRightAngleTurn;
 let staticDelta;
 let staticForward;
 let staticTurn;
-
 let initStatics = function() {
   initStatics = null;
   staticDirectionA = new Vec3();
   staticDirectionB = new Vec3();
-  staticRightAngleTurn = new Rotor3();
   staticDelta = new Vec3();
   staticForward = new Vec3();
   staticTurn = new Rotor3();

@@ -1,7 +1,55 @@
 import {Temp} from './temp.js';
 import {Rotor3} from './rotor3.js';
 
+/**
+ * Getter index:
+ * - clone()
+ * - squareLength()
+ * - length()
+ * - dot(v)
+ *
+ * Setter index:
+ * - set(v)
+ * For the following setters e.g. `setAdd(va, vb)` there also exists
+ * `Vec3.add(va, vb)` which operates on the `Vec3.singleton` instance.
+ * For setters that take at least one Vec3 parameter there also exists
+ * `inplaceAdd(vb)` which uses `this` as the first Vec3 parameter.
+ * - setZero()
+ * - setXyz(x, y, z)
+ * - setX(x)
+ * - setY(y)
+ * - setZ(z)
+ * - setPolar(angle, radius)
+ * - setSpherical(angleXy, angleZ, radius=1)
+ * - setScale(k, v)
+ * - setAdd(va, vb)
+ * - setAddXyz(v, x, y, z)
+ * - setScaleAdd(va, kb, vb)
+ * - setSum(ka, va, kb, vb)
+ * - setDelta(va, vb)
+ * - setSubtract(va, vb)
+ * - setLerp(va, vb, t)
+ * - setNormalise(v)
+ * - setMin(va, vb)
+ * - setMax(va, vb)
+ * - setRotateRotor(v, r)
+ * - setMultiplyMat4Vec3(m, v)
+ * - setNonParallel(v)
+ * - setOrthogonal(normal)
+ * - setCross(va, vb)
+ * - setTurnXy(v)
+ * - setUnturnXy(v)
+ * - setTurnTowards(direction, position, destination, cosMaxTurnAngle)
+ * - setNormalProjection(normal, v)
+ * - setPlaneProjection(planeOrigin, planeNormal, v)
+ * - setRelativePlaneProjection(planeOrigin, planeNormal, position)
+ * - setPlaneProjection2d(planeBasis, v)
+ * - setRelativePlaneProjection2d(planeBasis, v)
+ * - setPlanePosition3d(planeBasis, v)
+ * - setRelativePlanePosition3d(planeBasis, v)
+ */
 export class Vec3 {
+  // Uses of this must include a call to Temp.reclaimAll().
   static temp(x=0, y=0, z=0) {
     return tempStorage.acquire().setXyz(x, y, z);
   }
@@ -278,14 +326,13 @@ export class Vec3 {
     return this.singleton.setNonParallel(v);
   }
 
-  static #orthogonalTemp = new Vec3();
   // TODO: Test.
   // normal must be a unit vector.
   setOrthogonal(normal) {
-    Vec3.#orthogonalTemp.set(normal);
+    staticOrthogonal.set(normal);
     return this
-      .setNonParallel(Vec3.#orthogonalTemp)
-      .inplaceNormalProjection(Vec3.#orthogonalTemp)
+      .setNonParallel(staticOrthogonal)
+      .inplaceNormalProjection(staticOrthogonal)
       .inplaceNormalise();
   }
   static orthogonal(normal) {
@@ -333,6 +380,28 @@ export class Vec3 {
   }
   static unturnXy(v) {
     return this.singleton.setUnturnXy(v);
+  }
+
+  // TODO: Test.
+  // direction must be a unit vector.
+  setTurnTowards(direction, position, destination, cosMaxTurnAngle) {
+    staticDestinationDirection.setDelta(position, destination).inplaceNormalise();
+    const dot = direction.dot(staticDestinationDirection);
+    if (dot >= cosMaxTurnAngle) {
+      return this.set(staticDestinationDirection);
+    }
+    staticOrthogonal
+      .setNormalProjection(direction, staticDestinationDirection)
+      .inplaceNormalise();
+    return this.setSum(
+      cosMaxTurnAngle,
+      direction,
+      Math.sqrt(1 - cosMaxTurnAngle ** 2),
+      staticOrthogonal,
+    ).inplaceNormalise();
+  }
+  static turnTowards(direction, position, destination, cosMaxTurnAngle) {
+    return this.singleton.setTurnTowards(direction, position, destination, cosMaxTurnAngle);
   }
 
   // TODO: Test.
@@ -430,6 +499,7 @@ export class Vec3 {
   inplaceCross(v) { return this.setCross(this, v); }
   inplaceTurnXy() { return this.setTurnXy(this); }
   inplaceUnturnXy() { return this.setUnturnXy(this); }
+  inplaceTurnTowards(position, destination, cosMaxTurnAngle) { return this.setTurnTowards(this, position, destination, cosMaxTurnAngle); }
   inplaceNormalProjection(normal) { return this.setNormalProjection(normal, this); }
   inplacePlaneProjection(planeOrigin, planeNormal) { return this.setPlaneProjection(planeOrigin, planeNormal, this); }
   inplaceRelativePlaneProjection(planeOrigin, planeNormal) { return this.setRelativePlaneProjection(planeOrigin, planeNormal, this); }
@@ -441,9 +511,11 @@ export class Vec3 {
 
 const tempStorage = Temp.registerStorage(() => new Vec3());
 
+const staticOrthogonal = new Vec3();
+const staticDestinationDirection = new Vec3();
+
 let staticQungedRotation;
 let staticQungedPosition;
-
 let initStatics = function() {
   initStatics = null;
   staticQungedRotation = new Rotor3();

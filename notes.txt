@@ -5,6 +5,13 @@
   - Need to resolve a circular dependency between Rotor3 and Vec3.
   - Moved initialisation into initStatics nullable function called by each method that needs them.
 - Moved all the private tempStorage variables after the exported class.
+- Added getter and setter docs to Vec3.
+- Updated class comments to /** */ format.
+- Added comments to .temp() and Temp.reclaimAll().
+- Added Vec3 setTurnTowards().
+  - Should work in any plane of rotation.
+  - Takes cosMaxTurnAngle to avoid doing any trig internally.
+  - Works first try yay.
 
 # 2026-01-19
 - Added static set() to Vec3, Mat4 and Rotor3.

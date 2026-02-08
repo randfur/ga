@@ -1,11 +1,14 @@
 import {Temp} from './temp.js';
 
-// Matrix shape:
-// aa ab ac ad
-// ba bb bc bd
-// ca cb cc cd
-// da db dc dd
+/**
+ * Matrix shape:
+ * aa ab ac ad
+ * ba bb bc bd
+ * ca cb cc cd
+ * da db dc dd
+ */
 export class Mat4 {
+  // Uses of this must include a call to Temp.reclaimAll().
   static temp() {
     return tempStorage.acquire().setIdentity();
   }
