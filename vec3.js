@@ -290,7 +290,7 @@ export class Vec3 {
   }
 
   setRotateRotor(v, r) {
-    initStatics?.();
+    initRotor3Statics?.();
     staticQungedRotation
       .setComponents(r.rr, -r.yz, -r.zx, -r.xy)
       .inplaceMultiplyRight(
@@ -515,8 +515,8 @@ const staticDestinationDirection = new Vec3();
 
 let staticQungedRotation;
 let staticQungedPosition;
-let initStatics = function() {
-  initStatics = null;
+let initRotor3Statics = function() {
+  initRotor3Statics = null;
   staticQungedRotation = new Rotor3();
   staticQungedPosition = new Rotor3();
 };

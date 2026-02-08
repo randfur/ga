@@ -83,7 +83,7 @@ export class Rotor3 {
       return this;
     }
 
-    initStatics?.();
+    initVec3Statics?.();
     staticDirectionA.setNormalise(va);
     staticDirectionB
       .setNormalise(vb)
@@ -197,7 +197,7 @@ export class Rotor3 {
   }
 
   setTurnTo(vPosition, vBaseForward, rOrientation, vTarget, reduceRatio) {
-    initStatics?.();
+    initVec3Statics?.();
     staticDelta.setDelta(vPosition, vTarget);
     staticForward.set(vBaseForward).inplaceRotateRotor(rOrientation);
     staticTurn.setVec3ToVec3(staticForward, staticDelta, reduceRatio);
@@ -218,17 +218,15 @@ export class Rotor3 {
 const tempStorage = Temp.registerStorage(() => new Rotor3());
 
 const staticRightAngleTurn = new Rotor3();
+const staticTurn = new Rotor3();
 
 let staticDirectionA;
 let staticDirectionB;
 let staticDelta;
 let staticForward;
-let staticTurn;
-let initStatics = function() {
-  initStatics = null;
+let initVec3Statics = function() {
+  initVec3Statics = null;
   staticDirectionA = new Vec3();
   staticDirectionB = new Vec3();
   staticDelta = new Vec3();
-  staticForward = new Vec3();
-  staticTurn = new Rotor3();
 };
