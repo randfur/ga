@@ -386,8 +386,7 @@ export class Vec3 {
   // direction must be a unit vector.
   setTurnTowards(direction, position, destination, cosMaxTurnAngle) {
     staticDestinationDirection.setDelta(position, destination).inplaceNormalise();
-    const dot = direction.dot(staticDestinationDirection);
-    if (dot >= cosMaxTurnAngle) {
+    if (direction.dot(staticDestinationDirection) >= cosMaxTurnAngle) {
       return this.set(staticDestinationDirection);
     }
     staticOrthogonal
