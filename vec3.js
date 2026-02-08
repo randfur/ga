@@ -1,8 +1,6 @@
 import {Temp} from './temp.js';
 import {Rotor3} from './rotor3.js';
 
-const tempStorage = Temp.registerStorage(() => new Vec3());
-
 export class Vec3 {
   static temp(x=0, y=0, z=0) {
     return tempStorage.acquire().setXyz(x, y, z);
@@ -244,16 +242,16 @@ export class Vec3 {
   }
 
   setRotateRotor(v, r) {
-    const qunged =
-      Rotor3.temp()
-        .setComponents(r.rr, -r.yz, -r.zx, -r.xy)
-        .inplaceMultiplyRight(
-          Rotor3.temp().setComponents(0, v.x, v.y, v.z)
-        )
-        .inplaceMultiplyRight(r);
-    this.x = qunged.yz;
-    this.y = qunged.zx;
-    this.z = qunged.xy;
+    initStatics?.();
+    staticQungedRotation
+      .setComponents(r.rr, -r.yz, -r.zx, -r.xy)
+      .inplaceMultiplyRight(
+        staticQungedPosition.setComponents(0, v.x, v.y, v.z)
+      )
+      .inplaceMultiplyRight(r);
+    this.x = staticQungedRotation.yz;
+    this.y = staticQungedRotation.zx;
+    this.z = staticQungedRotation.xy;
     return this;
   }
   static rotateRotor(v, r) {
@@ -440,3 +438,14 @@ export class Vec3 {
   inplacePlanePosition3d(planeBasis) { return this.setPlanePosition3d(planeBasis, this); }
   inplaceRelativePlanePosition3d(planeBasis) { return this.setRelativePlanePosition3d(planeBasis, this); }
 }
+
+const tempStorage = Temp.registerStorage(() => new Vec3());
+
+let staticQungedRotation;
+let staticQungedPosition;
+
+let initStatics = function() {
+  initStatics = null;
+  staticQungedRotation = new Rotor3();
+  staticQungedPosition = new Rotor3();
+};

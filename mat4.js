@@ -1,7 +1,5 @@
 import {Temp} from './temp.js';
 
-const tempStorage = Temp.registerStorage(() => new Mat4());
-
 // Matrix shape:
 // aa ab ac ad
 // ba bb bc bd
@@ -330,3 +328,5 @@ export class Mat4 {
     float32ArrayBuffer[15] = this.dd;
   }
 }
+
+const tempStorage = Temp.registerStorage(() => new Mat4());

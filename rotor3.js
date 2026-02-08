@@ -1,8 +1,6 @@
 import {Temp} from './temp.js';
 import {Vec3} from './vec3.js';
 
-const tempStorage = Temp.registerStorage(() => new Rotor3());
-
 export class Rotor3 {
   static temp() {
     return tempStorage.acquire().setIdentity();
@@ -84,13 +82,14 @@ export class Rotor3 {
       return this;
     }
 
-    const directionA = Vec3.temp().setNormalise(va);
-    const directionB = Vec3.temp()
+    initStatics?.();
+    staticDirectionA.setNormalise(va);
+    staticDirectionB
       .setNormalise(vb)
-      .inplaceScaleAdd(1 / reduceRatio, directionA)
+      .inplaceScaleAdd(1 / reduceRatio, staticDirectionA)
       .inplaceNormalise();
-    const {x: a, y: b, z: c} = directionA;
-    const {x: d, y: e, z: f} = directionB;
+    const {x: a, y: b, z: c} = staticDirectionA;
+    const {x: d, y: e, z: f} = staticDirectionB;
     // (ax + by + cz) * (dx + ey + fz)
     //
     // = adxx + aexy + afxz +
@@ -117,8 +116,9 @@ export class Rotor3 {
 
   // va and vb must be orthogonal, they define which plane to turn around in.
   setTurnAround(va, vb) {
-    const rightAngleTurn = Rotor3.temp().setVec3ToVec3(va, vb)
-    return this.setMultiply(rightAngleTurn, rightAngleTurn);
+    initStatics?.();
+    staticRightAngleTurn.setVec3ToVec3(va, vb)
+    return this.setMultiply(staticRightAngleTurn, staticRightAngleTurn);
   }
   static turnAround(va, vb) {
     return this.singleton.setTurnAround(va, vb);
@@ -197,10 +197,11 @@ export class Rotor3 {
   }
 
   setTurnTo(vPosition, vBaseForward, rOrientation, vTarget, reduceRatio) {
-    const delta = Vec3.temp().setDelta(vPosition, vTarget);
-    const forward = Vec3.temp().set(vBaseForward).inplaceRotateRotor(rOrientation);
-    const turn = Rotor3.temp().setVec3ToVec3(forward, delta, reduceRatio);
-    return this.setMultiply(rOrientation, turn);
+    initStatics?.();
+    staticDelta.setDelta(vPosition, vTarget);
+    staticForward.set(vBaseForward).inplaceRotateRotor(rOrientation);
+    staticTurn.setVec3ToVec3(staticForward, staticDelta, reduceRatio);
+    return this.setMultiply(rOrientation, staticTurn);
   }
   static turnTo(vPosition, vBaseForward, rOrientation, vTarget, reduceRatio) {
     return this.singleton.setTurnTo(vPosition, vBaseForward, rOrientation, vTarget, reduceRatio);
@@ -213,3 +214,22 @@ export class Rotor3 {
   inplaceReduce(ratio) { return this.setReduce(this, ratio); }
   inplaceTurnTo(vPosition, vBaseForward, vTarget, reduceRatio) { return this.setTurnTo(vPosition, vBaseForward, this, vTarget, reduceRatio); }
 }
+
+const tempStorage = Temp.registerStorage(() => new Rotor3());
+
+let staticDirectionA;
+let staticDirectionB;
+let staticRightAngleTurn;
+let staticDelta;
+let staticForward;
+let staticTurn;
+
+let initStatics = function() {
+  initStatics = null;
+  staticDirectionA = new Vec3();
+  staticDirectionB = new Vec3();
+  staticRightAngleTurn = new Rotor3();
+  staticDelta = new Vec3();
+  staticForward = new Vec3();
+  staticTurn = new Rotor3();
+};

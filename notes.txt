@@ -1,3 +1,11 @@
+# 2026-02-08
+- Remove all uses of .temp() in methods.
+  - Clients may only think to call Temp.reclaimAll() if they themselves actually use .temp() methods.
+  - With the new static instances clients are less likely to use .temp().
+  - Need to resolve a circular dependency between Rotor3 and Vec3.
+  - Moved initialisation into initStatics nullable function called by each method that needs them.
+- Moved all the private tempStorage variables after the exported class.
+
 # 2026-01-19
 - Added static set() to Vec3, Mat4 and Rotor3.
 - Added default 0 values to Vec3.setXyz().

@@ -1,8 +1,6 @@
 import {Temp} from './temp.js';
 import {Vec3} from './vec3.js';
 
-const tempStorage = Temp.registerStorage(() => new PlaneBasis());
-
 export class PlaneBasis {
   static temp(origin, normal, guideXDirection=null) {
     return tempStorage.acquire().set(origin, normal, guideXDirection);
@@ -35,3 +33,5 @@ export class PlaneBasis {
 
   // See "plane" methods on Vec3 for related operations involving PlaneBasis.
 }
+
+const tempStorage = Temp.registerStorage(() => new PlaneBasis());
