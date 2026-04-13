@@ -1,3 +1,7 @@
+# 2026-04-13
+- Added setMap(v, f) which takes an f to apply to xyz.
+- Added setYzx(v) which swizzles the xyz values to yzx.
+
 # 2026-02-08
 - Remove all uses of .temp() in methods.
   - Clients may only think to call Temp.reclaimAll() if they themselves actually use .temp() methods.

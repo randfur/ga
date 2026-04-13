@@ -32,6 +32,8 @@ import {Rotor3} from './rotor3.js';
  * - setNormalise(v)
  * - setMin(va, vb)
  * - setMax(va, vb)
+ * - setMap(f)
+ * - setYzx(v)
  * - setRotateRotor(v, r)
  * - setMultiplyMat4Vec3(m, v)
  * - setNonParallel(v)
@@ -82,6 +84,12 @@ export class Vec3 {
 
   dot(v) {
     return this.x * v.x + this.y * v.y + this.z * v.z;
+  }
+
+  // TODO: Test.
+  apply(f) {
+    f(this);
+    return this;
   }
 
   set(v) {
@@ -289,6 +297,29 @@ export class Vec3 {
     return this.singleton.setMax(va, vb);
   }
 
+  // TODO: Test.
+  setMap(v, f) {
+    this.x = f(v.x);
+    this.y = f(v.y);
+    this.z = f(v.z);
+    return this;
+  }
+  static map(v, f) {
+    return this.singleton.setMap(v, f);
+  }
+
+  // TODO: Test.
+  setYzx(v) {
+    const {x, y, z} = v;
+    this.x = y;
+    this.y = z;
+    this.z = x;
+    return this;
+  }
+  static setYzx(v) {
+    return this.singleton.setYzx(v);
+  }
+
   setRotateRotor(v, r) {
     initRotor3Statics?.();
     staticQungedRotation
@@ -491,6 +522,8 @@ export class Vec3 {
   inplaceNormalise() { return this.setNormalise(this); }
   inplaceMin(v) { return this.setMin(this, v); }
   inplaceMax(v) { return this.setMax(this, v); }
+  inplaceMap(f) { return this.setMap(this, f); }
+  inplaceYzx() { return this.setYzx(this) }
   inplaceRotateRotor(r) { return this.setRotateRotor(this, r); }
   inplaceMultiplyMat4Left(m) { return this.setMultiplyMat4Vec3(m, this); }
   inplaceNonParallel() { return this.setNonParallel(this); }
