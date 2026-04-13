@@ -141,21 +141,21 @@ function main() {
           new Vec3(3 / 7.07, 4 / 7.07, 5 / 7.07),
         );
       },
-      rotateRotor() {
+      rotateRotor3() {
         checkSimilarVec3s(
-          new Vec3(1, 2, 3).inplaceRotateRotor(
+          new Vec3(1, 2, 3).inplaceRotateRotor3(
             new Rotor3().setAxisAngle(new Vec3(1, 0, 0), TAU / 4)
           ),
           new Vec3(1, -3, 2),
         );
         checkSimilarVec3s(
-          new Vec3(1, 2, 3).inplaceRotateRotor(
+          new Vec3(1, 2, 3).inplaceRotateRotor3(
             new Rotor3().setAxisAngle(new Vec3(0, 1, 0), TAU / 4)
           ),
           new Vec3(3, 2, -1),
         );
         checkSimilarVec3s(
-          new Vec3(1, 2, 3).inplaceRotateRotor(
+          new Vec3(1, 2, 3).inplaceRotateRotor3(
             new Rotor3().setAxisAngle(new Vec3(0, 0, 1), TAU / 4)
           ),
           new Vec3(-2, 1, 3),
@@ -224,10 +224,10 @@ function main() {
           ),
         );
       },
-      rotateRotor() {
+      rotateRotor3() {
         checkSimilarVec3s(
           new Vec3(1, 2, 3).inplaceMultiplyMat4Left(
-            new Mat4().setRotateRotor(
+            new Mat4().setRotateRotor3(
               new Rotor3().setVec3ToVec3(
                 new Vec3(1, 0, 0),
                 new Vec3(0, 1, 0),
@@ -238,7 +238,7 @@ function main() {
         );
         checkSimilarVec3s(
           new Vec3(1, 2, 3).inplaceMultiplyMat4Left(
-            new Mat4().setRotateRotor(
+            new Mat4().setRotateRotor3(
               new Rotor3().setVec3ToVec3(
                 new Vec3(0, 1, 0),
                 new Vec3(0, 0, 1),
@@ -249,7 +249,7 @@ function main() {
         );
         checkSimilarVec3s(
           new Vec3(1, 2, 3).inplaceMultiplyMat4Left(
-            new Mat4().setRotateRotor(
+            new Mat4().setRotateRotor3(
               new Rotor3().setVec3ToVec3(
                 new Vec3(0, 0, 1),
                 new Vec3(1, 0, 0),
@@ -273,7 +273,7 @@ function main() {
             new Mat4()
               .setTranslateXyz(2, -1, -5)
               .inplaceMultiplyLeft(
-                new Mat4().setRotateRotor(
+                new Mat4().setRotateRotor3(
                   new Rotor3().setVec3ToVec3(
                     new Vec3(0, 1, 0),
                     new Vec3(0, 0, 1),

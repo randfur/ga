@@ -199,7 +199,7 @@ export class Rotor3 {
   setTurnTo(vPosition, vBaseForward, rOrientation, vTarget, reduceRatio) {
     initVec3Statics?.();
     staticDelta.setDelta(vPosition, vTarget);
-    staticForward.set(vBaseForward).inplaceRotateRotor(rOrientation);
+    staticForward.set(vBaseForward).inplaceRotateRotor3(rOrientation);
     staticTurn.setVec3ToVec3(staticForward, staticDelta, reduceRatio);
     return this.setMultiply(rOrientation, staticTurn);
   }
@@ -229,4 +229,5 @@ let initVec3Statics = function() {
   staticDirectionA = new Vec3();
   staticDirectionB = new Vec3();
   staticDelta = new Vec3();
+  staticForward = new Vec3();
 };

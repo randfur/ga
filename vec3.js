@@ -34,7 +34,7 @@ import {Rotor3} from './rotor3.js';
  * - setMax(va, vb)
  * - setMap(f)
  * - setYzx(v)
- * - setRotateRotor(v, r)
+ * - setRotateRotor3(v, r)
  * - setMultiplyMat4Vec3(m, v)
  * - setNonParallel(v)
  * - setOrthogonal(normal)
@@ -320,7 +320,7 @@ export class Vec3 {
     return this.singleton.setYzx(v);
   }
 
-  setRotateRotor(v, r) {
+  setRotateRotor3(v, r) {
     initRotor3Statics?.();
     staticQungedRotation
       .setComponents(r.rr, -r.yz, -r.zx, -r.xy)
@@ -333,8 +333,8 @@ export class Vec3 {
     this.z = staticQungedRotation.xy;
     return this;
   }
-  static rotateRotor(v, r) {
-    return this.singleton.setRotateRotor(v, r);
+  static rotateRotor3(v, r) {
+    return this.singleton.setRotateRotor3(v, r);
   }
 
   setMultiplyMat4Vec3(m, v) {
@@ -524,7 +524,7 @@ export class Vec3 {
   inplaceMax(v) { return this.setMax(this, v); }
   inplaceMap(f) { return this.setMap(this, f); }
   inplaceYzx() { return this.setYzx(this) }
-  inplaceRotateRotor(r) { return this.setRotateRotor(this, r); }
+  inplaceRotateRotor3(r) { return this.setRotateRotor3(this, r); }
   inplaceMultiplyMat4Left(m) { return this.setMultiplyMat4Vec3(m, this); }
   inplaceNonParallel() { return this.setNonParallel(this); }
   inplaceOrthogonal() { return this.setOrthogonal(this); }

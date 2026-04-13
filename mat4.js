@@ -114,7 +114,7 @@ export class Mat4 {
     return this.singleton.setScale(k);
   }
 
-  setRotateRotor(r) {
+  setRotateRotor3(r) {
     const {rr: a, yz: b, zx: c, xy: d} = r;
     // (arr - byz - czx - dxy) * (ex + fy + gz) * (arr + byz + czx + dxy)
     //
@@ -260,8 +260,8 @@ export class Mat4 {
       0, 0, 0, 1,
     );
   }
-  static rotateRotor(r) {
-    return this.singleton.setRotateRotor(r);
+  static rotateRotor3(r) {
+    return this.singleton.setRotateRotor3(r);
   }
 
   setRotateXy(angle) {

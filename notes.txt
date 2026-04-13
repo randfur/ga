@@ -1,6 +1,8 @@
 # 2026-04-13
 - Added setMap(v, f) which takes an f to apply to xyz.
 - Added setYzx(v) which swizzles the xyz values to yzx.
+- Renamed rotateRotor() to rotateRotor3() to be consistent with the Rotor3 class name in Vec3 and Mat4.
+- staticForward was unset in rotor3.js, not sure when that went wrong, fixed now.
 
 # 2026-02-08
 - Remove all uses of .temp() in methods.
