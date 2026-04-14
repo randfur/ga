@@ -42,6 +42,7 @@ import {Rotor3} from './rotor3.js';
  * - setTurnXy(v)
  * - setUnturnXy(v)
  * - setTurnTowards(direction, position, destination, cosMaxTurnAngle)
+ * - setFractionTowards(position, destination, fraction)
  * - setNormalProjection(normal, v)
  * - setPlaneProjection(planeOrigin, planeNormal, v)
  * - setRelativePlaneProjection(planeOrigin, planeNormal, position)
@@ -435,6 +436,16 @@ export class Vec3 {
   }
 
   // TODO: Test.
+  setFractionTowards(position, destination, fraction) {
+    this.x = position.x + (destination.x - position.x) * fraction;
+    this.y = position.y + (destination.y - position.y) * fraction;
+    this.z = position.z + (destination.z - position.z) * fraction;
+  }
+  static fractionTowards(position, destination, fraction) {
+    return this.singleton.setFractionTowards(position, destination, fraction);
+  }
+
+  // TODO: Test.
   // normal must be a unit vector.
   // Same as setPlaneProjection() but uses a planeOrigin of (0,0,0).
   setNormalProjection(normal, v) {
@@ -532,6 +543,7 @@ export class Vec3 {
   inplaceTurnXy() { return this.setTurnXy(this); }
   inplaceUnturnXy() { return this.setUnturnXy(this); }
   inplaceTurnTowards(position, destination, cosMaxTurnAngle) { return this.setTurnTowards(this, position, destination, cosMaxTurnAngle); }
+  inplaceFractionTowards(destination, fraction) { return this.setFractionTowards(this, destination, fraction); }
   inplaceNormalProjection(normal) { return this.setNormalProjection(normal, this); }
   inplacePlaneProjection(planeOrigin, planeNormal) { return this.setPlaneProjection(planeOrigin, planeNormal, this); }
   inplaceRelativePlaneProjection(planeOrigin, planeNormal) { return this.setRelativePlaneProjection(planeOrigin, planeNormal, this); }
