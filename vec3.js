@@ -380,12 +380,12 @@ export class Vec3 {
     // = x(bf - ce) - y(af - cd) + z(ae - bd)
 
     // Geometric algebra method:
-    // munge(nonreal((ax + by + cz) * (dx + ey + fz)))
-    // = munge(nonreal(adxx + aexy + afxz + bdyx + beyy + bfyz + cdzx + cezy + cfzz))
+    // munge(nonscalar((ax + by + cz) * (dx + ey + fz)))
+    // = munge(nonscalar(adxx + aexy + afxz + bdyx + beyy + bfyz + cdzx + cezy + cfzz))
     // = munge(aexy + afxz + bdyx + bfyz + cdzx + cezy)
     // = munge(aexy - afzx - bdxy + bfyz + cdzx - ceyz)
     // = aez - afy - bdz + bfx + cdy - cex
-    // = x(bf - ce) + y(cd - af) + z(ae - bd)i
+    // = x(bf - ce) + y(cd - af) + z(ae - bd)
 
     const {x: a, y: b, z: c} = va;
     const {x: d, y: e, z: f} = vb;

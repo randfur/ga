@@ -1,3 +1,6 @@
+# 2026-06-28
+- Small fixes for comment in setCross.
+
 # 2026-04-14
 - Added setFractionTowards().
 
