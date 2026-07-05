@@ -207,12 +207,24 @@ export class Rotor3 {
     return this.singleton.setTurnTo(vPosition, vBaseForward, rOrientation, vTarget, reduceRatio);
   }
 
+  setLerp(ra, rb, t) {
+    this.rr = ra.rr + t * (rb.rr - ra.rr);
+    this.yz = ra.yz + t * (rb.yz - ra.yz);
+    this.zx = ra.zx + t * (rb.zx - ra.zx);
+    this.xy = ra.xy + t * (rb.xy - ra.xy);
+    return this;
+  }
+  lerp(ra, rb, t) {
+    Rotor3.singleton.setLerp(ra, rb, t);
+  }
+
   inplaceConjugate() { return this.setConjugate(this); }
   inplaceNormalise() { return this.setNormalise(this); }
   inplaceMultiplyLeft(r) { return this.setMultiply(r, this); }
   inplaceMultiplyRight(r) { return this.setMultiply(this, r); }
   inplaceReduce(ratio) { return this.setReduce(this, ratio); }
   inplaceTurnTo(vPosition, vBaseForward, vTarget, reduceRatio) { return this.setTurnTo(vPosition, vBaseForward, this, vTarget, reduceRatio); }
+  inplaceLerp(r, t) { return this.setLerp(this, r, t); }
 }
 
 const tempStorage = Temp.registerStorage(() => new Rotor3());

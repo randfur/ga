@@ -1,3 +1,6 @@
+# 2026-07-05
+- Added lerp to Rotor3.
+
 # 2026-06-28
 - Small fixes for comment in setCross.
 
