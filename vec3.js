@@ -188,6 +188,17 @@ export class Vec3 {
     return this.singleton.setScale(k, v);
   }
 
+  // TODO: Test.
+  setScaleXyz(v, x=1, y=1, z=1) {
+    this.x = x * v.x;
+    this.y = y * v.y;
+    this.z = z * v.z;
+    return this;
+  }
+  static scaleXyz(v, x=1, y=1, z=1) {
+    return this.singleton.setScaleXyz(v, x, y, z);
+  }
+
   setAdd(va, vb) {
     this.x = va.x + vb.x;
     this.y = va.y + vb.y;
@@ -199,13 +210,13 @@ export class Vec3 {
   }
 
   // TODO: Test.
-  setAddXyz(v, x, y, z) {
+  setAddXyz(v, x=0, y=0, z=0) {
     this.x = v.x + x;
     this.y = v.y + y;
     this.z = v.z + z;
     return this;
   }
-  static addXyz(v, x, y, z) {
+  static addXyz(v, x=0, y=0, z=0) {
     return this.singleton.setAddXyz(v, x, y, z);
   }
 
@@ -415,6 +426,32 @@ export class Vec3 {
   }
 
   // TODO: Test.
+  setRotateXy(v, r) {
+    return this.setXyz(
+      v.x * r.x - v.y * r.y,
+      v.x * r.y + v.y * r.x,
+      v.z,
+    );
+  }
+  static setRotateXy(v, r) {
+    return this.singleton.setRotateXy(v, r);
+  }
+
+  // TODO: Test.
+  setRotateXyAngle(v, angle) {
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    return this.setXyz(
+      v.x * cos - v.y * sin,
+      v.x * sin + v.y * cos,
+      v.z,
+    );
+  }
+  static setRotateXyAngle(v, angle) {
+    return this.singleton.setRotateXyAngle(v, angle);
+  }
+
+  // TODO: Test.
   // direction must be a unit vector.
   setTurnTowards(direction, position, destination, cosMaxTurnAngle) {
     staticDestinationDirection.setDelta(position, destination).inplaceNormalise();
@@ -523,8 +560,9 @@ export class Vec3 {
   }
 
   inplaceScale(k) { return this.setScale(k, this); }
+  inplaceScaleXyz(x=1, y=1, z=1) { return this.setScaleXyz(this, x, y, z); }
   inplaceAdd(v) { return this.setAdd(this, v); }
-  inplaceAddXyz(x, y, z) { return this.setAddXyz(this, x, y, z); }
+  inplaceAddXyz(x=0, y=0, z=0) { return this.setAddXyz(this, x, y, z); }
   inplaceScaleAdd(k, v) { return this.setScaleAdd(this, k, v); }
   inplaceSum(ka, kb, vb) { return this.setSum(ka, this, kb, vb); }
   inplaceDelta(v) { return this.setDelta(this, v); }
@@ -542,6 +580,8 @@ export class Vec3 {
   inplaceCross(v) { return this.setCross(this, v); }
   inplaceTurnXy() { return this.setTurnXy(this); }
   inplaceUnturnXy() { return this.setUnturnXy(this); }
+  inplaceRotateXy(r) { return this.setRotateXy(this, r); }
+  inplaceRotateXyAngle(angle) { return this.setRotateXyAngle(this, angle); }
   inplaceTurnTowards(position, destination, cosMaxTurnAngle) { return this.setTurnTowards(this, position, destination, cosMaxTurnAngle); }
   inplaceFractionTowards(destination, fraction) { return this.setFractionTowards(this, destination, fraction); }
   inplaceNormalProjection(normal) { return this.setNormalProjection(normal, this); }

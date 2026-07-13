@@ -1,3 +1,8 @@
+# 2026-07-13
+- Added setRotateXy() and setRotateXyAngle().
+- Added default =0 to setAddXyz().
+- Added setScaleXyz().
+
 # 2026-07-05
 - Added lerp to Rotor3.
 
