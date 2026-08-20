@@ -1,14 +1,17 @@
 /// ts-check
 /// <reference path="./index.d.ts" />
 
+/**
+ * @type {TempType}
+*/
 export class Temp {
-  /** @type {TempStorage<any>[]} */
+  /** @type {(typeof TempType)['storageList']} */
   static storageList = []
 
   /**
    * @template T
-   * @param {() => T} createNew
-   * @returns {TempStorage<T>}
+   * @param {TempStorageType<T>['createNew']} createNew
+   * @returns {TempStorageType<T>}
    */
   static registerStorage(createNew) {
     const storage = new TempStorage(createNew);
@@ -27,14 +30,14 @@ export class Temp {
 
 /**
  * @template T
+ * @implements {TempStorageType<T>}
  */
 class TempStorage {
-  /**
-   * @param {() => T} createNew
-   */
+
+  /** @param {TempStorageType<T>['createNew']} createNew */
   constructor(createNew) {
     this.createNew = createNew;
-    /** @type T[] */
+    /** @type {TempStorageType<T>['buffer']} */
     this.buffer = [];
     this.index = 0;
   }

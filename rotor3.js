@@ -4,6 +4,7 @@
 import {Temp} from './temp.js';
 import {Vec3} from './vec3.js';
 
+/** @implements {Rotor3Type} */
 export class Rotor3 {
   // Uses of this must include a call to Temp.reclaimAll().
   static temp() {
@@ -16,12 +17,6 @@ export class Rotor3 {
   static c = new Rotor3();
   static d = new Rotor3();
 
-  /**
-   * @param {number} rr
-   * @param {number} yz
-   * @param {number} zx
-   * @param {number} xy
-   */
   constructor(rr=1, yz=0, zx=0, xy=0) {
     this.rr = rr;
     this.yz = yz;
@@ -29,22 +24,18 @@ export class Rotor3 {
     this.xy = xy;
   }
 
-  /** @returns {number} **/
   squareLength() {
     return this.rr ** 2 + this.yz ** 2 + this.zx ** 2 + this.xy ** 2;
   }
 
-  /** @returns {number} **/
   length() {
     return Math.sqrt(this.squareLength());
   }
 
-  /** @returns {Rotor3} **/
   clone() {
     return new Rotor3().set(this);
   }
 
-  /** @returns {Rotor3} **/
   setIdentity() {
     this.rr = 1;
     this.yz = 0;
@@ -52,19 +43,11 @@ export class Rotor3 {
     this.xy = 0;
     return this;
   }
-
-  /** @returns {Rotor3} **/
   static identity() {
     return this.singleton.setIdentity();
   }
 
-  /**
-   * @param {number} rr
-   * @param {number} yz
-   * @param {number} zx
-   * @param {number} xy
-   * @returns {Rotor3}
-   */
+  /** @type {Rotor3Type['setComponents']} */
   setComponents(rr, yz, zx, xy) {
     this.rr = rr;
     this.yz = yz;
@@ -73,22 +56,12 @@ export class Rotor3 {
     return this;
   }
 
-
-  /**
-   * @param {number} rr
-   * @param {number} yz
-   * @param {number} zx
-   * @param {number} xy
-   * @returns {Rotor3}
-   */
+  /** @type {(typeof Rotor3Type)['components']} */
   static components(rr, yz, zx, xy) {
     return this.singleton.setComponents(rr, yz, zx, xy);
   }
 
-  /**
-   * @param {Rotor3} r
-   * @returns {Rotor3}
-   */
+  /** @type {Rotor3Type['set']} */
   set(r) {
     this.rr = r.rr;
     this.yz = r.yz;
@@ -97,19 +70,12 @@ export class Rotor3 {
     return this;
   }
 
-  /**
-   * @param {Rotor3} r
-   * @returns {Rotor3}
-   */
+  /** @type {(typeof Rotor3Type)['set']} */
   static set(r) {
     return this.singleton.set(r);
   }
 
-  /**
-   * @param {Vec3} axis
-   * @param {number} angle
-   * @returns {Rotor3}
-   */
+  /** @type {Rotor3Type['setAxisAngle']} */
   setAxisAngle(axis, angle) {
     const sin = Math.sin(angle / 2);
     this.rr = Math.cos(angle / 2);
@@ -119,21 +85,12 @@ export class Rotor3 {
     return this;
   }
 
-  /**
-   * @param {Vec3} axis
-   * @param {number} angle
-   * @returns {Rotor3}
-   */
+  /** @type {(typeof Rotor3Type)['axisAngle']} */
   static axisAngle(axis, angle) {
     return this.singleton.setAxisAngle(axis, angle);
   }
 
-  /**
-   * @param {Vec3} va
-   * @param {Vec3} vb
-   * @param {number} reduceRatio
-   * @returns {Rotor3}
-   */
+  /** @type {Rotor3Type['setVec3ToVec3']} */
   setVec3ToVec3(va, vb, reduceRatio=1) {
     if (reduceRatio <= 0) {
       this.setIdentity();
@@ -169,41 +126,24 @@ export class Rotor3 {
     return this;
   }
 
-  /**
-   * @param {Vec3} va
-   * @param {Vec3} vb
-   * @param {number} reduceRatio
-   * @returns {Rotor3}
-   */
+  /** @type {(typeof Rotor3Type)['vec3ToVec3']} */
   static vec3ToVec3(va, vb, reduceRatio=1) {
     return this.singleton.setVec3ToVec3(va, vb, reduceRatio);
   }
 
-  /**
-   * va and vb must be orthogonal, they define which plane to turn around in.
-   * @param {Vec3} va
-   * @param {Vec3} vb
-   * @returns {Rotor3}
-   */
+  // va and vb must be orthogonal, they define which plane to turn around in.
+  /** @type {Rotor3Type['setTurnAround']} */
   setTurnAround(va, vb) {
     staticRightAngleTurn.setVec3ToVec3(va, vb)
     return this.setMultiply(staticRightAngleTurn, staticRightAngleTurn);
   }
 
-  /**
-   * va and vb must be orthogonal, they define which plane to turn around in.
-   * @param {Vec3} va
-   * @param {Vec3} vb
-   * @returns {Rotor3}
-   */
+  /** @type {(typeof Rotor3Type)['turnAround']} */
   static turnAround(va, vb) {
     return this.singleton.setTurnAround(va, vb);
   }
 
-  /**
-   * @param {Rotor3} r
-   * @returns {Rotor3}
-   */
+  /** @type {Rotor3Type['setConjugate']} */
   setConjugate(r) {
     this.rr = r.rr;
     this.yz = -r.yz;
@@ -212,18 +152,12 @@ export class Rotor3 {
     return this;
   }
 
-  /**
-   * @param {Rotor3} r
-   * @returns {Rotor3}
-   */
+  /** @type {(typeof Rotor3Type)['conjugate']} */
   static conjugate(r) {
     return this.singleton.setConjugate(r);
   }
 
-  /**
-   * @param {Rotor3} r
-   * @returns {Rotor3}
-   */
+  /** @type {Rotor3Type['setNormalise']} */
   setNormalise(r) {
     const length = r.length();
     if (length === 0) {
@@ -237,19 +171,12 @@ export class Rotor3 {
     return this;
   }
 
-  /**
-   * @param {Rotor3} r
-   * @returns {Rotor3}
-   */
+  /** @type {(typeof Rotor3Type)['normalise']} */
   static normalise(r) {
     return this.singleton.setNormalise(r);
   }
 
-  /**
-   * @param {Rotor3} ra
-   * @param {Rotor3} rb
-   * @returns {Rotor3}
-   */
+  /** @type {Rotor3Type['setMultiply']} */
   setMultiply(ra, rb) {
     const {rr: a, yz: b, zx: c, xy: d} = ra;
     const {rr: e, yz: f, zx: g, xy: h} = rb;
@@ -276,20 +203,12 @@ export class Rotor3 {
     return this;
   }
 
-  /**
-   * @param {Rotor3} ra
-   * @param {Rotor3} rb
-   * @returns {Rotor3}
-   */
+  /** @type {(typeof Rotor3Type)['multiply']} */
   static multiply(ra, rb) {
     return this.singleton.setMultiply(ra, rb);
   }
 
-  /**
-   * @param {Rotor3} r
-   * @param {number} ratio
-   * @returns {Rotor3}
-   */
+  /** @type {Rotor3Type['setReduce']} */
   setReduce(r, ratio) {
     if (ratio <= 0) {
       this.setIdentity();
@@ -303,23 +222,12 @@ export class Rotor3 {
     return this;
   }
 
-  /**
-   * @param {Rotor3} r
-   * @param {number} ratio
-   * @returns {Rotor3}
-   */
+  /** @type {(typeof Rotor3Type)['reduce']} */
   static reduce(r, ratio) {
     return this.singleton.setReduce(r, ratio);
   }
 
-  /**
-   * @param {Vec3} vPosition
-   * @param {Vec3} vBaseForward
-   * @param {Rotor3} rOrientation
-   * @param {Vec3} vTarget
-   * @param {number} reduceRatio
-   * @returns {Rotor3}
-   */
+  /** @type {Rotor3Type['setTurnTo']} */
   setTurnTo(vPosition, vBaseForward, rOrientation, vTarget, reduceRatio) {
     initVec3Statics?.();
     staticDelta.setDelta(vPosition, vTarget);
@@ -328,24 +236,12 @@ export class Rotor3 {
     return this.setMultiply(rOrientation, staticTurn);
   }
 
-  /**
-   * @param {Vec3} vPosition
-   * @param {Vec3} vBaseForward
-   * @param {Rotor3} rOrientation
-   * @param {Vec3} vTarget
-   * @param {number} reduceRatio
-   * @returns {Rotor3}
-   */
+  /** @type {(typeof Rotor3Type)['turnTo']} */
   static turnTo(vPosition, vBaseForward, rOrientation, vTarget, reduceRatio) {
     return this.singleton.setTurnTo(vPosition, vBaseForward, rOrientation, vTarget, reduceRatio);
   }
 
-  /**
-   * @param {Rotor3} ra
-   * @param {Rotor3} rb
-   * @param {number} t
-   * @returns {Rotor3}
-   */
+  /** @type {Rotor3Type['setLerp']} */
   setLerp(ra, rb, t) {
     this.rr = ra.rr + t * (rb.rr - ra.rr);
     this.yz = ra.yz + t * (rb.yz - ra.yz);
@@ -354,41 +250,28 @@ export class Rotor3 {
     return this;
   }
 
-  /**
-   * @param {Rotor3} ra
-   * @param {Rotor3} rb
-   * @param {number} t
-   */
+  /** @type {Rotor3Type['lerp']} */
   lerp(ra, rb, t) {
-    Rotor3.singleton.setLerp(ra, rb, t);
+    return Rotor3.singleton.setLerp(ra, rb, t);
   }
 
-
-  /** @returns {Rotor3} */
   inplaceConjugate() { return this.setConjugate(this); }
 
-  /** @returns {Rotor3} */
   inplaceNormalise() { return this.setNormalise(this); }
 
-  /** @param {Rotor3} r @returns {Rotor3} */
+  /** @type {Rotor3Type['inplaceMultiplyLeft']} */
   inplaceMultiplyLeft(r) { return this.setMultiply(r, this); }
 
-  /** @param {Rotor3} r @returns {Rotor3} */
+  /** @type {Rotor3Type['inplaceMultiplyRight']} */
   inplaceMultiplyRight(r) { return this.setMultiply(this, r); }
 
-  /** @param {number} ratio @returns {Rotor3} */
+  /** @type {Rotor3Type['inplaceReduce']} */
   inplaceReduce(ratio) { return this.setReduce(this, ratio); }
 
-  /**
-   * @param {Vec3} vPosition
-   * @param {Vec3} vBaseForward
-   * @param {Vec3} vTarget
-   * @param {number} reduceRatio
-   * @returns {Rotor3}
-  */
+  /** @type {Rotor3Type['inplaceTurnTo']} */
   inplaceTurnTo(vPosition, vBaseForward, vTarget, reduceRatio) { return this.setTurnTo(vPosition, vBaseForward, this, vTarget, reduceRatio); }
 
-  /** @param {Rotor3} r @param {number} t @returns {Rotor3} */
+  /** @type {Rotor3Type['inplaceLerp']} */
   inplaceLerp(r, t) { return this.setLerp(this, r, t); }
 }
 
@@ -405,7 +288,7 @@ let staticDirectionB;
 let staticDelta;
 /** @type {Vec3}  */
 let staticForward;
-/** @type {(() => void) | null} */
+/** @type {(() => void) | null}  */
 let initVec3Statics = function() {
   initVec3Statics = null;
   staticDirectionA = new Vec3();
