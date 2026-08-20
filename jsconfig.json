@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "Node20",
+    "moduleResolution": "nodenext",
+    "checkJs": true,
+    "allowJs": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "types": [
+    ]
+  },
+  "exclude": ["node_modules"],
+  "include": ["**/*.js", "index.d.ts"]
+}

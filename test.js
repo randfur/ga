@@ -1,10 +1,18 @@
-import {Vec3} from './vec3.js';
-import {Rotor3} from './rotor3.js';
-import {Mat4} from './mat4.js';
-import {Temp} from './temp.js';
+/// ts-check
+/// <reference path="./index.d.ts" />
+
+import { Vec3 } from './vec3.js';
+import { Rotor3 } from './rotor3.js';
+import { Mat4 } from './mat4.js';
+import { Temp } from './temp.js';
 
 const TAU = Math.PI * 2;
 
+/**
+ * @template T
+ * @param {T} a
+ * @param {T} b
+ */
 function checkExact(a, b) {
   if (a !== b) {
     debugger;
@@ -12,6 +20,10 @@ function checkExact(a, b) {
   }
 }
 
+/**
+ * @param {number} a
+ * @param {number} b
+ */
 function checkSimilar(a, b) {
   if (Math.abs(a - b) >= 0.001) {
     debugger;
@@ -19,12 +31,20 @@ function checkSimilar(a, b) {
   }
 }
 
+/**
+ * @param {Vec3} va
+ * @param {Vec3} vb
+ */
 function checkSimilarVec3s(va, vb) {
   checkSimilar(va.x, vb.x);
   checkSimilar(va.x, vb.x);
   checkSimilar(va.z, vb.z);
 }
 
+/**
+ * @param {Rotor3} ra
+ * @param {Rotor3} rb
+ */
 function checkSimilarRotor3s(ra, rb) {
   checkSimilar(ra.rr, rb.rr);
   checkSimilar(ra.yz, rb.yz);
@@ -32,6 +52,10 @@ function checkSimilarRotor3s(ra, rb) {
   checkSimilar(ra.xy, rb.xy);
 }
 
+/**
+ * @param {Mat4} ma
+ * @param {Mat4} mb
+ */
 function checkSimilarMat4s(ma, mb) {
   checkSimilar(ma.aa, mb.aa);
   checkSimilar(ma.ab, mb.ab);
@@ -51,16 +75,27 @@ function checkSimilarMat4s(ma, mb) {
   checkSimilar(ma.dd, mb.dd);
 }
 
+/**
+ * @param {Record<string, Record<string, () => void>>} testSuites
+ */
 function runTests(testSuites) {
-  for (const [testSuiteName, testSuite] of Object.entries(testSuites)) {
-    output.textContent += `${testSuiteName}: \n`;
-    for (const [testName, test] of Object.entries(testSuite)) {
-      output.textContent += `- ${testName}: ${runTest(test)}\n`;
+  /** @type {HTMLElement | null} */
+  const output = document.getElementById("output");
+  if (output) {
+    for (const [testSuiteName, testSuite] of Object.entries(testSuites)) {
+      output.textContent += `${testSuiteName}: \n`;
+      for (const [testName, test] of Object.entries(testSuite)) {
+        output.textContent += `- ${testName}: ${runTest(test)}\n`;
+      }
+      output.textContent += '\n';
     }
-    output.textContent += '\n';
   }
 }
 
+/**
+ * @param {() => void} test
+ * @returns
+ */
 function runTest(test) {
   try {
     test();

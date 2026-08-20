@@ -1,8 +1,17 @@
+/// ts-check
+/// <reference path="./index.d.ts" />
+
 import {Temp} from './temp.js';
 import {Vec3} from './vec3.js';
 
 export class PlaneBasis {
-  // Uses of this must include a call to Temp.reclaimAll().
+  /**
+   * Uses of this must include a call to Temp.reclaimAll().
+   * @param {Vec3} origin
+   * @param {Vec3} normal
+   * @param {Vec3 | null} guideXDirection
+   * @returns {PlaneBasis}
+   */
   static temp(origin, normal, guideXDirection=null) {
     return tempStorage.acquire().set(origin, normal, guideXDirection);
   }
@@ -17,6 +26,13 @@ export class PlaneBasis {
   }
 
   // TODO: Test.
+  /**
+   * Uses of this must include a call to Temp.reclaimAll().
+   * @param {Vec3} origin
+   * @param {Vec3} normal
+   * @param {Vec3 | null} guideXDirection
+   * @returns {PlaneBasis}
+   */
   set(origin, normal, guideXDirection=null) {
     this.origin.set(origin);
     this.normal.setNormalise(normal);
@@ -28,6 +44,14 @@ export class PlaneBasis {
     this.yDirection.setCross(this.normal, this.xDirection);
     return this;
   }
+
+  /**
+   * Uses of this must include a call to Temp.reclaimAll().
+   * @param {Vec3} origin
+   * @param {Vec3} normal
+   * @param {Vec3 | null} guideXDirection
+   * @returns {PlaneBasis}
+   */
   static set(origin, normal, guideXDirection=null) {
     return this.singleton.set(origin, normal, guideXDirection);
   }

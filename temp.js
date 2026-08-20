@@ -1,6 +1,15 @@
+/// ts-check
+/// <reference path="./index.d.ts" />
+
 export class Temp {
+  /** @type {TempStorage<any>[]} */
   static storageList = []
 
+  /**
+   * @template T
+   * @param {() => T} createNew
+   * @returns {TempStorage<T>}
+   */
   static registerStorage(createNew) {
     const storage = new TempStorage(createNew);
     this.storageList.push(storage);
@@ -16,9 +25,16 @@ export class Temp {
   }
 }
 
+/**
+ * @template T
+ */
 class TempStorage {
+  /**
+   * @param {() => T} createNew
+   */
   constructor(createNew) {
     this.createNew = createNew;
+    /** @type T[] */
     this.buffer = [];
     this.index = 0;
   }
