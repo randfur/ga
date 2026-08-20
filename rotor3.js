@@ -131,7 +131,7 @@ export class Rotor3 {
   /**
    * @param {Vec3} va
    * @param {Vec3} vb
-   * @param {*} reduceRatio
+   * @param {number} reduceRatio
    * @returns {Rotor3}
    */
   setVec3ToVec3(va, vb, reduceRatio=1) {
