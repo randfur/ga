@@ -1,5 +1,4 @@
 /// ts-check
-/// <reference path="./index.d.ts" />
 
 import { Temp } from './temp.js';
 import { Rotor3 } from './rotor3.js';

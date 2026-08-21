@@ -2,5 +2,7 @@
   "compilerOptions": {
     "lib": ["DOM", "esnext"],
     "checkJs": true
-  }
+  },
+  "exclude": ["node_modules"],
+  "include": ["**/*.js", "types/**/*.d.ts"]
 }

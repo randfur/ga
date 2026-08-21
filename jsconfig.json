@@ -6,9 +6,7 @@
     "checkJs": true,
     "allowJs": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "types": [
-    ]
   },
   "exclude": ["node_modules"],
-  "include": ["**/*.js", "index.d.ts"]
+  "include": ["**/*.js", "types/**/*.d.ts"]
 }
