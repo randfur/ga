@@ -1,14 +1,11 @@
+/// ts-check
+
 import {Temp} from './temp.js';
 
-/**
- * Matrix shape:
- * aa ab ac ad
- * ba bb bc bd
- * ca cb cc cd
- * da db dc dd
- */
+
+/** @implements {Mat4Type} */
 export class Mat4 {
-  // Uses of this must include a call to Temp.reclaimAll().
+
   static temp() {
     return tempStorage.acquire().setIdentity();
   }
@@ -20,7 +17,11 @@ export class Mat4 {
   static d = new Mat4();
 
   constructor() {
-    this.setIdentity();
+    this.aa = 1; this.ab = 0; this.ac = 0; this.ad = 0;
+    this.ba = 0; this.bb = 1; this.bc = 0; this.bd = 0;
+    this.ca = 0; this.cb = 0; this.cc = 1; this.cd = 0;
+    this.da = 0; this.db = 0; this.dc = 0; this.dd = 1;
+    // this.setIdentity();
   }
 
   setIdentity() {
@@ -30,10 +31,12 @@ export class Mat4 {
     this.da = 0; this.db = 0; this.dc = 0; this.dd = 1;
     return this;
   }
+
   static identity() {
     return this.singleton.setIdentity();
   }
 
+  /** @type {Mat4Type['setComponents']} */
   setComponents(aa, ab, ac, ad, ba, bb, bc, bd, ca, cb, cc, cd, da, db, dc, dd) {
     this.aa = aa; this.ab = ab; this.ac = ac; this.ad = ad;
     this.ba = ba; this.bb = bb; this.bc = bc; this.bd = bd;
@@ -41,10 +44,13 @@ export class Mat4 {
     this.da = da; this.db = db; this.dc = dc; this.dd = dd;
     return this;
   }
+
+  /** @type {(typeof Mat4Type)['components']} */
   static components(aa, ab, ac, ad, ba, bb, bc, bd, ca, cb, cc, cd, da, db, dc, dd) {
     return this.singleton.setComponents(aa, ab, ac, ad, ba, bb, bc, bd, ca, cb, cc, cd, da, db, dc, dd);
   }
 
+  /** @type {Mat4Type['set']} */
   set(m) {
     this.aa = m.aa; this.ab = m.ab; this.ac = m.ac; this.ad = m.ad;
     this.ba = m.ba; this.bb = m.bb; this.bc = m.bc; this.bd = m.bd;
@@ -52,10 +58,13 @@ export class Mat4 {
     this.da = m.da; this.db = m.db; this.dd = m.dd; this.dd = m.dd;
     return this;
   }
+
+  /** @type {(typeof Mat4Type)['set']} */
   static set(m) {
     return this.singleton.set(m);
   }
 
+  /** @type {Mat4Type['setMultiply']} */
   setMultiply(ma, mb) {
     return this.setComponents(
       /*aa*/ ma.aa * mb.aa + ma.ab * mb.ba + ma.ac * mb.ca + ma.ad * mb.da,
@@ -79,10 +88,13 @@ export class Mat4 {
       /*dd*/ ma.da * mb.ad + ma.db * mb.bd + ma.dc * mb.cd + ma.dd * mb.dd,
     );
   }
+
+  /** @type {(typeof Mat4Type)['multiply']} */
   static multiply(ma, mb) {
     return this.singleton.setMultiply(ma, mb);
   }
 
+  /** @type {Mat4Type['setTranslateXyz']} */
   setTranslateXyz(x, y, z) {
     return this.setComponents(
       1, 0, 0, x,
@@ -91,17 +103,23 @@ export class Mat4 {
       0, 0, 0, 1,
     );
   }
+
+  /** @type {(typeof Mat4Type)['translateXyz']} */
   static translateXyz(x, y, z) {
     return this.singleton.setTranslateXyz(x, y, z);
   }
 
+  /** @type {Mat4Type['setTranslateVec3']} */
   setTranslateVec3(v) {
     return this.setTranslateXyz(v.x, v.y, v.z);
   }
+
+  /** @type {(typeof Mat4Type)['translateVec3']} */
   static translateVec3(v) {
     return this.singleton.setTranslateVec3(v);
   }
 
+  /** @type {Mat4Type['setScale']} */
   setScale(k) {
     return this.setComponents(
       k, 0, 0, 0,
@@ -110,10 +128,13 @@ export class Mat4 {
       0, 0, 0, 1,
     );
   }
+
+  /** @type {(typeof Mat4Type)['scale']} */
   static scale(k) {
     return this.singleton.setScale(k);
   }
 
+  /** @type {Mat4Type['setRotateRotor3']} */
   setRotateRotor3(r) {
     const {rr: a, yz: b, zx: c, xy: d} = r;
     // (arr - byz - czx - dxy) * (ex + fy + gz) * (arr + byz + czx + dxy)
@@ -260,10 +281,13 @@ export class Mat4 {
       0, 0, 0, 1,
     );
   }
+
+  /** @type {(typeof Mat4Type)['rotateRotor3']} */
   static rotateRotor3(r) {
     return this.singleton.setRotateRotor3(r);
   }
 
+  /** @type {Mat4Type['setRotateXy']} */
   setRotateXy(angle) {
     const c = Math.cos(angle);
     const s = Math.sin(angle);
@@ -274,10 +298,13 @@ export class Mat4 {
       0, 0, 0, 1,
     );
   }
+
+  /** @type {(typeof Mat4Type)['rotateXy']} */
   static rotateXy(angle) {
     return this.singleton.setRotateXy(angle);
   }
 
+  /** @type {Mat4Type['setRotateYz']} */
   setRotateYz(angle) {
     const c = Math.cos(angle);
     const s = Math.sin(angle);
@@ -288,10 +315,13 @@ export class Mat4 {
       0, 0, 0, 1,
     );
   }
+
+  /** @type {(typeof Mat4Type)['rotateYz']} */
   static rotateYz(angle) {
     return this.singleton.setRotateYz(angle);
   }
 
+  /** @type {Mat4Type['setRotateZx']} */
   setRotateZx(angle) {
     const c = Math.cos(angle);
     const s = Math.sin(angle);
@@ -302,13 +332,18 @@ export class Mat4 {
       0, 0, 0, 1,
     );
   }
+
+  /** @type {(typeof Mat4Type)['rotateZx']} */
   static rotateZx(angle) {
     return this.singleton.setRotateZx(angle);
   }
 
+  /** @type {Mat4Type['inplaceMultiplyLeft']} */
   inplaceMultiplyLeft(m) { return this.setMultiply(m, this); }
+  /** @type {Mat4Type['inplaceMultiplyRight']} */
   inplaceMultiplyRight(m) { return this.setMultiply(this, m); }
 
+  /** @type {Mat4Type['exportToArrayBuffer']} */
   exportToArrayBuffer(float32ArrayBuffer) {
     float32ArrayBuffer[0] = this.aa;
     float32ArrayBuffer[1] = this.ba;

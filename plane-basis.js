@@ -1,8 +1,12 @@
+/// ts-check
+
 import {Temp} from './temp.js';
 import {Vec3} from './vec3.js';
 
+/** @type {PlaneBasisType} */
 export class PlaneBasis {
-  // Uses of this must include a call to Temp.reclaimAll().
+
+  /** @type {(typeof PlaneBasisType)['temp']} */
   static temp(origin, normal, guideXDirection=null) {
     return tempStorage.acquire().set(origin, normal, guideXDirection);
   }
@@ -16,7 +20,8 @@ export class PlaneBasis {
     this.yDirection = new Vec3();
   }
 
-  // TODO: Test.
+
+  /** @type {PlaneBasisType['set']} */
   set(origin, normal, guideXDirection=null) {
     this.origin.set(origin);
     this.normal.setNormalise(normal);
@@ -28,6 +33,8 @@ export class PlaneBasis {
     this.yDirection.setCross(this.normal, this.xDirection);
     return this;
   }
+
+  /** @type {(typeof PlaneBasisType)['set']} */
   static set(origin, normal, guideXDirection=null) {
     return this.singleton.set(origin, normal, guideXDirection);
   }
