@@ -1,18 +1,11 @@
 /// ts-check
-/// <reference path="./index.d.ts" />
 
 import {Temp} from './temp.js';
 
-/**
- * Matrix shape:
- * aa ab ac ad
- * ba bb bc bd
- * ca cb cc cd
- * da db dc dd
- */
+
 /** @implements {Mat4Type} */
 export class Mat4 {
-  // Uses of this must include a call to Temp.reclaimAll().
+
   static temp() {
     return tempStorage.acquire().setIdentity();
   }
@@ -31,7 +24,6 @@ export class Mat4 {
     // this.setIdentity();
   }
 
-  /** @type {Mat4Type['setIdentity']} */
   setIdentity() {
     this.aa = 1; this.ab = 0; this.ac = 0; this.ad = 0;
     this.ba = 0; this.bb = 1; this.bc = 0; this.bd = 0;
@@ -40,7 +32,6 @@ export class Mat4 {
     return this;
   }
 
-  /** @type {(typeof Mat4Type)['identity']} */
   static identity() {
     return this.singleton.setIdentity();
   }

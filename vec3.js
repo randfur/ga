@@ -1,63 +1,11 @@
 /// ts-check
-/// <reference path="./index.d.ts" />
 
 import { Temp } from './temp.js';
 import { Rotor3 } from './rotor3.js';
 
-/**
- * Getter index:
- * - clone()
- * - squareLength()
- * - length()
- * - dot(v)
- *
- * Setter index:
- * - set(v)
- * For the following setters e.g. `setAdd(va, vb)` there also exists
- * `Vec3.add(va, vb)` which operates on the `Vec3.singleton` instance.
- * For setters that take at least one Vec3 parameter there also exists
- * `inplaceAdd(vb)` which uses `this` as the first Vec3 parameter.
- * - setZero()
- * - setXyz(x, y, z)
- * - setX(x)
- * - setY(y)
- * - setZ(z)
- * - setPolar(angle, radius)
- * - setSpherical(angleXy, angleZ, radius=1)
- * - setScale(k, v)
- * - setAdd(va, vb)
- * - setAddXyz(v, x, y, z)
- * - setScaleAdd(va, kb, vb)
- * - setSum(ka, va, kb, vb)
- * - setDelta(va, vb)
- * - setSubtract(va, vb)
- * - setLerp(va, vb, t)
- * - setNormalise(v)
- * - setMin(va, vb)
- * - setMax(va, vb)
- * - setMap(f)
- * - setYzx(v)
- * - setRotateRotor3(v, r)
- * - setMultiplyMat4Vec3(m, v)
- * - setNonParallel(v)
- * - setOrthogonal(normal)
- * - setCross(va, vb)
- * - setTurnXy(v)
- * - setUnturnXy(v)
- * - setTurnTowards(direction, position, destination, cosMaxTurnAngle)
- * - setFractionTowards(position, destination, fraction)
- * - setNormalProjection(normal, v)
- * - setPlaneProjection(planeOrigin, planeNormal, v)
- * - setRelativePlaneProjection(planeOrigin, planeNormal, position)
- * - setPlaneProjection2d(planeBasis, v)
- * - setRelativePlaneProjection2d(planeBasis, v)
- * - setPlanePosition3d(planeBasis, v)
- * - setRelativePlanePosition3d(planeBasis, v)
- */
-
 /** @implements {Vec3Type} */
 export class Vec3 {
-  // Uses of this must include a call to Temp.reclaimAll().
+
   /** @type {(typeof Vec3Type)['temp']} */
   static temp(x = 0, y = 0, z = 0) {
     return tempStorage.acquire().setXyz(x, y, z);
@@ -75,12 +23,11 @@ export class Vec3 {
     this.z = z;
   }
 
-  // TODO: Test.
+
   clone() {
     return new Vec3(this.x, this.y, this.z);
   }
 
-  // TODO: Test.
   squareLength() {
     return this.x * this.x + this.y * this.y + this.z * this.z;
   }
@@ -94,7 +41,6 @@ export class Vec3 {
     return this.x * v.x + this.y * v.y + this.z * v.z;
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['apply']} */
   apply(f) {
     f(this);
@@ -136,7 +82,6 @@ export class Vec3 {
     return this.singleton.setXyz(x, y, z);
   }
 
-  // TODO: Test.
   setX(x = 1) {
     this.x = x;
     this.y = 0;
@@ -148,7 +93,6 @@ export class Vec3 {
     return this.singleton.setX(x);
   }
 
-  // TODO: Test.
   setY(y = 1) {
     this.x = 0;
     this.y = y;
@@ -160,7 +104,6 @@ export class Vec3 {
     return this.singleton.setY(y);
   }
 
-  // TODO: Test.
   setZ(z = 1) {
     this.x = 0;
     this.y = 0;
@@ -172,7 +115,6 @@ export class Vec3 {
     return this.singleton.setZ(z);
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['setPolar']} */
   setPolar(angle, radius = 1) {
     this.x = Math.cos(angle) * radius;
@@ -186,7 +128,6 @@ export class Vec3 {
     return this.singleton.setPolar(angle, radius);
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['setSpherical']} */
   setSpherical(angleXy, angleZ, radius = 1) {
     this.x = Math.cos(angleXy) * Math.sin(angleZ) * radius;
@@ -213,7 +154,6 @@ export class Vec3 {
     return this.singleton.setScale(k, v);
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['setScaleXyz']} */
   setScaleXyz(v, x = 1, y = 1, z = 1) {
     this.x = x * v.x;
@@ -241,7 +181,6 @@ export class Vec3 {
     return this.singleton.setAdd(va, vb);
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['setAddXyz']} */
   setAddXyz(v, x = 0, y = 0, z = 0) {
     this.x = v.x + x;
@@ -294,7 +233,6 @@ export class Vec3 {
     return this.singleton.setDelta(va, vb);
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['setSubtract']} */
   setSubtract(va, vb) {
     this.x = va.x - vb.x;
@@ -308,7 +246,6 @@ export class Vec3 {
     return this.singleton.setSubtract(va, vb);
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['setLerp']} */
   setLerp(va, vb, t) {
     this.x = va.x + t * (vb.x - va.x);
@@ -340,7 +277,6 @@ export class Vec3 {
     return this.singleton.setNormalise(v);
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['setMin']} */
   setMin(va, vb) {
     this.x = Math.min(va.x, vb.x);
@@ -354,7 +290,6 @@ export class Vec3 {
     return this.singleton.setMin(va, vb);
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['setMax']} */
   setMax(va, vb) {
     this.x = Math.max(va.x, vb.x);
@@ -368,7 +303,6 @@ export class Vec3 {
     return this.singleton.setMax(va, vb);
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['setMap']} */
   setMap(v, f) {
     this.x = f(v.x);
@@ -382,7 +316,6 @@ export class Vec3 {
     return this.singleton.setMap(v, f);
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['setYzx']} */
   setYzx(v) {
     const { x, y, z } = v;
@@ -431,7 +364,6 @@ export class Vec3 {
     return this.singleton.setMultiplyMat4Vec3(m, v);
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['setNonParallel']} */
   setNonParallel(v) {
     [this.x, this.y, this.z] = [v.y, -v.z, v.x];
@@ -443,8 +375,6 @@ export class Vec3 {
     return this.singleton.setNonParallel(v);
   }
 
-  // TODO: Test.
-  // normal must be a unit vector.
   /** @type {Vec3Type['setOrthogonal']} */
   setOrthogonal(normal) {
     staticOrthogonal.set(normal);
@@ -459,7 +389,6 @@ export class Vec3 {
     return this.singleton.setOrthogonal(normal);
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['setCross']} */
   setCross(va, vb) {
     // Matrix determinant method:
@@ -489,7 +418,6 @@ export class Vec3 {
     return this.singleton.setCross(va, vb);
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['setTurnXy']} */
   setTurnXy(v) {
     return this.setXyz(-v.y, v.x, v.z);
@@ -500,7 +428,6 @@ export class Vec3 {
     return this.singleton.setTurnXy(v);
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['setUnturnXy']} */
   setUnturnXy(v) {
     return this.setXyz(v.y, -v.x, v.z);
@@ -511,7 +438,6 @@ export class Vec3 {
     return this.singleton.setUnturnXy(v);
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['setRotateXy']} */
   setRotateXy(v, r) {
     return this.setXyz(
@@ -526,7 +452,6 @@ export class Vec3 {
     return this.singleton.setRotateXy(v, r);
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['setRotateXyAngle']} */
   setRotateXyAngle(v, angle) {
     const cos = Math.cos(angle);
@@ -543,8 +468,6 @@ export class Vec3 {
     return this.singleton.setRotateXyAngle(v, angle);
   }
 
-  // TODO: Test.
-  // direction must be a unit vector.
   /** @type {Vec3Type['setTurnTowards']} */
   setTurnTowards(direction, position, destination, cosMaxTurnAngle) {
     staticDestinationDirection.setDelta(position, destination).inplaceNormalise();
@@ -567,7 +490,6 @@ export class Vec3 {
     return this.singleton.setTurnTowards(direction, position, destination, cosMaxTurnAngle);
   }
 
-  // TODO: Test.
   /** @type {Vec3Type['setFractionTowards']} */
   setFractionTowards(position, destination, fraction) {
     this.x = position.x + (destination.x - position.x) * fraction;
@@ -581,9 +503,6 @@ export class Vec3 {
     return this.singleton.setFractionTowards(position, destination, fraction);
   }
 
-  // TODO: Test.
-  // normal must be a unit vector.
-  // Same as setPlaneProjection() but uses a planeOrigin of (0,0,0).
   /** @type {Vec3Type['setNormalProjection']} */
   setNormalProjection(normal, v) {
     return this.setScaleAdd(v, -v.dot(normal), normal);
@@ -594,9 +513,6 @@ export class Vec3 {
     return this.singleton.setNormalProjection(normal, v);
   }
 
-  // TODO: Test.
-  // Projects v onto a plane.
-  // planeNormal must be a unit vector.
   /** @type {Vec3Type['setPlaneProjection']} */
   setPlaneProjection(planeOrigin, planeNormal, v) {
     return this
@@ -609,9 +525,6 @@ export class Vec3 {
     return this.singleton.setPlaneProjection(planeOrigin, planeNormal, v);
   }
 
-  // TODO: Test.
-  // Projects v onto a plane and returns the delta from the plane origin.
-  // planeNormal must be a unit vector.
   /** @type {Vec3Type['setRelativePlaneProjection']} */
   setRelativePlaneProjection(planeOrigin, planeNormal, position) {
     return this
@@ -624,10 +537,6 @@ export class Vec3 {
     return this.singleton.setRelativePlaneProjection(planeOrigin, planeNormal, position);
   }
 
-  // TODO: Test.
-  // Takes a 3D point, projects it onto the plane and converts it to a "2D"
-  // vector with only X and Y set to the local co-ordinates within the 2D plane
-  // basis vectors.
   /** @type {Vec3Type['setPlaneProjection2d']} */
   setPlaneProjection2d(planeBasis, v) {
     return this.setRelativePlaneProjection2d(planeBasis, this.setDelta(planeBasis.origin, v));
@@ -638,9 +547,6 @@ export class Vec3 {
     return this.singleton.setPlaneProjection2d(planeBasis, v);
   }
 
-  // TODO: Test.
-  // Same as set2dPlaneProjection() but considers v as already relative to the
-  // plane's origin.
   /** @type {Vec3Type['setRelativePlaneProjection2d']} */
   setRelativePlaneProjection2d(planeBasis, v) {
     return this.setXyz(planeBasis.xDirection.dot(v), planeBasis.yDirection.dot(v), 0);
@@ -651,10 +557,6 @@ export class Vec3 {
     return this.singleton.setRelativePlaneProjection2d(planeBasis, v);
   }
 
-  // TODO: Test.
-  // The reverse of set2dPlanePosition().
-  // Takes a "2D" vector's X and Y values as being within the 2D plane's local
-  // co-ordinates and converts it to a 3D vector on the plane's surface.
   /** @type {Vec3Type['setPlanePosition3d']} */
   setPlanePosition3d(planeBasis, v) {
     return this.setRelativePlanePosition3d(planeBasis, v).inplaceAdd(planeBasis.origin);
@@ -665,10 +567,6 @@ export class Vec3 {
     return this.singleton.setPlanePosition3d(planeBasis, v);
   }
 
-  // TODO: Test.
-  // The reverse of setRelative2dPlanePosition().
-  // Same as set3dPlanePosition() but keeps the resulting vector relative to the
-  // plane's origin.
   /** @type {Vec3Type['setRelativePlanePosition3d']} */
   setRelativePlanePosition3d(planeBasis, v) {
     return this.setSum(v.x, planeBasis.xDirection, v.y, planeBasis.yDirection);

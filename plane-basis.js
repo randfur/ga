@@ -1,5 +1,4 @@
 /// ts-check
-/// <reference path="./index.d.ts" />
 
 import {Temp} from './temp.js';
 import {Vec3} from './vec3.js';
@@ -7,7 +6,6 @@ import {Vec3} from './vec3.js';
 /** @type {PlaneBasisType} */
 export class PlaneBasis {
 
-  // Uses of this must include a call to Temp.reclaimAll().
   /** @type {(typeof PlaneBasisType)['temp']} */
   static temp(origin, normal, guideXDirection=null) {
     return tempStorage.acquire().set(origin, normal, guideXDirection);
@@ -22,7 +20,7 @@ export class PlaneBasis {
     this.yDirection = new Vec3();
   }
 
-  // TODO: Test.
+
   /** @type {PlaneBasisType['set']} */
   set(origin, normal, guideXDirection=null) {
     this.origin.set(origin);

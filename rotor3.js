@@ -1,12 +1,11 @@
 /// ts-check
-/// <reference path="./index.d.ts" />
 
 import {Temp} from './temp.js';
 import {Vec3} from './vec3.js';
 
 /** @implements {Rotor3Type} */
 export class Rotor3 {
-  // Uses of this must include a call to Temp.reclaimAll().
+
   static temp() {
     return tempStorage.acquire().setIdentity();
   }
@@ -131,7 +130,6 @@ export class Rotor3 {
     return this.singleton.setVec3ToVec3(va, vb, reduceRatio);
   }
 
-  // va and vb must be orthogonal, they define which plane to turn around in.
   /** @type {Rotor3Type['setTurnAround']} */
   setTurnAround(va, vb) {
     staticRightAngleTurn.setVec3ToVec3(va, vb)

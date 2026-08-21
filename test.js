@@ -1,5 +1,4 @@
 /// ts-check
-/// <reference path="./index.d.ts" />
 
 import { Vec3 } from './vec3.js';
 import { Rotor3 } from './rotor3.js';
