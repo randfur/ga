@@ -1,16 +1,11 @@
-/// ts-check
-
-/**
- * @type {TempType}
-*/
 export class Temp {
-  /** @type {(typeof TempType)['storageList']} */
+  /** @type Array<TempStorage<any>> */
   static storageList = []
 
   /**
    * @template T
-   * @param {TempStorageType<T>['createNew']} createNew
-   * @returns {TempStorageType<T>}
+   * @param {() => T} createNew
+   * @returns {TempStorage<T>}
    */
   static registerStorage(createNew) {
     const storage = new TempStorage(createNew);
@@ -27,18 +22,17 @@ export class Temp {
 
 /**
  * @template T
- * @implements {TempStorageType<T>}
  */
 class TempStorage {
-
-  /** @param {TempStorageType<T>['createNew']} createNew */
+  /** @param {() => T} createNew */
   constructor(createNew) {
     this.createNew = createNew;
-    /** @type {TempStorageType<T>['buffer']} */
+    /** @type {Array<T>} */
     this.buffer = [];
     this.index = 0;
   }
 
+  /** @returns {T} */
   acquire() {
     if (this.buffer.length === this.index) {
       this.buffer.push(this.createNew())

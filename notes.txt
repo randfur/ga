@@ -1,3 +1,24 @@
+# 2026-08-25
+- Rewrote setup.md as readme.md, added quick command line install instructions.
+- Removed watchman and npx commands.
+- Type checking doesn't work with deno currently, can't find types.
+  - Needs to import them e.g.: https://github.com/randfur/experiments/blob/main/2024/tetris-scrabble/main.js
+- Organised things into src/ and tests/ folders.
+- class.d.ts files have separate classes with a different name and real class references each method.
+  - Maybe use interface instead of class in the d.ts files.
+  - Interfaces can't define static methods or properties.
+    - Found old documentation with workarounds: https://www.typescriptlang.org/docs/handbook/interfaces.html#difference-between-the-static-and-instance-sides-of-classes
+  - Interfaces won't work for accepting Self as a parameter.
+  - Maybe it's just missing the declare keyword: https://www.typescriptlang.org/docs/handbook/declaration-files/by-example.html#classes
+  - No, unable to feed d.ts files back into checking the JS source that's supposed to implement them.
+- Maybe just use inline JSDoc.
+  - Created little test with Dog and Cat, it works pretty well.
+
+# 2026-08-22
+- Merged JSDoc pull request, adding type checking to the library.
+  - https://github.com/randfur/ga/pull/2
+  - Needs thorough inspection, TBD.
+
 # 2026-07-13
 - Added setRotateXy() and setRotateXyAngle().
 - Added default =0 to setAddXyz().

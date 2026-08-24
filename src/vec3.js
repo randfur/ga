@@ -1,7 +1,7 @@
 /// ts-check
 
-import { Temp } from './temp.js';
-import { Rotor3 } from './rotor3.js';
+import {Temp} from './temp.js';
+import {Rotor3} from './rotor3.js';
 
 /** @implements {Vec3Type} */
 export class Vec3 {
@@ -22,7 +22,6 @@ export class Vec3 {
     this.y = y;
     this.z = z;
   }
-
 
   clone() {
     return new Vec3(this.x, this.y, this.z);
