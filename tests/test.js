@@ -1,9 +1,7 @@
-/// ts-check
-
-import { Vec3 } from './vec3.js';
-import { Rotor3 } from './rotor3.js';
-import { Mat4 } from './mat4.js';
-import { Temp } from './temp.js';
+import { Vec3 } from '../src/vec3.js';
+import { Rotor3 } from '../src/rotor3.js';
+import { Mat4 } from '../src/mat4.js';
+import { Temp } from '../src/temp.js';
 
 const TAU = Math.PI * 2;
 
