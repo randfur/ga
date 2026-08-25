@@ -2,7 +2,6 @@ import {Temp} from './temp.js';
 import {Vec3} from './vec3.js';
 
 export class PlaneBasis {
-
   /**
    * @param {Vec3} origin
    * @param {Vec3} normal

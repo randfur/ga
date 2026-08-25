@@ -13,6 +13,7 @@
   - No, unable to feed d.ts files back into checking the JS source that's supposed to implement them.
 - Maybe just use inline JSDoc.
   - Created little test with Dog and Cat, it works pretty well.
+- Converted all types to inline JSDoc.
 
 # 2026-08-22
 - Merged JSDoc pull request, adding type checking to the library.

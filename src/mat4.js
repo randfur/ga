@@ -1,5 +1,6 @@
+import {Rotor3} from './rotor3.js';
 import {Temp} from './temp.js';
-
+import {Vec3} from './vec3.js';
 
 export class Mat4 {
   static singleton = new Mat4();
@@ -189,6 +190,10 @@ export class Mat4 {
     return this.singleton.setTranslateVec3(v);
   }
 
+  /**
+   * @param {number} k
+   * @returns {Mat4}
+   */
   setScale(k) {
     return this.setComponents(
       k, 0, 0, 0,
@@ -198,10 +203,18 @@ export class Mat4 {
     );
   }
 
+  /**
+   * @param {number} k
+   * @returns {Mat4}
+   */
   static scale(k) {
     return this.singleton.setScale(k);
   }
 
+  /**
+   * @param {Rotor3} r
+   * @returns {Mat4}
+   */
   setRotateRotor3(r) {
     const {rr: a, yz: b, zx: c, xy: d} = r;
     // (arr - byz - czx - dxy) * (ex + fy + gz) * (arr + byz + czx + dxy)
@@ -349,10 +362,18 @@ export class Mat4 {
     );
   }
 
+  /**
+   * @param {Rotor3} r
+   * @returns {Mat4}
+   */
   static rotateRotor3(r) {
     return this.singleton.setRotateRotor3(r);
   }
 
+  /**
+   * @param {number} angle
+   * @returns {Mat4}
+   */
   setRotateXy(angle) {
     const c = Math.cos(angle);
     const s = Math.sin(angle);
@@ -364,10 +385,18 @@ export class Mat4 {
     );
   }
 
+  /**
+   * @param {number} angle
+   * @returns {Mat4}
+   */
   static rotateXy(angle) {
     return this.singleton.setRotateXy(angle);
   }
 
+  /**
+   * @param {number} angle
+   * @returns {Mat4}
+   */
   setRotateYz(angle) {
     const c = Math.cos(angle);
     const s = Math.sin(angle);
@@ -379,10 +408,18 @@ export class Mat4 {
     );
   }
 
+  /**
+   * @param {number} angle
+   * @returns {Mat4}
+   */
   static rotateYz(angle) {
     return this.singleton.setRotateYz(angle);
   }
 
+  /**
+   * @param {number} angle
+   * @returns {Mat4}
+   */
   setRotateZx(angle) {
     const c = Math.cos(angle);
     const s = Math.sin(angle);
@@ -394,33 +431,47 @@ export class Mat4 {
     );
   }
 
+  /**
+   * @param {number} angle
+   * @returns {Mat4}
+   */
   static rotateZx(angle) {
     return this.singleton.setRotateZx(angle);
   }
 
+  /**
+   * @param {Mat4} m
+   * @returns {Mat4}
+   */
   inplaceMultiplyLeft(m) { return this.setMultiply(m, this); }
+
+  /**
+   * @param {Mat4} m
+   * @returns {Mat4}
+   */
   inplaceMultiplyRight(m) { return this.setMultiply(this, m); }
 
-  exportToArrayBuffer(float32ArrayBuffer) {
-    float32ArrayBuffer[0] = this.aa;
-    float32ArrayBuffer[1] = this.ba;
-    float32ArrayBuffer[2] = this.ca;
-    float32ArrayBuffer[3] = this.da;
+  /** @param {Float32Array} buffer */
+  exportToBuffer(buffer) {
+    buffer[0] = this.aa;
+    buffer[1] = this.ba;
+    buffer[2] = this.ca;
+    buffer[3] = this.da;
 
-    float32ArrayBuffer[4] = this.ab;
-    float32ArrayBuffer[5] = this.bb;
-    float32ArrayBuffer[6] = this.cb;
-    float32ArrayBuffer[7] = this.db;
+    buffer[4] = this.ab;
+    buffer[5] = this.bb;
+    buffer[6] = this.cb;
+    buffer[7] = this.db;
 
-    float32ArrayBuffer[8] = this.ac;
-    float32ArrayBuffer[9] = this.bc;
-    float32ArrayBuffer[10] = this.cc;
-    float32ArrayBuffer[11] = this.dc;
+    buffer[8] = this.ac;
+    buffer[9] = this.bc;
+    buffer[10] = this.cc;
+    buffer[11] = this.dc;
 
-    float32ArrayBuffer[12] = this.ad;
-    float32ArrayBuffer[13] = this.bd;
-    float32ArrayBuffer[14] = this.cd;
-    float32ArrayBuffer[15] = this.dd;
+    buffer[12] = this.ad;
+    buffer[13] = this.bd;
+    buffer[14] = this.cd;
+    buffer[15] = this.dd;
   }
 }
 

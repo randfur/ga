@@ -1,5 +1,5 @@
 check:
-    deno check --config=deno.json
+    deno check --config=deno.json src/*.js
 
 watch:
-    watch --color deno check --config=deno.json
+    watch --color deno check --config=deno.json src/*.js
