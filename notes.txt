@@ -1,3 +1,8 @@
+# 2026-10-17
+- Fixed PlaneBasis import in Vec3 that created a circular dependency.
+  - Needed for the type checking.
+  - Replaced with an @import.
+
 # 2026-08-25
 - Rewrote setup.md as readme.md, added quick command line install instructions.
 - Removed watchman and npx commands.

@@ -1,5 +1,5 @@
+/** @import {PlaneBasis} from './plane-basis.js' */
 import {Mat4} from './mat4.js';
-import {PlaneBasis} from './plane-basis.js';
 import {Rotor3} from './rotor3.js';
 import {Temp} from './temp.js';
 
