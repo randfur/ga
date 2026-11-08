@@ -219,7 +219,7 @@ function main() {
             5, 6, 7, 8,
             9, 10, 11, 12,
             13, 14, 15, 16,
-          ).inplaceMultiplyRight(
+          ).multiply(
             new Mat4().setComponents(
               17, 18, 19, 20,
               21, 22, 23, 24,
@@ -240,7 +240,7 @@ function main() {
             21, 22, 23, 24,
             25, 26, 27, 28,
             29, 30, 31, 32,
-          ).inplaceMultiplyLeft(
+          ).leftMultiply(
             new Mat4().setComponents(
               1, 2, 3, 4,
               5, 6, 7, 8,
@@ -304,7 +304,7 @@ function main() {
           new Vec3(1, 2, 3).inplaceMultiplyMat4Left(
             new Mat4()
               .setTranslateXyz(2, -1, -5)
-              .inplaceMultiplyLeft(
+              .leftMultiply(
                 new Mat4().setRotateRotor3(
                   new Rotor3().setVec3ToVec3(
                     new Vec3(0, 1, 0),
