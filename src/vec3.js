@@ -67,18 +67,20 @@ export class Vec3 {
    * @param {Vec3} v
    * @returns {Vec3}
    */
+  static set(v) { return this.singleton.set(v); }
+  /**
+   * @param {Vec3} v
+   * @returns {Vec3}
+   */
   set(v) {
     this.x = v.x;
     this.y = v.y;
     this.z = v.z;
     return this;
   }
-  /**
-   * @param {Vec3} v
-   * @returns {Vec3}
-   */
-  static set(v) { return this.singleton.set(v); }
 
+  /** @returns {Vec3} */
+  static setZero() { return this.singleton.setZero(); }
   /** @returns {Vec3} */
   setZero() {
     this.x = 0;
@@ -86,9 +88,14 @@ export class Vec3 {
     this.z = 0;
     return this;
   }
-  /** @returns {Vec3} */
-  static zero() { return this.singleton.setZero(); }
 
+  /**
+   * @param {number} x
+   * @param {number} y
+   * @param {number} z
+   * @returns {Vec3}
+   */
+  static setXyz(x=0, y=0, z=0) { return this.singleton.setXyz(x, y, z); }
   /**
    * @param {number} x
    * @param {number} y
@@ -101,14 +108,12 @@ export class Vec3 {
     this.z = z;
     return this;
   }
+
   /**
    * @param {number} x
-   * @param {number} y
-   * @param {number} z
    * @returns {Vec3}
    */
-  static xyz(x=0, y=0, z=0) { return this.singleton.setXyz(x, y, z); }
-
+  static setX(x=1) { return this.singleton.setX(x); }
   /**
    * @param {number} x
    * @returns {Vec3}
@@ -119,12 +124,12 @@ export class Vec3 {
     this.z = 0;
     return this;
   }
+
   /**
-   * @param {number} x
+   * @param {number} y
    * @returns {Vec3}
    */
-  static x(x=1) { return this.singleton.setX(x); }
-
+  static setY(y=1) { return this.singleton.setY(y); }
   /**
    * @param {number} y
    * @returns {Vec3}
@@ -135,12 +140,12 @@ export class Vec3 {
     this.z = 0;
     return this;
   }
+
   /**
-   * @param {number} y
+   * @param {number} z
    * @returns {Vec3}
    */
-  static y(y=1) { return this.singleton.setY(y); }
-
+  static setZ(z=1) { return this.singleton.setZ(z); }
   /**
    * @param {number} z
    * @returns {Vec3}
@@ -151,12 +156,13 @@ export class Vec3 {
     this.z = z;
     return this;
   }
+
   /**
-   * @param {number} z
+   * @param {number} angle
+   * @param {number} radius
    * @returns {Vec3}
    */
-  static z(z=1) { return this.singleton.setZ(z); }
-
+  static setPolar(angle, radius=1) { return this.singleton.setPolar(angle, radius); }
   /**
    * @param {number} angle
    * @param {number} radius
@@ -168,13 +174,14 @@ export class Vec3 {
     this.z = 0;
     return this;
   }
+
   /**
-   * @param {number} angle
+   * @param {number} angleXy
+   * @param {number} angleZ
    * @param {number} radius
    * @returns {Vec3}
    */
-  static polar(angle, radius=1) { return this.singleton.setPolar(angle, radius); }
-
+  static setSpherical(angleXy, angleZ, radius=1) { return this.singleton.setSpherical(angleXy, angleZ, radius); }
   /**
    * @param {number} angleXy
    * @param {number} angleZ
@@ -187,14 +194,13 @@ export class Vec3 {
     this.z = Math.cos(angleZ) * radius;
     return this;
   }
+
   /**
-   * @param {number} angleXy
-   * @param {number} angleZ
-   * @param {number} radius
+   * @param {number} k
+   * @param {Vec3} v
    * @returns {Vec3}
    */
-  static spherical(angleXy, angleZ, radius=1) { return this.singleton.setSpherical(angleXy, angleZ, radius); }
-
+  static setScale(k, v) { return this.singleton.setScale(k, v); }
   /**
    * @param {number} k
    * @param {Vec3} v
@@ -210,14 +216,42 @@ export class Vec3 {
    * @param {number} k
    * @returns {Vec3}
    */
-  inplaceScale(k) { return this.setScale(k, this); }
+  scale(k) { return this.setScale(k, this); }
+
+  /**
+   * @param {Vec3} va
+   * @param {number} kb
+   * @param {Vec3} vb
+   * @returns {Vec3}
+   */
+  static setScaleAdd(va, kb, vb) { return this.singleton.setScaleAdd(va, kb, vb); }
+  /**
+   * @param {Vec3} va
+   * @param {number} kb
+   * @param {Vec3} vb
+   * @returns {Vec3}
+   */
+  setScaleAdd(va, kb, vb) {
+    this.x = va.x + kb * vb.x;
+    this.y = va.y + kb * vb.y;
+    this.z = va.z + kb * vb.z;
+    return this;
+  }
   /**
    * @param {number} k
    * @param {Vec3} v
    * @returns {Vec3}
    */
-  static scale(k, v) { return this.singleton.setScale(k, v); }
+  scaleAdd(k, v) { return this.setScaleAdd(this, k, v); }
 
+  /**
+   * @param {Vec3} v
+   * @param {number} x
+   * @param {number} y
+   * @param {number} z
+   * @returns {Vec3}
+   */
+  static setScaleXyz(v, x=1, y=1, z=1) { return this.singleton.setScaleXyz(v, x, y, z); }
   /**
    * @param {Vec3} v
    * @param {number} x
@@ -237,17 +271,14 @@ export class Vec3 {
    * @param {number} z
    * @returns {Vec3}
    */
-  inplaceScaleXyz(x=1, y=1, z=1) { return this.setScaleXyz(this, x, y, z); }
+  scaleXyz(x=1, y=1, z=1) { return this.setScaleXyz(this, x, y, z); }
+
   /**
-   * @param {Vec3} v
-   * @param {number} x
-   * @param {number} y
-   * @param {number} z
+   * @param {Vec3} va
+   * @param {Vec3} vb
    * @returns {Vec3}
    */
-  static scaleXyz(v, x=1, y=1, z=1) { return this.singleton.setScaleXyz(v, x, y, z); }
-
-
+  static setAdd(va, vb) { return this.singleton.setAdd(va, vb); }
   /**
    * @param {Vec3} va
    * @param {Vec3} vb
@@ -263,14 +294,16 @@ export class Vec3 {
    * @param {Vec3} v
    * @returns {Vec3}
    */
-  inplaceAdd(v) { return this.setAdd(this, v); }
+  add(v) { return this.setAdd(this, v); }
+
   /**
-   * @param {Vec3} va
-   * @param {Vec3} vb
+   * @param {Vec3} v
+   * @param {number} x
+   * @param {number} y
+   * @param {number} z
    * @returns {Vec3}
    */
-  static add(va, vb) { return this.singleton.setAdd(va, vb); }
-
+  static setAddXyz(v, x=0, y=0, z=0) { return this.singleton.setAddXyz(v, x, y, z); }
   /**
    * @param {Vec3} v
    * @param {number} x
@@ -290,42 +323,16 @@ export class Vec3 {
    * @param {number} z
    * @returns {Vec3}
    */
-  inplaceAddXyz(x=0, y=0, z=0) { return this.setAddXyz(this, x, y, z); }
-  /**
-   * @param {Vec3} v
-   * @param {number} x
-   * @param {number} y
-   * @param {number} z
-   * @returns {Vec3}
-   */
-  static addXyz(v, x=0, y=0, z=0) { return this.singleton.setAddXyz(v, x, y, z); }
+  addXyz(x=0, y=0, z=0) { return this.setAddXyz(this, x, y, z); }
 
   /**
+   * @param {number} ka
    * @param {Vec3} va
    * @param {number} kb
    * @param {Vec3} vb
    * @returns {Vec3}
    */
-  setScaleAdd(va, kb, vb) {
-    this.x = va.x + kb * vb.x;
-    this.y = va.y + kb * vb.y;
-    this.z = va.z + kb * vb.z;
-    return this;
-  }
-  /**
-   * @param {number} k
-   * @param {Vec3} v
-   * @returns {Vec3}
-   */
-  inplaceScaleAdd(k, v) { return this.setScaleAdd(this, k, v); }
-  /**
-   * @param {Vec3} va
-   * @param {number} kb
-   * @param {Vec3} vb
-   * @returns {Vec3}
-   */
-  static scaleAdd(va, kb, vb) { return this.singleton.setScaleAdd(va, kb, vb); }
-
+  static setSum(ka, va, kb, vb) { return this.singleton.setSum(ka, va, kb, vb); }
   /**
    * @param {number} ka
    * @param {Vec3} va
@@ -345,16 +352,14 @@ export class Vec3 {
    * @param {Vec3} vb
    * @returns {Vec3}
    */
-  inplaceSum(k, kb, vb) { return this.setSum(k, this, kb, vb); }
+  sum(k, kb, vb) { return this.setSum(k, this, kb, vb); }
+
   /**
-   * @param {number} ka
    * @param {Vec3} va
-   * @param {number} kb
    * @param {Vec3} vb
    * @returns {Vec3}
    */
-  static sum(ka, va, kb, vb) { return this.singleton.setSum(ka, va, kb, vb); }
-
+  static setDelta(va, vb) { return this.singleton.setDelta(va, vb); }
   /**
    * @param {Vec3} va
    * @param {Vec3} vb
@@ -370,14 +375,14 @@ export class Vec3 {
    * @param {Vec3} v
    * @returns {Vec3}
    */
-  inplaceDelta(v) { return this.setDelta(this, v); }
+  delta(v) { return this.setDelta(this, v); }
+
   /**
    * @param {Vec3} va
    * @param {Vec3} vb
    * @returns {Vec3}
    */
-  static delta(va, vb) { return this.singleton.setDelta(va, vb); }
-
+  static setSubtract(va, vb) { return this.singleton.setSubtract(va, vb); }
   /**
    * @param {Vec3} va
    * @param {Vec3} vb
@@ -393,14 +398,15 @@ export class Vec3 {
    * @param {Vec3} v
    * @returns {Vec3}
    */
-  inplaceSubtract(v) { return this.setSubtract(this, v); }
+  subtract(v) { return this.setSubtract(this, v); }
+
   /**
    * @param {Vec3} va
    * @param {Vec3} vb
+   * @param {number} t
    * @returns {Vec3}
    */
-  static subtract(va, vb) { return this.singleton.setSubtract(va, vb); }
-
+  static setLerp(va, vb, t) { return this.singleton.setLerp(va, vb, t); }
   /**
    * @param {Vec3} va
    * @param {Vec3} vb
@@ -418,15 +424,13 @@ export class Vec3 {
    * @param {number} t
    * @returns {Vec3}
    */
-  inplaceLerp(v, t) { return this.setLerp(this, v, t); }
+  lerp(v, t) { return this.setLerp(this, v, t); }
+
   /**
-   * @param {Vec3} va
-   * @param {Vec3} vb
-   * @param {number} t
+   * @param {Vec3} v
    * @returns {Vec3}
    */
-  static lerp(va, vb, t) { return this.singleton.setLerp(va, vb, t); }
-
+  static setNormalise(v) { return this.singleton.setNormalise(v); }
   /**
    * @param {Vec3} v
    * @returns {Vec3}
@@ -443,13 +447,14 @@ export class Vec3 {
     return this;
   }
   /** @returns {Vec3} */
-  inplaceNormalise() { return this.setNormalise(this); }
+  normalise() { return this.setNormalise(this); }
+
   /**
-   * @param {Vec3} v
+   * @param {Vec3} va
+   * @param {Vec3} vb
    * @returns {Vec3}
    */
-  static normalise(v) { return this.singleton.setNormalise(v); }
-
+  static setMin(va, vb) { return this.singleton.setMin(va, vb); }
   /**
    * @param {Vec3} va
    * @param {Vec3} vb
@@ -465,14 +470,14 @@ export class Vec3 {
    * @param {Vec3} v
    * @returns {Vec3}
    */
-  inplaceMin(v) { return this.setMin(this, v); }
+  min(v) { return this.setMin(this, v); }
+
   /**
    * @param {Vec3} va
    * @param {Vec3} vb
    * @returns {Vec3}
    */
-  static min(va, vb) { return this.singleton.setMin(va, vb); }
-
+  static setMax(va, vb) { return this.singleton.setMax(va, vb); }
   /**
    * @param {Vec3} va
    * @param {Vec3} vb
@@ -488,14 +493,14 @@ export class Vec3 {
    * @param {Vec3} v
    * @returns {Vec3}
    */
-  inplaceMax(v) { return this.setMax(this, v); }
+  max(v) { return this.setMax(this, v); }
+
   /**
-   * @param {Vec3} va
-   * @param {Vec3} vb
+   * @param {Vec3} v
+   * @param {(x: number) => number} f
    * @returns {Vec3}
    */
-  static max(va, vb) { return this.singleton.setMax(va, vb); }
-
+  static setMap(v, f) { return this.singleton.setMap(v, f); }
   /**
    * @param {Vec3} v
    * @param {(x: number) => number} f
@@ -511,14 +516,13 @@ export class Vec3 {
    * @param {(x: number) => number} f
    * @returns {Vec3}
    */
-  inplaceMap(f) { return this.setMap(this, f); }
+  map(f) { return this.setMap(this, f); }
+
   /**
    * @param {Vec3} v
-   * @param {(x: number) => number} f
    * @returns {Vec3}
    */
-  static map(v, f) { return this.singleton.setMap(v, f); }
-
+  static setYzx(v) { return this.singleton.setYzx(v); }
   /**
    * @param {Vec3} v
    * @returns {Vec3}
@@ -531,13 +535,14 @@ export class Vec3 {
     return this;
   }
   /** @returns {Vec3} */
-  inplaceYzx() { return this.setYzx(this) }
+  yzx() { return this.setYzx(this) }
+
   /**
    * @param {Vec3} v
+   * @param {Rotor3} r
    * @returns {Vec3}
    */
-  static setYzx(v) { return this.singleton.setYzx(v); }
-
+  static setRotateRotor3(v, r) { return this.singleton.setRotateRotor3(v, r); }
   /**
    * @param {Vec3} v
    * @param {Rotor3} r
@@ -560,14 +565,14 @@ export class Vec3 {
    * @param {Rotor3} r
    * @returns {Vec3}
    */
-  inplaceRotateRotor3(r) { return this.setRotateRotor3(this, r); }
+  rotateRotor3(r) { return this.setRotateRotor3(this, r); }
+
   /**
+   * @param {Mat4} m
    * @param {Vec3} v
-   * @param {Rotor3} r
    * @returns {Vec3}
    */
-  static rotateRotor3(v, r) { return this.singleton.setRotateRotor3(v, r); }
-
+  static setMultiplyMat4Vec3(m, v) { return this.singleton.setMultiplyMat4Vec3(m, v); }
   /**
    * @param {Mat4} m
    * @param {Vec3} v
@@ -584,14 +589,13 @@ export class Vec3 {
    * @param {Mat4} m
    * @returns {Vec3}
    */
-  inplaceMultiplyMat4Left(m) { return this.setMultiplyMat4Vec3(m, this); }
+  leftMultiplyMat4(m) { return this.setMultiplyMat4Vec3(m, this); }
+
   /**
-   * @param {Mat4} m
    * @param {Vec3} v
    * @returns {Vec3}
    */
-  static multiplyMat4Vec3(m, v) { return this.singleton.setMultiplyMat4Vec3(m, v); }
-
+  static setNonParallel(v) { return this.singleton.setNonParallel(v); }
   /**
    * @param {Vec3} v
    * @returns {Vec3}
@@ -601,13 +605,13 @@ export class Vec3 {
     return this;
   }
   /** @returns {Vec3} */
-  inplaceNonParallel() { return this.setNonParallel(this); }
+  nonParallel() { return this.setNonParallel(this); }
+
   /**
-   * @param {Vec3} v
+   * @param {Vec3} normal
    * @returns {Vec3}
    */
-  static nonParallel(v) { return this.singleton.setNonParallel(v); }
-
+  static setOrthogonal(normal) { return this.singleton.setOrthogonal(normal); }
   /**
    * @param {Vec3} normal
    * @returns {Vec3}
@@ -616,17 +620,18 @@ export class Vec3 {
     staticOrthogonal.set(normal);
     return this
       .setNonParallel(staticOrthogonal)
-      .inplaceNormalProjection(staticOrthogonal)
-      .inplaceNormalise();
+      .normalProjection(staticOrthogonal)
+      .normalise();
   }
   /** @returns {Vec3} */
-  inplaceOrthogonal() { return this.setOrthogonal(this); }
+  orthogonal() { return this.setOrthogonal(this); }
+
   /**
-   * @param {Vec3} normal
+   * @param {Vec3} va
+   * @param {Vec3} vb
    * @returns {Vec3}
    */
-  static orthogonal(normal) { return this.singleton.setOrthogonal(normal); }
-
+  static setCross(va, vb) { return this.singleton.setCross(va, vb); }
   /**
    * @param {Vec3} va
    * @param {Vec3} vb
@@ -658,14 +663,13 @@ export class Vec3 {
    * @param {Vec3} right
    * @returns {Vec3}
    */
-  inplaceCross(right) { return this.setCross(this, right); }
+  cross(right) { return this.setCross(this, right); }
+
   /**
-   * @param {Vec3} va
-   * @param {Vec3} vb
+   * @param {Vec3} v
    * @returns {Vec3}
    */
-  static cross(va, vb) { return this.singleton.setCross(va, vb); }
-
+  static setTurnXy(v) { return this.singleton.setTurnXy(v); }
   /**
    * @param {Vec3} v
    * @returns {Vec3}
@@ -674,13 +678,13 @@ export class Vec3 {
     return this.setXyz(-v.y, v.x, v.z);
   }
   /** @returns {Vec3} */
-  inplaceTurnXy() { return this.setTurnXy(this); }
+  turnXy() { return this.setTurnXy(this); }
+
   /**
    * @param {Vec3} v
    * @returns {Vec3}
    */
-  static turnXy(v) { return this.singleton.setTurnXy(v); }
-
+  static setUnturnXy(v) { return this.singleton.setUnturnXy(v); }
   /**
    * @param {Vec3} v
    * @returns {Vec3}
@@ -689,13 +693,14 @@ export class Vec3 {
     return this.setXyz(v.y, -v.x, v.z);
   }
   /** @returns {Vec3} */
-  inplaceUnturnXy() { return this.setUnturnXy(this); }
+  unturnXy() { return this.setUnturnXy(this); }
+
   /**
    * @param {Vec3} v
+   * @param {Vec3} r
    * @returns {Vec3}
    */
-  static unturnXy(v) { return this.singleton.setUnturnXy(v); }
-
+  static setRotateXy(v, r) { return this.singleton.setRotateXy(v, r); }
   /**
    * @param {Vec3} v
    * @param {Vec3} r
@@ -712,14 +717,14 @@ export class Vec3 {
    * @param {Vec3} r
    * @returns {Vec3}
    */
-  inplaceRotateXy(r) { return this.setRotateXy(this, r); }
+  rotateXy(r) { return this.setRotateXy(this, r); }
+
   /**
    * @param {Vec3} v
-   * @param {Vec3} r
+   * @param {number} angle
    * @returns {Vec3}
    */
-  static setRotateXy(v, r) { return this.singleton.setRotateXy(v, r); }
-
+  static setRotateXyAngle(v, angle) { return this.singleton.setRotateXyAngle(v, angle); }
   /**
    * @param {Vec3} v
    * @param {number} angle
@@ -738,14 +743,16 @@ export class Vec3 {
    * @param {number} angle
    * @returns {Vec3}
    */
-  inplaceRotateXyAngle(angle) { return this.setRotateXyAngle(this, angle); }
+  rotateXyAngle(angle) { return this.setRotateXyAngle(this, angle); }
+
   /**
-   * @param {Vec3} v
-   * @param {number} angle
+   * @param {Vec3} direction
+   * @param {Vec3} position
+   * @param {Vec3} destination
+   * @param {number} cosMaxTurnAngle
    * @returns {Vec3}
    */
-  static setRotateXyAngle(v, angle) { return this.singleton.setRotateXyAngle(v, angle); }
-
+  static setTurnTowards(direction, position, destination, cosMaxTurnAngle) { return this.singleton.setTurnTowards(direction, position, destination, cosMaxTurnAngle); }
   /**
    * @param {Vec3} direction
    * @param {Vec3} position
@@ -754,19 +761,19 @@ export class Vec3 {
    * @returns {Vec3}
    */
   setTurnTowards(direction, position, destination, cosMaxTurnAngle) {
-    staticDestinationDirection.setDelta(position, destination).inplaceNormalise();
+    staticDestinationDirection.setDelta(position, destination).normalise();
     if (direction.dot(staticDestinationDirection) >= cosMaxTurnAngle) {
       return this.set(staticDestinationDirection);
     }
     staticOrthogonal
       .setNormalProjection(direction, staticDestinationDirection)
-      .inplaceNormalise();
+      .normalise();
     return this.setSum(
       cosMaxTurnAngle,
       direction,
       Math.sqrt(1 - cosMaxTurnAngle ** 2),
       staticOrthogonal,
-    ).inplaceNormalise();
+    ).normalise();
   }
   /**
    * @param {Vec3} position
@@ -774,16 +781,15 @@ export class Vec3 {
    * @param {number} cosMaxTurnAngle
    * @returns {Vec3}
    */
-  inplaceTurnTowards(position, destination, cosMaxTurnAngle) { return this.setTurnTowards(this, position, destination, cosMaxTurnAngle); }
+  turnTowards(position, destination, cosMaxTurnAngle) { return this.setTurnTowards(this, position, destination, cosMaxTurnAngle); }
+
   /**
-   * @param {Vec3} direction
    * @param {Vec3} position
    * @param {Vec3} destination
-   * @param {number} cosMaxTurnAngle
+   * @param {number} fraction
    * @returns {Vec3}
    */
-  static turnTowards(direction, position, destination, cosMaxTurnAngle) { return this.singleton.setTurnTowards(direction, position, destination, cosMaxTurnAngle); }
-
+  static setFractionTowards(position, destination, fraction) { return this.singleton.setFractionTowards(position, destination, fraction); }
   /**
    * @param {Vec3} position
    * @param {Vec3} destination
@@ -801,15 +807,14 @@ export class Vec3 {
    * @param {number} fraction
    * @returns {Vec3}
    */
-  inplaceFractionTowards(destination, fraction) { return this.setFractionTowards(this, destination, fraction); }
+  fractionTowards(destination, fraction) { return this.setFractionTowards(this, destination, fraction); }
+
   /**
-   * @param {Vec3} position
-   * @param {Vec3} destination
-   * @param {number} fraction
+   * @param {Vec3} normal
+   * @param {Vec3} v
    * @returns {Vec3}
    */
-  static fractionTowards(position, destination, fraction) { return this.singleton.setFractionTowards(position, destination, fraction); }
-
+  static setNormalProjection(normal, v) { return this.singleton.setNormalProjection(normal, v); }
   /**
    * @param {Vec3} normal
    * @param {Vec3} v
@@ -822,14 +827,15 @@ export class Vec3 {
    * @param {Vec3} normal
    * @returns {Vec3}
    */
-  inplaceNormalProjection(normal) { return this.setNormalProjection(normal, this); }
+  normalProjection(normal) { return this.setNormalProjection(normal, this); }
+
   /**
-   * @param {Vec3} normal
+   * @param {Vec3} planeOrigin
+   * @param {Vec3} planeNormal
    * @param {Vec3} v
    * @returns {Vec3}
    */
-  static normalProjection(normal, v) { return this.singleton.setNormalProjection(normal, v); }
-
+  static setPlaneProjection(planeOrigin, planeNormal, v) { return this.singleton.setPlaneProjection(planeOrigin, planeNormal, v); }
   /**
    * @param {Vec3} planeOrigin
    * @param {Vec3} planeNormal
@@ -839,22 +845,22 @@ export class Vec3 {
   setPlaneProjection(planeOrigin, planeNormal, v) {
     return this
       .setRelativePlaneProjection(planeOrigin, planeNormal, v)
-      .inplaceAdd(planeOrigin);
+      .add(planeOrigin);
   }
   /**
    * @param {Vec3} planeOrigin
    * @param {Vec3} planeNormal
    * @returns {Vec3}
    */
-  inplacePlaneProjection(planeOrigin, planeNormal) { return this.setPlaneProjection(planeOrigin, planeNormal, this); }
+  planeProjection(planeOrigin, planeNormal) { return this.setPlaneProjection(planeOrigin, planeNormal, this); }
+
   /**
    * @param {Vec3} planeOrigin
    * @param {Vec3} planeNormal
    * @param {Vec3} v
    * @returns {Vec3}
    */
-  static planeProjection(planeOrigin, planeNormal, v) { return this.singleton.setPlaneProjection(planeOrigin, planeNormal, v); }
-
+  static setRelativePlaneProjection(planeOrigin, planeNormal, v) { return this.singleton.setRelativePlaneProjection(planeOrigin, planeNormal, v); }
   /**
    * @param {Vec3} planeOrigin
    * @param {Vec3} planeNormal
@@ -864,22 +870,21 @@ export class Vec3 {
   setRelativePlaneProjection(planeOrigin, planeNormal, v) {
     return this
       .setDelta(planeOrigin, v)
-      .inplaceNormalProjection(planeNormal)
+      .normalProjection(planeNormal)
   }
   /**
    * @param {Vec3} planeOrigin
    * @param {Vec3} planeNormal
    * @returns {Vec3}
    */
-  inplaceRelativePlaneProjection(planeOrigin, planeNormal) { return this.setRelativePlaneProjection(planeOrigin, planeNormal, this); }
+  relativePlaneProjection(planeOrigin, planeNormal) { return this.setRelativePlaneProjection(planeOrigin, planeNormal, this); }
+
   /**
-   * @param {Vec3} planeOrigin
-   * @param {Vec3} planeNormal
+   * @param {PlaneBasis} planeBasis
    * @param {Vec3} v
    * @returns {Vec3}
    */
-  static relativePlaneProjection(planeOrigin, planeNormal, v) { return this.singleton.setRelativePlaneProjection(planeOrigin, planeNormal, v); }
-
+  static setPlaneProjection2d(planeBasis, v) { return this.singleton.setPlaneProjection2d(planeBasis, v); }
   /**
    * @param {PlaneBasis} planeBasis
    * @param {Vec3} v
@@ -892,14 +897,14 @@ export class Vec3 {
    * @param {PlaneBasis} planeBasis
    * @returns {Vec3}
    */
-  inplacePlaneProjection2d(planeBasis) { return this.setPlaneProjection2d(planeBasis, this); }
+  planeProjection2d(planeBasis) { return this.setPlaneProjection2d(planeBasis, this); }
+
   /**
    * @param {PlaneBasis} planeBasis
    * @param {Vec3} v
    * @returns {Vec3}
    */
-  static planeProjection2d(planeBasis, v) { return this.singleton.setPlaneProjection2d(planeBasis, v); }
-
+  static setRelativePlaneProjection2d(planeBasis, v) { return this.singleton.setRelativePlaneProjection2d(planeBasis, v); }
   /**
    * @param {PlaneBasis} planeBasis
    * @param {Vec3} v
@@ -912,34 +917,34 @@ export class Vec3 {
    * @param {PlaneBasis} planeBasis
    * @returns {Vec3}
    */
-  inplaceRelativePlaneProjection2d(planeBasis) { return this.setRelativePlaneProjection2d(planeBasis, this); }
+  relativePlaneProjection2d(planeBasis) { return this.setRelativePlaneProjection2d(planeBasis, this); }
+
   /**
    * @param {PlaneBasis} planeBasis
    * @param {Vec3} v
    * @returns {Vec3}
    */
-  static relativePlaneProjection2d(planeBasis, v) { return this.singleton.setRelativePlaneProjection2d(planeBasis, v); }
-
+  static setPlanePosition3d(planeBasis, v) { return this.singleton.setPlanePosition3d(planeBasis, v); }
   /**
    * @param {PlaneBasis} planeBasis
    * @param {Vec3} v
    * @returns {Vec3}
    */
   setPlanePosition3d(planeBasis, v) {
-    return this.setRelativePlanePosition3d(planeBasis, v).inplaceAdd(planeBasis.origin);
+    return this.setRelativePlanePosition3d(planeBasis, v).add(planeBasis.origin);
   }
   /**
    * @param {PlaneBasis} planeBasis
    * @returns {Vec3}
    */
-  inplacePlanePosition3d(planeBasis) { return this.setPlanePosition3d(planeBasis, this); }
+  planePosition3d(planeBasis) { return this.setPlanePosition3d(planeBasis, this); }
+
   /**
    * @param {PlaneBasis} planeBasis
    * @param {Vec3} v
    * @returns {Vec3}
    */
-  static planePosition3d(planeBasis, v) { return this.singleton.setPlanePosition3d(planeBasis, v); }
-
+  static setRelativePlanePosition3d(planeBasis, v) { return this.singleton.setRelativePlanePosition3d(planeBasis, v); }
   /**
    * @param {PlaneBasis} planeBasis
    * @param {Vec3} v
@@ -952,13 +957,7 @@ export class Vec3 {
    * @param {PlaneBasis} planeBasis
    * @returns {Vec3}
    */
-  inplaceRelativePlanePosition3d(planeBasis) { return this.setRelativePlanePosition3d(planeBasis, this); }
-  /**
-   * @param {PlaneBasis} planeBasis
-   * @param {Vec3} v
-   * @returns {Vec3}
-   */
-  static relativePlanePosition3d(planeBasis, v) { return this.singleton.setRelativePlanePosition3d(planeBasis, v); }
+  relativePlanePosition3d(planeBasis) { return this.setRelativePlanePosition3d(planeBasis, this); }
 }
 
 const tempStorage = Temp.registerStorage(() => new Vec3());

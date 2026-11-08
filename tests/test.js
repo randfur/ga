@@ -135,19 +135,19 @@ function main() {
       },
       scale() {
         checkSimilarVec3s(
-          new Vec3(-1, -2, -3).inplaceScale(-1),
+          new Vec3(-1, -2, -3).scale(-1),
           new Vec3(1, 2, 3),
         );
       },
       add() {
         checkSimilarVec3s(
-          new Vec3(-1, -2, -3).inplaceAdd(new Vec3(2, 4, 6)),
+          new Vec3(-1, -2, -3).add(new Vec3(2, 4, 6)),
           new Vec3(1, 2, 3),
         );
       },
       scaleAdd() {
         checkSimilarVec3s(
-          new Vec3(-1, -2, -3).inplaceScaleAdd(2, new Vec3(1, 2, 3)),
+          new Vec3(-1, -2, -3).scaleAdd(2, new Vec3(1, 2, 3)),
           new Vec3(1, 2, 3),
         );
       },
@@ -159,35 +159,35 @@ function main() {
       },
       delta() {
         checkSimilarVec3s(
-          new Vec3(2, 4, 6).inplaceDelta(new Vec3(3, 6, 9)),
+          new Vec3(2, 4, 6).delta(new Vec3(3, 6, 9)),
           new Vec3(1, 2, 3),
         );
       },
       normalise() {
         checkSimilarVec3s(
-          new Vec3(0, 0, 0).inplaceNormalise(),
+          new Vec3(0, 0, 0).normalise(),
           new Vec3(0, 0, 0),
         );
         checkSimilarVec3s(
-          new Vec3(3, 4, 5).inplaceNormalise(),
+          new Vec3(3, 4, 5).normalise(),
           new Vec3(3 / 7.07, 4 / 7.07, 5 / 7.07),
         );
       },
       rotateRotor3() {
         checkSimilarVec3s(
-          new Vec3(1, 2, 3).inplaceRotateRotor3(
+          new Vec3(1, 2, 3).rotateRotor3(
             new Rotor3().setAxisAngle(new Vec3(1, 0, 0), TAU / 4)
           ),
           new Vec3(1, -3, 2),
         );
         checkSimilarVec3s(
-          new Vec3(1, 2, 3).inplaceRotateRotor3(
+          new Vec3(1, 2, 3).rotateRotor3(
             new Rotor3().setAxisAngle(new Vec3(0, 1, 0), TAU / 4)
           ),
           new Vec3(3, 2, -1),
         );
         checkSimilarVec3s(
-          new Vec3(1, 2, 3).inplaceRotateRotor3(
+          new Vec3(1, 2, 3).rotateRotor3(
             new Rotor3().setAxisAngle(new Vec3(0, 0, 1), TAU / 4)
           ),
           new Vec3(-2, 1, 3),
@@ -196,7 +196,7 @@ function main() {
       multiplyMat4() {
         checkSimilarVec3s(
           new Vec3(1, 2, 3)
-            .inplaceMultiplyMat4Left(
+            .leftMultiplyMat4(
               new Mat4().setComponents(
                 1, 1, 1, 1,
                 2, 2, 2, 2,
@@ -258,7 +258,7 @@ function main() {
       },
       rotateRotor3() {
         checkSimilarVec3s(
-          new Vec3(1, 2, 3).inplaceMultiplyMat4Left(
+          new Vec3(1, 2, 3).leftMultiplyMat4(
             new Mat4().setRotateRotor3(
               new Rotor3().setVec3ToVec3(
                 new Vec3(1, 0, 0),
@@ -269,7 +269,7 @@ function main() {
           new Vec3(-2, 1, 3),
         );
         checkSimilarVec3s(
-          new Vec3(1, 2, 3).inplaceMultiplyMat4Left(
+          new Vec3(1, 2, 3).leftMultiplyMat4(
             new Mat4().setRotateRotor3(
               new Rotor3().setVec3ToVec3(
                 new Vec3(0, 1, 0),
@@ -280,7 +280,7 @@ function main() {
           new Vec3(1, -3, 2),
         );
         checkSimilarVec3s(
-          new Vec3(1, 2, 3).inplaceMultiplyMat4Left(
+          new Vec3(1, 2, 3).leftMultiplyMat4(
             new Mat4().setRotateRotor3(
               new Rotor3().setVec3ToVec3(
                 new Vec3(0, 0, 1),
@@ -293,7 +293,7 @@ function main() {
       },
       translate() {
         checkSimilarVec3s(
-          new Vec3(1, 2, 3).inplaceMultiplyMat4Left(
+          new Vec3(1, 2, 3).leftMultiplyMat4(
             new Mat4().setTranslateXyz(10, 20, 30),
           ),
           new Vec3(11, 22, 33),
@@ -301,7 +301,7 @@ function main() {
       },
       translateRotate() {
         checkSimilarVec3s(
-          new Vec3(1, 2, 3).inplaceMultiplyMat4Left(
+          new Vec3(1, 2, 3).leftMultiplyMat4(
             new Mat4()
               .setTranslateXyz(2, -1, -5)
               .leftMultiply(

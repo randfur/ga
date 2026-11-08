@@ -144,8 +144,8 @@ export class Rotor3 {
     staticDirectionA.setNormalise(va);
     staticDirectionB
       .setNormalise(vb)
-      .inplaceScaleAdd(1 / reduceRatio, staticDirectionA)
-      .inplaceNormalise();
+      .scaleAdd(1 / reduceRatio, staticDirectionA)
+      .normalise();
     const {x: a, y: b, z: c} = staticDirectionA;
     const {x: d, y: e, z: f} = staticDirectionB;
     // (ax + by + cz) * (dx + ey + fz)
@@ -336,7 +336,7 @@ export class Rotor3 {
   setTurnTo(position, baseForward, orientation, target, reduceRatio) {
     initVec3Statics?.();
     staticDelta.setDelta(position, target);
-    staticForward.set(baseForward).inplaceRotateRotor3(orientation);
+    staticForward.set(baseForward).rotateRotor3(orientation);
     staticTurn.setVec3ToVec3(staticForward, staticDelta, reduceRatio);
     return this.setMultiply(orientation, staticTurn);
   }

@@ -1,3 +1,6 @@
+# 2026-11-09
+- Updated Vec3 to have setOperation() static methods and replaced inplaceOperation() methods with operation().
+
 # 2026-11-08
 - Added index.js file for easier importing.
 - Updated Mat4 to have leftOperation and operation instance methods.
@@ -135,7 +138,7 @@
     this.xDirection
       .setNonParallel(this.normal)
       .inplaceRelativePlaneProjection(PlaneBasis.#origin, this.normal)
-      .inplaceNormalise();
+      .normalise();
   - Where PlaneBasis.#origin was (0, 0, 0).
   - This could have used inplaceNormalProjection().
   - Actually Vec3.setOrthogonal() already does all this.
