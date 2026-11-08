@@ -547,10 +547,10 @@ export class Vec3 {
     initRotor3Statics?.();
     staticQungedRotation
       .setComponents(r.rr, -r.yz, -r.zx, -r.xy)
-      .inplaceMultiplyRight(
+      .multiply(
         staticQungedPosition.setComponents(0, v.x, v.y, v.z)
       )
-      .inplaceMultiplyRight(r);
+      .multiply(r);
     this.x = staticQungedRotation.yz;
     this.y = staticQungedRotation.zx;
     this.z = staticQungedRotation.xy;

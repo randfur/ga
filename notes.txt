@@ -5,6 +5,7 @@
   - Added "inplace" methods for all the operations.
   - Multiplying on the right is now implicit since it reads that way anyway e.g. a.multiply(b).
   - TODO: The same for Vec3's instance and static methods.
+- Did the same for Rotor3.
 
 # 2026-10-17
 - Fixed PlaneBasis import in Vec3 that created a circular dependency.
