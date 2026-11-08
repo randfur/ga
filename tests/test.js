@@ -153,7 +153,7 @@ function main() {
       },
       sum() {
         checkSimilarVec3s(
-          new Vec3(2, 4, 0).inplaceSum(0.5, -1, new Vec3(0, 0, -3)),
+          new Vec3(2, 4, 0).sum(0.5, -1, new Vec3(0, 0, -3)),
           new Vec3(1, 2, 3),
         );
       },
