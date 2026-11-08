@@ -30,9 +30,8 @@ export class Mat4 {
     this.da = 0; this.db = 0; this.dc = 0; this.dd = 1;
     return this;
   }
-
   /** @returns {Mat4} */
-  static identity() {
+  static setIdentity() {
     return this.singleton.setIdentity();
   }
 
@@ -62,7 +61,6 @@ export class Mat4 {
     this.da = da; this.db = db; this.dc = dc; this.dd = dd;
     return this;
   }
-
   /**
    * @param {number} aa
    * @param {number} ab
@@ -82,7 +80,7 @@ export class Mat4 {
    * @param {number} dd
    * @returns {Mat4}
    */
-  static components(aa, ab, ac, ad, ba, bb, bc, bd, ca, cb, cc, cd, da, db, dc, dd) {
+  static setComponents(aa, ab, ac, ad, ba, bb, bc, bd, ca, cb, cc, cd, da, db, dc, dd) {
     return this.singleton.setComponents(
       aa, ab, ac, ad,
       ba, bb, bc, bd,
@@ -102,7 +100,6 @@ export class Mat4 {
     this.da = m.da; this.db = m.db; this.dd = m.dd; this.dd = m.dd;
     return this;
   }
-
   /**
    * @param {Mat4} m
    * @returns {Mat4}
@@ -139,13 +136,22 @@ export class Mat4 {
       /*dd*/ ma.da * mb.ad + ma.db * mb.bd + ma.dc * mb.cd + ma.dd * mb.dd,
     );
   }
-
+  /**
+   * @param {Mat4} m
+   * @returns {Mat4}
+   */
+  leftMultiply(m) { return this.setMultiply(m, this); }
+  /**
+   * @param {Mat4} m
+   * @returns {Mat4}
+   */
+  multiply(m) { return this.setMultiply(this, m); }
   /**
    * @param {Mat4} ma
    * @param {Mat4} mb
    * @returns {Mat4}
    */
-  static multiply(ma, mb) {
+  static setMultiply(ma, mb) {
     return this.singleton.setMultiply(ma, mb);
   }
 
@@ -163,14 +169,31 @@ export class Mat4 {
       0, 0, 0, 1,
     );
   }
-
   /**
    * @param {number} x
    * @param {number} y
    * @param {number} z
    * @returns {Mat4}
    */
-  static translateXyz(x, y, z) {
+  leftTranslateXyz(x, y, z) {
+    return this.leftMultiply(staticInstance.setTranslateXyz(x, y, z));
+  }
+  /**
+   * @param {number} x
+   * @param {number} y
+   * @param {number} z
+   * @returns {Mat4}
+   */
+  translateXyz(x, y, z) {
+    return this.multiply(staticInstance.setTranslateXyz(x, y, z));
+  }
+  /**
+   * @param {number} x
+   * @param {number} y
+   * @param {number} z
+   * @returns {Mat4}
+   */
+  static setTranslateXyz(x, y, z) {
     return this.singleton.setTranslateXyz(x, y, z);
   }
 
@@ -181,12 +204,25 @@ export class Mat4 {
   setTranslateVec3(v) {
     return this.setTranslateXyz(v.x, v.y, v.z);
   }
-
   /**
    * @param {Vec3} v
    * @returns {Mat4}
    */
-  static translateVec3(v) {
+  leftTranslateVec3(v) {
+    return this.leftMultiply(staticInstance.setTranslateVec3(v));
+  }
+  /**
+   * @param {Vec3} v
+   * @returns {Mat4}
+   */
+  translateVec3(v) {
+    return this.multiply(staticInstance.setTranslateVec3(v));
+  }
+  /**
+   * @param {Vec3} v
+   * @returns {Mat4}
+   */
+  static setTranslateVec3(v) {
     return this.singleton.setTranslateVec3(v);
   }
 
@@ -202,12 +238,25 @@ export class Mat4 {
       0, 0, 0, 1,
     );
   }
-
   /**
    * @param {number} k
    * @returns {Mat4}
    */
-  static scale(k) {
+  leftScale(k) {
+    return this.leftMultiply(staticInstance.setScale(k));
+  }
+  /**
+   * @param {number} k
+   * @returns {Mat4}
+   */
+  scale(k) {
+    return this.multiply(staticInstance.setScale(k));
+  }
+  /**
+   * @param {number} k
+   * @returns {Mat4}
+   */
+  static setScale(k) {
     return this.singleton.setScale(k);
   }
 
@@ -361,12 +410,25 @@ export class Mat4 {
       0, 0, 0, 1,
     );
   }
-
   /**
    * @param {Rotor3} r
    * @returns {Mat4}
    */
-  static rotateRotor3(r) {
+  leftRotateRotor3(r) {
+    return this.leftMultiply(staticInstance.setRotateRotor3(r));
+  }
+  /**
+   * @param {Rotor3} r
+   * @returns {Mat4}
+   */
+  rotateRotor3(r) {
+    return this.multiply(staticInstance.setRotateRotor3(r));
+  }
+  /**
+   * @param {Rotor3} r
+   * @returns {Mat4}
+   */
+  static setRotateRotor3(r) {
     return this.singleton.setRotateRotor3(r);
   }
 
@@ -384,12 +446,25 @@ export class Mat4 {
       0, 0, 0, 1,
     );
   }
-
   /**
    * @param {number} angle
    * @returns {Mat4}
    */
-  static rotateXy(angle) {
+  leftRotateXy(angle) {
+    return this.leftMultiply(staticInstance.setRotateXy(angle));
+  }
+  /**
+   * @param {number} angle
+   * @returns {Mat4}
+   */
+  static setRotateXy(angle) {
+    return this.multiply(staticInstance.setRotateXy(angle));
+  }
+  /**
+   * @param {number} angle
+   * @returns {Mat4}
+   */
+  static setRotateXy(angle) {
     return this.singleton.setRotateXy(angle);
   }
 
@@ -407,12 +482,25 @@ export class Mat4 {
       0, 0, 0, 1,
     );
   }
-
   /**
    * @param {number} angle
    * @returns {Mat4}
    */
-  static rotateYz(angle) {
+  leftRotateYz(angle) {
+    return this.leftMultiply(staticInstance.setRotateYz(angle));
+  }
+  /**
+   * @param {number} angle
+   * @returns {Mat4}
+   */
+  rotateYz(angle) {
+    return this.multiply(staticInstance.setRotateYz(angle));
+  }
+  /**
+   * @param {number} angle
+   * @returns {Mat4}
+   */
+  static setRotateYz(angle) {
     return this.singleton.setRotateYz(angle);
   }
 
@@ -430,26 +518,27 @@ export class Mat4 {
       0, 0, 0, 1,
     );
   }
-
   /**
    * @param {number} angle
    * @returns {Mat4}
    */
-  static rotateZx(angle) {
+  leftRotateZx(angle) {
+    return this.leftMultiply(staticInstance.setRotateZx(angle));
+  }
+  /**
+   * @param {number} angle
+   * @returns {Mat4}
+   */
+  rotateZx(angle) {
+    return this.multiply(staticInstance.setRotateZx(angle));
+  }
+  /**
+   * @param {number} angle
+   * @returns {Mat4}
+   */
+  static setRotateZx(angle) {
     return this.singleton.setRotateZx(angle);
   }
-
-  /**
-   * @param {Mat4} m
-   * @returns {Mat4}
-   */
-  inplaceMultiplyLeft(m) { return this.setMultiply(m, this); }
-
-  /**
-   * @param {Mat4} m
-   * @returns {Mat4}
-   */
-  inplaceMultiplyRight(m) { return this.setMultiply(this, m); }
 
   /** @param {Float32Array} buffer */
   exportToBuffer(buffer) {
@@ -476,3 +565,5 @@ export class Mat4 {
 }
 
 const tempStorage = Temp.registerStorage(() => new Mat4());
+
+const staticInstance = new Mat4();

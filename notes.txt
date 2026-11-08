@@ -1,5 +1,10 @@
 # 2026-11-08
 - Added index.js file for easier importing.
+- Updated Mat4 to have leftOperation and operation instance methods.
+  - Dropped the use of "inplace".
+  - Added "inplace" methods for all the operations.
+  - Multiplying on the right is now implicit since it reads that way anyway e.g. a.multiply(b).
+  - TODO: The same for Vec3's instance and static methods.
 
 # 2026-10-17
 - Fixed PlaneBasis import in Vec3 that created a circular dependency.
