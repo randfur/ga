@@ -1,3 +1,6 @@
+# 2026-11-08
+- Added index.js file for easier importing.
+
 # 2026-10-17
 - Fixed PlaneBasis import in Vec3 that created a circular dependency.
   - Needed for the type checking.
